@@ -1,0 +1,9 @@
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  if grep -qi Microsoft /proc/version; then
+    alias open="/mnt/c/Windows/explorer.exe"
+    alias pbcopy="/mnt/c/Windows/System32/clip.exe"
+    alias pbpaste="/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe -command Get-Clipboard"
+  else
+    alias open="xdg-open"
+  fi
+fi 

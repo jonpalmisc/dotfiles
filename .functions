@@ -1,2 +1,10 @@
 # Get sensible .gitignore defaults from the command line.
 gi() { curl -sLw "\n" "https://www.toptal.com/developers/gitignore/api/$@" ; }
+
+cmake-init() {
+	touch CMakeLists.txt
+
+  echo "cmake_minimum_required(VERSION 3.11)\n" >> CMakeLists.txt
+  echo "project(example C)\n" >> CMakeLists.txt
+  echo "add_executable(example main.c)\n" >> CMakeLists.txt
+}

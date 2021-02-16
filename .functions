@@ -1,0 +1,4 @@
+# Get sensible .gitignore defaults from the command line.
+function gi() {
+  curl -sLw "\n" "https://www.toptal.com/developers/gitignore/api/$@" ;
+}

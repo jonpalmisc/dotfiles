@@ -38,8 +38,12 @@ packer.init()
 use "wbthomason/packer.nvim"
 
 use {
+	use "nvim-treesitter/nvim-treesitter",
+	run = ":TSUpdate",
+	config = require "config.treesitter",
+}
+
+use {
 	"nvim-lualine/lualine.nvim",
-	config = function()
-		require "config/lualine"
-	end,
+	config = require "config.lualine",
 }

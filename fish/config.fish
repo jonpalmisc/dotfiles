@@ -1,6 +1,6 @@
 #===-- Settings -------------------------------------------------------------===
 
-# Disable path shortening in prompt.
+# Disable path shortening in prompt
 set -g fish_prompt_pwd_dir_length 0
 
 # Configure CLI editor
@@ -18,7 +18,9 @@ alias gmacs "open -a Emacs"
 
 #===-- Path -----------------------------------------------------------------===
 
-set -gx fish_user_paths "/opt/homebrew/bin" $fish_user_paths
+# If any of the following paths are missing, `fish_add_path` will ignore it
+fish_add_path -ag ~/.cargo/bin
+fish_add_path -ag /opt/homebrew/bin
 
 #===-------------------------------------------------------------------------===
 

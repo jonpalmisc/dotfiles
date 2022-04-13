@@ -1,7 +1,10 @@
-.PHONY:	fish misc hs
+.PHONY:	nvim fish hs misc
 
 all:
 	$(error Targets must be run individually)
+
+nvim:
+	ln -s -f `pwd`/nvim ~/.config/nvim
 
 fish:
 	ln -s -f `pwd`/fish ~/.config/fish

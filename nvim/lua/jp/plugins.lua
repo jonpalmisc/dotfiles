@@ -28,6 +28,7 @@ return packer.startup(function(use)
 
 	use "windwp/nvim-autopairs"
 	use "numToStr/Comment.nvim"
+	use "tpope/vim-sleuth"
 
 	-- mod/completion ------------------------------------------------------
 

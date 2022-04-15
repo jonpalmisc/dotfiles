@@ -1,0 +1,22 @@
+#+TITLE: macOS Build Instructions
+
+* Prerequisites
+
+Install build dependencies via MacPorts:
+
+#+begin_src sh
+  sudo port install autoconf texinfo gcc11 libgcc11 gnutls jansson pkgconfig
+#+end_src
+
+* Building
+
+Clone the desired branch/version of Emacs:
+
+#+begin_src sh
+  git clone https://github.com/emacs-mirror/emacs.git --branch emacs-28 --depth 1
+#+end_src
+
+1. Run =autogen.sh=.
+2. Copy [[file:configure.fish][configure.fish]] to the build directory, then run it.
+3. Run =make= to build. Optionally, pass =NATIVE_FULL_AOT=1= for ahead-of-time
+   native compilation for all built-in modules.

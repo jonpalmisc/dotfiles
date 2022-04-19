@@ -333,6 +333,10 @@
   (eglot-highlight-symbol-face highlight)
   :bind ("C-; r" . eglot-rename))
 
+;; Use `deadgrep' for awesome text search.
+(use-package deadgrep
+  :bind ("C-c C-f" . deadgrep))
+
 ;; Download tree-sitter language packs.
 (use-package tree-sitter-langs)
 

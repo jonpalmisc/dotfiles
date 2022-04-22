@@ -444,16 +444,15 @@
 (use-package orderless
   :custom (completion-styles '(orderless)))
 
-
 ;; Configure UI font
-(defun jp/config-md-io ()
-  "Set the default font to MD IO if it is available."
-  (setq jp/md-io-font "MD IO 0.4")
-  (when (member jp/md-io-font (font-family-list))
-    (set-face-attribute 'default nil :font jp/md-io-font)
-    (set-face-attribute 'fixed-pitch nil :font jp/md-io-font)))
+(defun jp/config-mono-font ()
+  "Set the default font if it is available."
+  (setq jp/mono-font "Go Mono")
+  (when (member jp/mono-font (font-family-list))
+    (set-face-attribute 'default nil :font jp/mono-font)
+    (set-face-attribute 'fixed-pitch nil :font jp/mono-font)))
 
-(jp/config-md-io)
+(jp/config-mono-font)
 
 ;; Configure appearance for the Modus theme family.
 (setq modus-themes-italic-constructs t

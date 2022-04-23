@@ -10,7 +10,7 @@ set -gx VISUAL nvim
 #===-- Aliases --------------------------------------------------------------===
 
 # Common command shorthands
-alias ls "ls -1a --color"
+alias ls "ls -la --color"
 
 # Aliases for opening graphical and terminal Emacs
 alias emacs "/Applications/Emacs.app/Contents/MacOS/Emacs -nw"

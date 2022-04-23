@@ -20,7 +20,7 @@ alias gmacs "open -a Emacs"
 
 # If any of the following paths are missing, `fish_add_path` will ignore it
 fish_add_path -ag ~/.cargo/bin
-fish_add_path -ag /opt/homebrew/bin
+fish_add_path -ag /opt/local/bin
 
 #===-------------------------------------------------------------------------===
 

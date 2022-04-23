@@ -1,100 +1,76 @@
 --===-- init.lua: Hammerspoon configuration ------------------------------------
 
-local key = hs.hotkey
-local app = hs.application
+local terminalAppId = "com.apple.Terminal"
+local editorAppId = "org.gnu.Emacs"
+local browserAppId = "com.apple.Safari"
 
-local kbd = {}
-kbd.type = hs.eventtap.keyStrokes
-
-local pboard = {}
-pboard.content = hs.pasteboard.getContents
-
-local window = {}
-window.active = hs.window.focusedWindow
-window.resize = function(win, x, y, w, h)
-	local f = win:frame()
-
-	f.x = x
-	f.y = y
-	f.w = w
-	f.h = h
-
-	win:setFrame(f, 0)
-end
-
---===-- Options ----------------------------------------------------------------
-
-local terminal_app_id = "com.apple.Terminal"
-local editor_app_id = "org.gnu.Emacs"
-local browser_app_id = "com.apple.Safari"
+hs.window.animationDuration = 0 -- Disable window adjustment animations
+hs.grid.setMargins "0,0" -- Remove margins between windows
+hs.grid.setGrid "2x2" -- Use a 2x2 (4 quadrant) grid for window positioning
 
 --===-- Functions --------------------------------------------------------------
 
 --- Open (or focus) the configured terminal emulator.
-function focus_terminal()
-	app.open(terminal_app_id)
+function focusTerminal()
+	hs.application.open(terminalAppId)
 end
 
 --- Open (or focus) the configured text editor.
-function focus_editor()
-	app.open(editor_app_id)
+function focusEditor()
+	hs.application.open(editorAppId)
 end
 
 --- Open (or focus) the configured web browser.
-function focus_browser()
-	app.open(browser_app_id)
+function focusBrowser()
+	hs.application.open(browserAppId)
 end
 
 --- Paste (auto-type) the contents of the clipboard as plaintext.
-function plaintext_paste()
-	kbd_type(clipboard_content())
+function plaintextPaste()
+	hs.eventtap.keyStrokes(hs.pasteboard.getContents())
 end
 
---- Snap a window using a ratio of the available screen space.
-function snap_ratio(xr, yr, wr, hr)
-	local win = window.active()
-	local screen = win:screen():frame()
-
-	window.resize(win, screen.w * xr, screen.h * yr, screen.w * wr, screen.h * hr)
+--- Snap a window to a grid cell.
+function gridSnap(cell)
+	hs.grid.set(hs.window.focusedWindow(), cell)
 end
 
 --===-- Bindings ---------------------------------------------------------------
 
-local cmd_alt = { "cmd", "alt" }
+local cmdAlt = { "cmd", "alt" }
+local ctrlAlt = { "ctrl", "alt" }
 
-key.bind(cmd_alt, "`", focus_terminal)
-key.bind(cmd_alt, "e", focus_editor)
-key.bind(cmd_alt, "w", focus_browser)
-key.bind(cmd_alt, "v", plaintext_paste)
-
-local ctrl_alt = { "ctrl", "alt" }
+hs.hotkey.bind(cmdAlt, "`", focusTerminal)
+hs.hotkey.bind(cmdAlt, "e", focusEditor)
+hs.hotkey.bind(cmdAlt, "w", focusBrowser)
+hs.hotkey.bind(cmdAlt, "v", plaintextPaste)
 
 -- Snap to the upper left quadrant of the screen.
-key.bind(ctrl_alt, "o", function()
-	snap_ratio(0, 0, 0.5, 0.5)
+hs.hotkey.bind(ctrlAlt, "o", function()
+	gridSnap "0,0 1x1"
 end)
 
 -- Snap to the upper right quadrant of the screen.
-key.bind(ctrl_alt, "p", function()
-	snap_ratio(0.5, 0, 0.5, 0.5)
+hs.hotkey.bind(ctrlAlt, "p", function()
+	gridSnap "1,0 1x1"
 end)
 
 -- Snap to the bottom left quadrant of the screen.
-key.bind(ctrl_alt, "k", function()
-	snap_ratio(0, 0.5, 0.5, 0.5)
+hs.hotkey.bind(ctrlAlt, "k", function()
+	gridSnap "0,1 1x1"
 end)
 
 -- Snap to the bottom right quadrant of the screen.
-key.bind(ctrl_alt, "l", function()
-	snap_ratio(0.5, 0.5, 0.5, 0.5)
+hs.hotkey.bind(ctrlAlt, "l", function()
+	gridSnap "1,1 1x1"
 end)
 
 -- Snap to the left half of the screen.
-key.bind(ctrl_alt, "[", function()
-	snap_ratio(0, 0, 0.5, 1)
+hs.hotkey.bind(ctrlAlt, "[", function()
+	gridSnap "0,0 1x2"
 end)
 
 -- Snap to the right half of the screen.
-key.bind(ctrl_alt, "]", function()
-	snap_ratio(0.5, 0, 0.5, 1)
+hs.hotkey.bind(ctrlAlt, "]", function()
+	gridSnap "1,0 1x2"
 end)

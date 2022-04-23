@@ -1,0 +1,9 @@
+[user]
+	name = Jon Palmisciano
+	email = jp@jonpalmisc.com
+
+[gpg]
+	signingKey = A2D8C5DE
+
+[commit]
+	gpgSign = true

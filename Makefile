@@ -27,7 +27,7 @@ git:
 
 hs:
 	$(RM) $(HS_CONFIG_PATH)
-	$(LN) `pwd`/hammerspoon $(HS_CONFIG_PATH)
+	$(LN) `pwd`/hs $(HS_CONFIG_PATH)
 
 nvim:
 	$(RM) $(NVIM_CONFIG_PATH)

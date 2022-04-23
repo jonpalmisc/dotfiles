@@ -1,21 +1,36 @@
-LN_FLAGS := -s -f
+RM := rm -fr
+LN := ln -s -f
 
-.PHONY:	emacs fish hs nvim misc
+EMACS_CONFIG_PATH := ~/.emacs.d
+FISH_CONFIG_PATH := ~/.config/fish
+GIT_CONFIG_PATH := ~/.gitconfig
+HS_CONFIG_PATH := ~/.hammerspoon
+NVIM_CONFIG_PATH := ~/.config/nvim
+
+.PHONY:	emacs fish git hs nvim misc
 
 all:
 	$(error Targets must be run individually)
 
 emacs:
-	ln $(LN_FLAGS) `pwd`/emacs ~/.emacs.d
+	$(RM) $(EMACS_CONFIG_PATH)
+	$(LN) `pwd`/emacs $(EMACS_CONFIG_PATH)
 
 fish:
-	ln $(LN_FLAGS) `pwd`/fish ~/.config/fish
+	$(RM) $(FISH_CONFIG_PATH)
+	$(LN) `pwd`/fish $(FISH_CONFIG_PATH)
+
+git:
+	$(RM) $(GIT_CONFIG_PATH)
+	$(LN) `pwd`/git/.gitconfig $(GIT_CONFIG_PATH)
 
 hs:
-	ln $(LN_FLAGS) `pwd`/hammerspoon ~/.hammerspoon
+	$(RM) $(HS_CONFIG_PATH)
+	$(LN) `pwd`/hammerspoon $(HS_CONFIG_PATH)
 
 nvim:
-	ln $(LN_FLAGS) `pwd`/nvim ~/.config/nvim
+	$(RM) $(NVIM_CONFIG_PATH)
+	$(LN) `pwd`/nvim $(NVIM_CONFIG_PATH)
 
 misc:
 	touch ~/.hushlogin

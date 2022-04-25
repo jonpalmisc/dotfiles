@@ -45,32 +45,42 @@ hs.hotkey.bind(cmdAlt, "e", focusEditor)
 hs.hotkey.bind(cmdAlt, "w", focusBrowser)
 hs.hotkey.bind(cmdAlt, "v", plaintextPaste)
 
--- Snap to the upper left quadrant of the screen.
+-- Snap the focused window to the upper left quadrant of the screen.
 hs.hotkey.bind(ctrlAlt, "o", function()
 	gridSnap "0,0 1x1"
 end)
 
--- Snap to the upper right quadrant of the screen.
+-- Snap the focused window to the upper right quadrant of the screen.
 hs.hotkey.bind(ctrlAlt, "p", function()
 	gridSnap "1,0 1x1"
 end)
 
--- Snap to the bottom left quadrant of the screen.
+-- Snap the focused window to the bottom left quadrant of the screen.
 hs.hotkey.bind(ctrlAlt, "k", function()
 	gridSnap "0,1 1x1"
 end)
 
--- Snap to the bottom right quadrant of the screen.
+-- Snap the focused window to the bottom right quadrant of the screen.
 hs.hotkey.bind(ctrlAlt, "l", function()
 	gridSnap "1,1 1x1"
 end)
 
--- Snap to the left half of the screen.
+-- Snap the focused window to the left half of the screen.
 hs.hotkey.bind(ctrlAlt, "[", function()
 	gridSnap "0,0 1x2"
 end)
 
--- Snap to the right half of the screen.
+-- Snap the focused window to the right half of the screen.
 hs.hotkey.bind(ctrlAlt, "]", function()
 	gridSnap "1,0 1x2"
+end)
+
+-- Move the focused window to the previous display.
+hs.hotkey.bind(ctrlAlt, ";", function()
+	hs.window.focusedWindow():moveOneScreenWest()
+end)
+
+-- Move the focused window to the next display.
+hs.hotkey.bind(ctrlAlt, "'", function()
+	hs.window.focusedWindow():moveOneScreenEast()
 end)

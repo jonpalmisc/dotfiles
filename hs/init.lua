@@ -3,6 +3,7 @@
 local terminalAppId = "com.apple.Terminal"
 local editorAppId = "org.gnu.Emacs"
 local browserAppId = "com.apple.Safari"
+local passwordsAppId = "com.markmcguill.strongbox.mac"
 
 hs.window.animationDuration = 0 -- Disable window adjustment animations
 hs.grid.setMargins "0,0" -- Remove margins between windows
@@ -25,6 +26,11 @@ function focusBrowser()
 	hs.application.open(browserAppId)
 end
 
+--- Open (or focus) the configured password manager.
+function focusPasswords()
+	hs.application.open(passwordsAppId)
+end
+
 --- Paste (auto-type) the contents of the clipboard as plaintext.
 function plaintextPaste()
 	hs.eventtap.keyStrokes(hs.pasteboard.getContents())
@@ -42,6 +48,7 @@ local cmdAlt = { "cmd", "alt" }
 hs.hotkey.bind(cmdAlt, "`", focusTerminal)
 hs.hotkey.bind(cmdAlt, "e", focusEditor)
 hs.hotkey.bind(cmdAlt, "w", focusBrowser)
+hs.hotkey.bind(cmdAlt, "m", focusPasswords)
 hs.hotkey.bind(cmdAlt, "v", plaintextPaste)
 
 -- Snap the focused window to the upper left quadrant of the screen.

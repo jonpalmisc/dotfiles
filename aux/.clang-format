@@ -1,0 +1,12 @@
+---
+BasedOnStyle:				WebKit
+ColumnLimit:				80
+AlignTrailingComments:			'true'
+AlignConsecutiveMacros:			'true'
+AllowAllArgumentsOnNextLine:		'false'
+AllowShortFunctionsOnASingleLine:	'false'
+UseTab:					AlignWithSpaces
+TabWidth:				8
+IndentWidth:				8
+
+...

@@ -81,6 +81,11 @@ hs.hotkey.bind(cmdAlt, "]", function()
 	gridSnap "1,0 1x2"
 end)
 
+-- Snap the focused window to fill the screen.
+hs.hotkey.bind(cmdAlt, "=", function()
+	gridSnap "0,0 2x2"
+end)
+
 -- Move the focused window to the previous display.
 hs.hotkey.bind(cmdAlt, ";", function()
 	hs.window.focusedWindow():moveOneScreenWest()

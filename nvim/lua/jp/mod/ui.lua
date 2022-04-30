@@ -1,16 +1,16 @@
 --===-- jp/mod/ui.lua ----------------------------------------------------------
 
+vim.opt.guifont = "Go_Mono:h12.5"
+
+local lualine_theme = "16color"
+
 -- Report whether Neovim is running under a GUI
 function has_gui()
 	return vim.fn.exists "g:neovide" == 1 or vim.fn.has "gui_vimr" == 1
 end
 
-local lualine_theme = "16color"
-
 -- Use a theme when running under GUI clients
 if has_gui() then
-	vim.opt.guifont = "MD_IO_0.4:h13"
-
 	lualine_theme = "auto"
 	vim.cmd [[colorscheme OceanicNext]]
 end

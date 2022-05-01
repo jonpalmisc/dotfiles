@@ -1,0 +1,8 @@
+[
+  { "keys": ["alt+tab"], "command": "clang_format" },
+  {
+    "keys": ["super+shift+l"],
+    "command": "show_overlay",
+    "args": { "overlay": "command_palette", "text": "LSP: " }
+  }
+]

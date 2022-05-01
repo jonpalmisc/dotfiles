@@ -1,0 +1,11 @@
+<snippet>
+	<content><![CDATA[
+//===-- ${1:FILE} - ${2:DESCRIPTION} --------------------------------------===//
+//
+// ${3:INFO}
+//
+//===----------------------------------------------------------------------===//
+]]></content>
+	<scope>source</scope>
+	<description>LLVM File Header</description>
+</snippet>

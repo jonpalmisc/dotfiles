@@ -7,8 +7,9 @@ GIT_CONFIG_PATH := ~/.gitconfig
 HS_CONFIG_PATH := ~/.hammerspoon
 NVIM_CONFIG_PATH := ~/.config/nvim
 SSH_CONFIG_PATH := ~/.ssh/config
+SUBL_CONFIG_PATH := ~/Library/Application\ Support/Sublime\ Text/Packages/User
 
-.PHONY:	emacs fish git hs nvim ssh misc
+.PHONY:	emacs fish git hs nvim ssh subl misc
 
 all:
 	$(error Targets must be run individually)
@@ -36,6 +37,10 @@ nvim:
 ssh:
 	$(RM) $(SSH_CONFIG_PATH)
 	$(LN) `pwd`/ssh/config $(SSH_CONFIG_PATH)
+
+subl:
+	$(RM) $(SUBL_CONFIG_PATH)
+	$(LN) `pwd`/subl $(SUBL_CONFIG_PATH)
 
 misc:
 	touch ~/.hushlogin

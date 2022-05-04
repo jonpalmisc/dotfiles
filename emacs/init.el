@@ -419,11 +419,6 @@
   (bind-key "C-=" 'text-scale-increase)
   (bind-key "C--" 'text-scale-decrease))
 
-;; Disable the mouse for getting better at keyboard navigation.
-(use-package disable-mouse
-  :config
-  (global-disable-mouse-mode))
-
 
 ;;;
 ;;; --- Interface ----------------------------------------------------

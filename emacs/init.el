@@ -462,7 +462,11 @@
       modus-themes-mode-line '(borderless)
       modus-themes-region '(bg-only)
       modus-themes-syntax '(faint alt-syntax))
-(load-theme 'modus-vivendi)
+
+;; Use light theme when in graphical mode, dark theme in terminal.
+(if (display-graphic-p)
+    (load-theme 'modus-operandi)
+  (load-theme 'modus-vivendi))
 
 ;; Make the mode line mode minimal
 (setq-default mode-line-format "%* %b %l:%c")

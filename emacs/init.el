@@ -337,13 +337,18 @@
 (use-package deadgrep
   :bind ("C-c C-f" . deadgrep))
 
-;; Download tree-sitter language packs.
-(use-package tree-sitter-langs)
 
 ;; Use tree-sitter for faster and better syntax highlighting.
 (use-package tree-sitter
   :hook (tree-sitter-after-on . tree-sitter-hl-mode)
   :config (global-tree-sitter-mode))
+
+;; Download tree-sitter language packs.
+(use-package tree-sitter-langs
+  :defer 1
+  ;; Prevent the "languages already installed" message from appearing.
+  :config (advice-add 'tree-sitter-langs-install-grammars
+		      :around 'jp/silence-mb))
 
 
 ;;;

@@ -1,7 +1,7 @@
 --===-- init.lua: Hammerspoon configuration ------------------------------------
 
 local terminalAppId = "com.apple.Terminal"
-local editorAppId = "org.gnu.Emacs"
+local editorAppId = "com.sublimetext.4"
 local browserAppId = "com.apple.Safari"
 local passwordsAppId = "com.markmcguill.strongbox.mac"
 

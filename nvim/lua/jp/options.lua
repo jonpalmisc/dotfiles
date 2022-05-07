@@ -37,3 +37,28 @@ end
 
 vim.cmd [[set iskeyword-=-]] -- Treat hyphens as word separators
 vim.cmd [[set iskeyword-=_]] -- Treat underscores as word separators
+
+local disabled_plugins = {
+	"2html_plugin",
+	"getscript",
+	"getscriptPlugin",
+	"gzip",
+	"logipat",
+	"netrw",
+	"netrwPlugin",
+	"netrwSettings",
+	"netrwFileHandlers",
+	"matchit",
+	"tar",
+	"tarPlugin",
+	"rrhelper",
+	"spellfile_plugin",
+	"vimball",
+	"vimballPlugin",
+	"zip",
+	"zipPlugin",
+}
+
+for _, plugin in pairs(disabled_plugins) do
+	vim.g["loaded_" .. plugin] = 1
+end

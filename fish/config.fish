@@ -26,3 +26,6 @@ fish_add_path -ag /opt/local/bin
 
 if status is-interactive
 end
+
+# Configure OPAM if installed
+source ~/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true

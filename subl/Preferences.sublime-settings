@@ -31,5 +31,5 @@
   "show_errors_inline": false,
 
   "hot_exit": "disabled",
-  "create_window_at_startup": false
+  "create_window_at_startup": true,
 }

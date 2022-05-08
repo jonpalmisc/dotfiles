@@ -1,0 +1,82 @@
+{
+  "name": "Xenon",
+  "author": "Jon Palmisciano",
+  "variables": {
+    "grey": "#949597",
+    "red": "#e59f9b",
+    "green": "#96c8bc",
+    "yellow": "#f7dfc2",
+    "blue": "#a6aedd",
+    "magenta": "#e09eb7",
+    "cyan": "#89bdd7",
+
+    "fg-dim": "#C9CACB",
+    "fg": "#DFDFE0",
+    "fg-bright": "#F4F4F5",
+    "bg": "#292A2F",
+
+    "sel": "#353A4D",
+    "sel-border": "#636779"
+  },
+  "globals": {
+    "foreground": "var(fg)",
+    "background": "var(bg)",
+
+    "selection": "var(sel)",
+    "selection_border": "var(sel-border)",
+
+    "caret": "var(yellow)",
+    "accent": "var(blue)",
+
+    "gutter_foreground": "var(grey)",
+    "line_highlight": "color(var(grey) alpha(0.125))",
+    "line_diff_added": "var(green)",
+    "line_diff_modified": "color(var(yellow) alpha(0.95))",
+    "line_diff_deleted": "var(red)",
+  },
+  "rules": [
+    // ===-- Keywords -------------------------------------------------------===
+    {
+      "scope": "keyword, storage",
+      "foreground": "var(magenta)"
+    },
+    {
+      "scope": "keyword.control.import, meta.preprocessor.include",
+      "foreground": "var(magenta)"
+    },
+    {
+      "scope": "keyword.operator",
+      "foreground": "var(fg-dim)"
+    },
+    // ===-- Functions -------------------------------------------------------===
+    {
+      "scope": "entity.name.function, support.function, variable.function",
+      "foreground": "var(cyan)"
+    },
+    // ===-- Types ----------------------------------------------------------===
+    {
+      "scope": "entity.name.type, entity.name.class, entity.name.enum, support.type",
+      "foreground": "var(green)"
+    },
+    // ===-- Variables ------------------------------------------------------===
+    {
+      "scope": "variable",
+      "foreground": "var(blue)"
+    },
+    // ===-- Strings --------------------------------------------------------===
+    {
+      "scope": "string",
+      "foreground": "var(red)"
+    },
+    // ===-- Constants ------------------------------------------------------===
+    {
+      "scope": "constant",
+      "foreground": "var(yellow)"
+    },
+    // ===-- Comments -------------------------------------------------------===
+    {
+      "scope": "comment",
+      "foreground": "var(grey)"
+    }
+  ]
+}

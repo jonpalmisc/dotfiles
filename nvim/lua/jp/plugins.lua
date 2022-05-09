@@ -50,6 +50,10 @@ return packer.startup(function(use)
 	use "mhartington/oceanic-next"
 	use "nvim-lualine/lualine.nvim"
 
+	use {
+		"nvim-telescope/telescope.nvim",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	}
 	-- mod/treesitter ------------------------------------------------------
 
 	use {

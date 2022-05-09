@@ -43,3 +43,6 @@ defaults write com.apple.TextEdit "RichText" -bool "false"
 
 # Enable the developer menu in Safari
 defaults write com.apple.Safari IncludeDevelopMenu -bool true
+
+# Don't open files (read: unzip archives) upon download completion
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false

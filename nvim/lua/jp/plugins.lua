@@ -49,6 +49,7 @@ return packer.startup(function(use)
 
 	use "mhartington/oceanic-next"
 	use "nvim-lualine/lualine.nvim"
+	use "RRethy/nvim-base16"
 
 	use {
 		"nvim-telescope/telescope.nvim",

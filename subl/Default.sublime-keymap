@@ -17,5 +17,30 @@
     "keys": ["super+shift+l"],
     "command": "show_overlay",
     "args": { "overlay": "command_palette", "text": "LSP: " }
+  },
+  // ===-- LSP --------------------------------------------------------------===
+  {
+    "keys": ["ctrl+;", "f"],
+    "command": "lsp_document_symbols"
+  },
+  {
+    "keys": ["ctrl+;", "F"],
+    "command": "lsp_workspace_symbols"
+  },
+  {
+    "keys": ["ctrl+;", "r"],
+    "command": "lsp_symbol_rename"
+  },
+  {
+    "keys": ["ctrl+;", "d"],
+    "command": "lsp_symbol_declaration"
+  },
+  {
+    "keys": ["ctrl+;", "R"],
+    "command": "lsp_symbol_references"
+  },
+  {
+    "keys": ["ctrl+shift+/"],
+    "command": "lsp_hover"
   }
 ]

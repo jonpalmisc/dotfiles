@@ -1,20 +1,18 @@
 {
-	"clients":
-	{
-		"clangd":
-		{
-			"enabled": true,
-			"command": [
-				"clangd",
-				"--clang-tidy",
-				"--header-insertion-decorators",
-				"--inlay-hints"
-			],
-			"scopes": ["source.c", "source.c++", "source.objc", "source.objc++"],
-		},
-		"rust-analyzer":
-		{
-			"enabled": true,
-		},
-	},
+  "show_diagnostics_panel_on_save": 0,
+
+  "clients": {
+    "clangd": {
+      "enabled": true,
+      "command": [
+        "clangd",
+        "--clang-tidy",
+        "--header-insertion-decorators",
+        "--inlay-hints"
+      ]
+    },
+    "rust-analyzer": {
+      "enabled": true
+    }
+  }
 }

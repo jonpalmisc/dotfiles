@@ -6,13 +6,15 @@ end
 
 local mappings = {
 	i = {
-		["<Esc>"] = require("telescope.actions").close,
+		-- Quit the prompt with a single press of <ESC>
+		["<ESC>"] = require("telescope.actions").close,
 	},
 }
 
 local defaults = {
 	mappings = mappings,
 
+	-- Use 'ripgrep' for grep-like activity
 	vimgrep_arguments = {
 		"rg",
 		"--color=never",
@@ -23,12 +25,12 @@ local defaults = {
 		"--smart-case",
 	},
 
-	storting_strategy = "ascending",
-
 	-- Hide caret on selected result (highlight is enough)
 	selection_caret = "  ",
 
-	-- Hide the unnecessary "Results" text
+	-- Hide preview and prompt/results titles
+	preview = false,
+	prompt_title = false,
 	results_title = false,
 
 	-- Place chooser at the bottom of the screen, Ivy-like
@@ -39,6 +41,7 @@ local defaults = {
 		height = 10,
 		prompt_position = "bottom",
 	},
+	storting_strategy = "ascending",
 
 	-- Hide certain border elements to match Ivy-style appearance
 	borderchars = {

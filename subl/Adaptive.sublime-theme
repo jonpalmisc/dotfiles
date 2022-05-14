@@ -1,0 +1,14 @@
+{
+	"variables":
+	{
+		"font_face": "MD System Variable",
+		"font_size_sm": 12,
+		"font_size": 12,
+		"font_size_lg": 13,
+		"font_size_title": 16,
+	},
+	"rules":
+	[
+
+	]
+}

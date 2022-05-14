@@ -3,11 +3,13 @@
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.mapleader = ";"
+vim.g.maplocalleader = ";"
 
 map("n", "<A-k>", ":m .-2<CR>==", opts) -- Swap line up
 map("n", "<A-j>", ":m .+1<CR>==", opts) -- Swap line down
+
+map("n", "<C-l>", ":noh<CR>zz", opts) -- Center line and clear highlight
 
 vim.cmd [[
 augroup jp_git_rebase

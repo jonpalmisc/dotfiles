@@ -29,6 +29,8 @@ local opts = {
 	hlsearch = true, -- Highlight search matches
 	ignorecase = true, -- Ignore case when searching
 	smartcase = true, -- Ignore `ignorecase` if the search is mixed-case
+
+	pumheight = 12, -- Limit popup menu height to 12
 }
 
 for k, v in pairs(opts) do

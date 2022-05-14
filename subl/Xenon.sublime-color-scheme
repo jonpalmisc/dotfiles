@@ -77,6 +77,19 @@
     {
       "scope": "comment",
       "foreground": "var(grey)"
-    }
+    },
+    // ===-- Diffs ----------------------------------------------------------===
+    {
+      "scope": "meta.diff.header",
+      "foreground": "var(yellow)"
+    },
+    {
+      "scope": "markup.deleted.diff",
+      "foreground": "var(red)"
+    },
+    {
+      "scope": "markup.inserted.diff",
+      "foreground": "var(green)"
+    },
   ]
 }

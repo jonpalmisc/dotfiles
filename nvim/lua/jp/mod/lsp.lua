@@ -43,7 +43,6 @@ local on_attach = function(client, bufnr)
 		"<cmd>lua vim.lsp.buf.references()<CR>",
 		opts
 	)
-
 	vim.api.nvim_buf_set_keymap(
 		bufnr,
 		"n",
@@ -77,6 +76,24 @@ end
 
 -- Configure LSP-backed auto-completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem = {
+   snippetSupport = true,
+   resolveSupport = {
+      properties = {
+         "documentation",
+         "detail",
+         "additionalTextEdits",
+      },
+   },
+   -- documentationFormat = { "markdown", "plaintext" },
+   -- preselectSupport = true,
+   -- insertReplaceSupport = true,
+   -- labelDetailsSupport = true,
+   -- deprecatedSupport = true,
+   -- commitCharactersSupport = true,
+   -- tagSupport = { valueSet = { 1 } },
+}
+
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 local servers = { "pyright", "rust_analyzer", "clangd" }

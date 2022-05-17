@@ -330,8 +330,14 @@
 (use-package eglot
   :hook ((c-mode c++-mode objc-mode python-mode) . eglot-ensure)
   :custom
+  (eglot-sync-connect nil)
   (eglot-highlight-symbol-face highlight)
-  :bind ("C-; r" . eglot-rename))
+  (eglot-ignored-server-capabilities '(:hoverProvider))
+  :bind (("C-; r" . eglot-rename)
+	 ;; ("M-." . xref-find-definitions) [default]
+	 ;; ("M-?" . xref-find-references)  [default]
+	 ;; ("C-h ." . eldoc)               [default]
+	 ("C-; a" . eglot-code-actions)))
 
 ;; Use `deadgrep' for awesome text search.
 (use-package deadgrep

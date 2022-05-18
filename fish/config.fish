@@ -16,6 +16,8 @@ alias ls "ls -la --color"
 alias emacs "/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias gmacs "open -a Emacs"
 
+alias qpy quick_python
+
 #===-- Path -----------------------------------------------------------------===
 
 # If any of the following paths are missing, `fish_add_path` will ignore it

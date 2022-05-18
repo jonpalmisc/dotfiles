@@ -3,7 +3,7 @@ LN := ln -s -f
 
 EMACS_CONFIG_PATH := ~/.emacs.d
 FISH_CONFIG_PATH := ~/.config/fish
-GIT_CONFIG_PATH := ~/.gitconfig
+GIT_CONFIG_PATH := ~/.config/git
 HS_CONFIG_PATH := ~/.hammerspoon
 NVIM_CONFIG_PATH := ~/.config/nvim
 SSH_CONFIG_PATH := ~/.ssh/config
@@ -24,7 +24,10 @@ fish:
 
 git:
 	$(RM) $(GIT_CONFIG_PATH)
-	$(LN) `pwd`/git/.gitconfig $(GIT_CONFIG_PATH)
+	mkdir -p $(GIT_CONFIG_PATH)
+
+	$(LN) `pwd`/git/.gitconfig ~/.gitconfig
+	$(LN) `pwd`/git/ignore $(GIT_CONFIG_PATH)/ignore
 
 hs:
 	$(RM) $(HS_CONFIG_PATH)

@@ -228,6 +228,14 @@
 (use-package yaml-mode
   :mode ("\\.yml\\'" . yaml-mode))
 
+;; Needed for indirect editing via `markdown-mode'
+(use-package edit-indirect
+  :defer)
+
+(use-package markdown-mode
+  :mode ("\\.md\\'" . markdown-mode)
+  :custom (markdown-command "multimarkdown"))
+
 (use-package auctex
   :defer t
   :custom (TeX-engine 'luatex))

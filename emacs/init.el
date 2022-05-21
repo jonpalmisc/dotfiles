@@ -380,6 +380,15 @@
   (interactive)
   (shell-command (concat "open " default-directory)))
 
+(defun jp/format-git-issue-link ()
+  "Format a Git issue link in <org>/<repo>#<number> format."
+  (interactive)
+
+  (insert
+   (s-replace "/issues/" "#"
+	      (replace-regexp-in-string ".+com/" ""
+					(read-string "Issue link: ")))))
+
 (setq jp/clang-format-styles
       '("LLVM" "Google" "Chromium" "Mozilla" "WebKit" "Microsoft" "GNU"))
 

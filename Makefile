@@ -29,6 +29,8 @@ git:
 	$(LN) `pwd`/git/.gitconfig ~/.gitconfig
 	$(LN) `pwd`/git/ignore $(GIT_CONFIG_PATH)/ignore
 
+	$(LN) `pwd`/git/templates $(GIT_CONFIG_PATH)/templates
+
 hs:
 	$(RM) $(HS_CONFIG_PATH)
 	$(LN) `pwd`/hs $(HS_CONFIG_PATH)

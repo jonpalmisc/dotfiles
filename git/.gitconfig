@@ -7,3 +7,6 @@
 
 [commit]
 	gpgSign = true
+
+[init]
+	templateDir = ~/.config/git/templates

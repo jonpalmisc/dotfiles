@@ -18,9 +18,6 @@ defaults write com.apple.dock 'orientation' -string 'left'
 defaults write com.apple.dock magnification -bool false
 defaults write com.apple.dock tilesize -int 40
 
-# Use "spring-loading" for all dock items
-defaults write com.apple.dock "enable-spring-load-actions-on-all-items"
-
 # Show hard drives, etc. on the desktop
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true

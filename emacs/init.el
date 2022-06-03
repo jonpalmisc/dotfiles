@@ -126,8 +126,6 @@
 (column-number-mode)                ; Show column numbers in mode line
 
 (global-display-fill-column-indicator-mode) ; Show fill column ruler
-(global-display-line-numbers-mode)          ; Show line numbers
-(setq display-line-numbers-width-start t)   ; Use fixed margin width
 
 (defun jp/set-fill-length-70 ()
   "Set the current buffer's fill length to 70 columns."

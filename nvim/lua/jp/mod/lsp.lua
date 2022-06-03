@@ -96,7 +96,7 @@ capabilities.textDocument.completion.completionItem = {
 
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-local servers = { "pyright", "rust_analyzer", "clangd" }
+local servers = { "pyright", "rust_analyzer", "clangd", "zls" }
 for _, lsp in pairs(servers) do
 	require("lspconfig")[lsp].setup {
 		on_attach = on_attach,

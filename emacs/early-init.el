@@ -35,6 +35,7 @@
 (push '(height . 64) default-frame-alist)
 
 (setq frame-inhibit-implied-resize t)
+(setq frame-resize-pixelwise t)
 
 ;; Loading modes for the scratch buffer can increase startup time.
 (setq initial-major-mode 'fundamental-mode

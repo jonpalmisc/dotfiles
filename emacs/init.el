@@ -148,7 +148,7 @@
 ;; using the `dtrt-indent' package.
 (use-package dtrt-indent
   :commands (dtrt-indent-mode)
-  :hook ((c-mode c++-mode objc-mode) . dtrt-indent-mode))
+  :hook ((c-mode c++-mode objc-mode python-mode) . dtrt-indent-mode))
 
 
 ;;;

@@ -17,6 +17,7 @@ alias emacs "/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias gmacs "open -a Emacs"
 
 alias qpy quick_python
+alias pyhttp "python3 -m http.server"
 
 #===-- Path -----------------------------------------------------------------===
 

@@ -167,6 +167,7 @@
   (display-line-numbers-mode -1))
 
 (use-package org
+  :defer
   ;; Org likes to load LOTS of modules by default, none of which I
   ;; personally need. Org startup time can be significantly improved
   ;; by loading no additional modules.
@@ -255,6 +256,7 @@
   :custom (mc/always-run-for-all t))
 
 (use-package yasnippet
+  :defer
   ;; This package is hard-deferred because immediately enabling its
   ;; global mode defeats the purpose of a `:hook' or `:commands'
   ;; block. Because this is a large package that contributes to
@@ -262,20 +264,17 @@
   :bind ("M-i" . 'yas-insert-snippet)
 
   ;; Prevent the "snippets loaded" message from appearing.
-  :config (advice-add 'yas-global-mode :around 'jp/silence-mb)
-
-  (yas-global-mode))
+  :config (advice-add 'yas-global-mode :around 'jp/silence-mb))
 
 ;; The primary YASnippet package does not include any snippets, only
 ;; the functionality for using them. The default snippet collection is
 ;; shipped separately in this package.
 (use-package yasnippet-snippets
-  :defer 1
+  :defer
   :after yasnippet
   :config (yasnippet-snippets-initialize))
 
 (use-package magit
-  :defer 1
   :commands magit-status
   :config
   ;; Remove expensive sections from the status window.
@@ -348,7 +347,6 @@
 ;; Use `deadgrep' for awesome text search.
 (use-package deadgrep
   :bind ("C-c C-f" . deadgrep))
-
 
 ;; Use tree-sitter for faster and better syntax highlighting.
 (use-package tree-sitter

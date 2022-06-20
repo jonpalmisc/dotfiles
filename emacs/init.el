@@ -303,34 +303,13 @@
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package company
-  :commands (company-complete-common
-             company-complete-common-or-cycle
-             company-manual-begin
-             company-grab-line)
-  :hook (prog-mode . company-mode)
+(use-package corfu
   :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.15)
-  (company-show-numbers nil)
-  (company-tooltip-align-annotations t)
+  (corfu-auto t)
+  (corfu-scroll-margin 2)
 
-  ;; Use case-insensitive completion to make things a bit easier.
-  (completion-ignore-case t)
-
-  ;; Avoid loading a bunch of backends at first. Additional backends
-  ;; will be automatically configured as needed.
-  (company-backends '(company-capf company-dabbrev))
-
-  ;; Restrict `company-dabbrev' completion to words in the current
-  ;; buffer; performance may suffer without this setting when many
-  ;; buffers are open.
-  (company-dabbrev-other-buffers nil)
-
-  ;; Ignore case when suggesting completions for buffer-local words,
-  ;; but retain capitalization on completion commit.
-  (company-dabbrev-ignore-case t)
-  (company-dabbrev-downcase nil))
+  :hook ((prog-mode . corfu-mode))
+  :config (global-corfu-mode))
 
 (use-package eglot
   :hook ((c-mode c++-mode objc-mode python-mode) . eglot-ensure)

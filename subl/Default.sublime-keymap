@@ -1,19 +1,5 @@
 [
   {
-    "keys": ["tab"],
-    "command": "reindent",
-    "args": {
-      "single_line": true
-    }
-  },
-  {
-    "keys": ["shift+tab"],
-    "command": "insert",
-    "args": {
-      "characters": "\t"
-    }
-  },
-  {
     "keys": ["super+shift+l"],
     "command": "show_overlay",
     "args": { "overlay": "command_palette", "text": "LSP: " }

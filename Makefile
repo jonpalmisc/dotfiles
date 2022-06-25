@@ -1,6 +1,7 @@
 RM := rm -fr
 LN := ln -s -f
 
+BN_CONFIG_PATH := ~/Library/Application\ Support/Binary\ Ninja
 EMACS_CONFIG_PATH := ~/.emacs.d
 FISH_CONFIG_PATH := ~/.config/fish
 GIT_CONFIG_PATH := ~/.config/git
@@ -9,10 +10,14 @@ NVIM_CONFIG_PATH := ~/.config/nvim
 SSH_CONFIG_PATH := ~/.ssh/config
 SUBL_CONFIG_PATH := ~/Library/Application\ Support/Sublime\ Text/Packages/User
 
-.PHONY:	emacs fish git hs nvim ssh subl misc
+.PHONY:	bn emacs fish git hs nvim ssh subl misc
 
 all:
 	$(error Targets must be run individually)
+
+bn:
+	$(RM) $(BN_CONFIG_PATH)/startup.py
+	$(LN) `pwd`/$@/startup.py $(BN_CONFIG_PATH)/startup.py
 
 emacs:
 	$(RM) $(EMACS_CONFIG_PATH)

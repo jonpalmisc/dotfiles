@@ -28,6 +28,22 @@ setopt COMPLETE_IN_WORD
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
+
+# Configure basic prompt
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '[%b]'
+
+CUSTOM_PROMPT+=$'\n'	# Newline between commands
+CUSTOM_PROMPT+='%n@%m ' # user@hostname
+CUSTOM_PROMPT+="%~ "	# ~/current/directory
+CUSTOM_PROMPT+='${vcs_info_msg_0_}'
+CUSTOM_PROMPT+=$'\n'
+CUSTOM_PROMPT+="%# "    # '%' or '$' depending on permissions
+
+setopt PROMPT_SUBST
+PROMPT=$CUSTOM_PROMPT
+
 typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc ${ZDOTDIR:-~}/antigen.zsh)
 source $ZDOTDIR/antigen.zsh
 

@@ -1,3 +1,5 @@
+# ===-- General -------------------------------------------------------------===
+
 # Use help system
 unalias run-help
 autoload run-help
@@ -36,20 +38,35 @@ setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
-# Configure basic prompt
+# ===-- Prompt --------------------------------------------------------------===
+
+autoload colors && colors
 autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '[%b]'
 
-CUSTOM_PROMPT+=$'\n'	# Newline between commands
-CUSTOM_PROMPT+='%n@%m ' # user@hostname
-CUSTOM_PROMPT+="%~ "	# ~/current/directory
-CUSTOM_PROMPT+='${vcs_info_msg_0_}'
+# Newline between commends, username and hostname
 CUSTOM_PROMPT+=$'\n'
-CUSTOM_PROMPT+="%# "    # '%' or '$' depending on permissions
+CUSTOM_PROMPT+='%n@%m '
+
+# Current directory
+CUSTOM_PROMPT+="%F{magenta}"
+CUSTOM_PROMPT+="%~ "
+CUSTOM_PROMPT+="%F{reset}"
+
+# Git info
+CUSTOM_PROMPT+="%F{green}"
+CUSTOM_PROMPT+='${vcs_info_msg_0_}'
+CUSTOM_PROMPT+="%F{reset}"
+
+# Prompt character, '%' or '#' depending on permissions
+CUSTOM_PROMPT+=$'\n'
+CUSTOM_PROMPT+="%# "
 
 setopt PROMPT_SUBST
 PROMPT=$CUSTOM_PROMPT
+
+# ===-- Packages ------------------------------------------------------------===
 
 # Disable Antigen's caching since it breaks with custom ZDOTDIR
 ANTIGEN_CACHE=false

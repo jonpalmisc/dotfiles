@@ -13,6 +13,10 @@ setopt HIST_SAVE_NO_DUPS
 # Use canonical line editing
 bindkey -e
 
+# Use Emacs-style word definitions
+autoload -Uz select-word-style
+select-word-style bash
+
 # Use completion system
 autoload -Uz compinit; compinit
 _comp_options+=(globdots)

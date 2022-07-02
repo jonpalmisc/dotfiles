@@ -4,7 +4,27 @@
     "command": "show_overlay",
     "args": { "overlay": "command_palette", "text": "LSP: " }
   },
+  {
+    "keys": ["ctrl+c", "ctrl+f"],
+    "command": "show_panel",
+    "args": { "panel": "find_in_files" }
+  },
   // ===-- LSP --------------------------------------------------------------===
+
+  {
+    "keys": ["alt+."],
+    "command": "lsp_symbol_declaration",
+  },
+  {
+    "keys": ["alt+shift+/"],
+    "command": "lsp_symbol_references",
+  },
+    {
+    "keys": ["alt+shift+'"],
+    "command": "lsp_hover"
+  },
+
+
   {
     "keys": ["ctrl+;", "f"],
     "command": "lsp_document_symbols"
@@ -25,8 +45,5 @@
     "keys": ["ctrl+;", "R"],
     "command": "lsp_symbol_references"
   },
-  {
-    "keys": ["ctrl+shift+/"],
-    "command": "lsp_hover"
-  }
+
 ]

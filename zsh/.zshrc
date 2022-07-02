@@ -44,8 +44,10 @@ CUSTOM_PROMPT+="%# "    # '%' or '$' depending on permissions
 setopt PROMPT_SUBST
 PROMPT=$CUSTOM_PROMPT
 
-typeset -a ANTIGEN_CHECK_FILES=(${ZDOTDIR:-~}/.zshrc ${ZDOTDIR:-~}/antigen.zsh)
+# Disable Antigen's caching since it breaks with custom ZDOTDIR
+ANTIGEN_CACHE=false
 source $ZDOTDIR/antigen.zsh
 
 antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-autosuggestions
 antigen apply

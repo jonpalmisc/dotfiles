@@ -5,9 +5,6 @@ unalias run-help
 autoload run-help
 alias help=run-help
 
-# Configure common aliases
-alias ll='ls -la --color'
-alias g='git'
 
 # Don't save duplicate history entries
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -37,6 +34,15 @@ setopt COMPLETE_IN_WORD
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
+
+# ===-- Aliases -------------------------------------------------------------===
+
+alias ll='ls -la --color'
+alias g='git'
+
+alias gmacs='open -a Emacs'
+alias binja='open -a Binary\ Ninja'
+alias ida='open -a ida64'
 
 # ===-- Prompt --------------------------------------------------------------===
 

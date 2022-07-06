@@ -5,7 +5,6 @@ unalias run-help
 autoload run-help
 alias help=run-help
 
-
 # Don't save duplicate history entries
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_ALL_DUPS
@@ -39,6 +38,18 @@ setopt PUSHD_SILENT
 
 alias ll='ls -la --color'
 alias g='git'
+
+alias untar='tar -xvf'
+alias tarxz='tar -cvJf'
+tarxz-dir() {
+	tarxz $(basename $1).tar.xz $1
+}
+
+alias aes256encrypt='gpg --symmetric --cipher-algo AES256'
+aes256decrypt() {
+	local file="$1"
+	gpg --decrypt --cipher-algo AES256 -o "${file%.*}" "$1"
+}
 
 alias gmacs='open -a Emacs'
 alias binja='open -a Binary\ Ninja'

@@ -39,21 +39,32 @@ setopt PUSHD_SILENT
 alias ll='ls -la --color'
 alias g='git'
 
-alias untar='tar -xvf'
-alias tarxz='tar -cvJf'
-tarxz-dir() {
-	tarxz $(basename $1).tar.xz $1
-}
-
-alias aes256encrypt='gpg --symmetric --cipher-algo AES256'
-aes256decrypt() {
+# Archive and XZ compress a file or directory
+,xz() {
 	local file="$1"
-	gpg --decrypt --cipher-algo AES256 -o "${file%.*}" "$1"
+	tar -cvJf "${file%.*}.tar.xz" "$file"
 }
 
-alias gmacs='open -a Emacs'
-alias binja='open -a Binary\ Ninja'
-alias ida='open -a ida64'
+# Encrypt a file with AES-256 using a passphrase
+,encrypt() {
+	local file="$1"
+	gpg --symmetric --cipher-algo AES256 "$file" && rm -i "$file"
+}
+
+# Decrypt a file formerly encrypted with AES-256 and passphrase
+,decrypt() {
+	local file="$1"
+	gpg --decrypt --cipher-algo AES256 -o "${file%.*}" "$file" && rm -i "$file"
+}
+
+# Open graphical Emacs on macOS
+alias ,gmacs='open -a Emacs'
+
+# Open Binary Ninja on macOS
+alias ,binja='open -a Binary\ Ninja'
+
+# Open IDA on macOS
+alias ,ida='open -a ida64'
 
 # ===-- Prompt --------------------------------------------------------------===
 

@@ -9,41 +9,36 @@
     "command": "show_panel",
     "args": { "panel": "find_in_files" }
   },
+  {
+    "keys": ["ctrl+c", "ctrl+r"],
+    "command": "show_panel",
+    "args": { "panel": "replace" }
+  },
+  {
+    "keys": ["ctrl+x", "ctrl+g"],
+    "command": "sublime_merge_open_repo"
+  },
+
   // ===-- LSP --------------------------------------------------------------===
 
   {
     "keys": ["alt+."],
-    "command": "lsp_symbol_declaration",
+    "command": "lsp_symbol_declaration"
   },
   {
     "keys": ["alt+shift+/"],
-    "command": "lsp_symbol_references",
+    "command": "lsp_symbol_references"
   },
-    {
+  {
     "keys": ["alt+shift+'"],
     "command": "lsp_hover"
-  },
-
-
-  {
-    "keys": ["ctrl+;", "f"],
-    "command": "lsp_document_symbols"
-  },
-  {
-    "keys": ["ctrl+;", "F"],
-    "command": "lsp_workspace_symbols"
   },
   {
     "keys": ["ctrl+;", "r"],
     "command": "lsp_symbol_rename"
   },
   {
-    "keys": ["ctrl+;", "d"],
-    "command": "lsp_symbol_declaration"
-  },
-  {
-    "keys": ["ctrl+;", "R"],
-    "command": "lsp_symbol_references"
-  },
-
+    "keys": ["ctrl+;", "a"],
+    "command": "lsp_code_actions"
+  }
 ]

@@ -1,3 +1,14 @@
+# ===-- Path ----------------------------------------------------------------===
+
+# Add an item to the path if it exists
+path_prepend() {
+	[ -d "$1" ] && path=($1 $path)
+}
+
+typeset -U path
+path_prepend "/opt/local/bin"
+path_prepend "$HOME/.cargo/bin"
+
 # ===-- General -------------------------------------------------------------===
 
 # Use help system

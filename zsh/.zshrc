@@ -98,9 +98,9 @@ CUSTOM_PROMPT+="%F{green}"
 CUSTOM_PROMPT+='${vcs_info_msg_0_}'
 CUSTOM_PROMPT+="%F{reset}"
 
-# Prompt character, '%' or '#' depending on permissions
+# Prompt character, ';' or '#' depending on permissions
 CUSTOM_PROMPT+=$'\n'
-CUSTOM_PROMPT+="%# "
+CUSTOM_PROMPT+="%(!.#.;) "
 
 setopt PROMPT_SUBST
 PROMPT=$CUSTOM_PROMPT

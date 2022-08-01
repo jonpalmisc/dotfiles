@@ -9,6 +9,8 @@ typeset -U path
 path_prepend "/opt/local/bin"
 path_prepend "$HOME/.cargo/bin"
 
+path_prepend "/Applications/Emacs.app/Contents/MacOS"
+
 # ===-- General -------------------------------------------------------------===
 
 # Use help system

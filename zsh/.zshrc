@@ -50,6 +50,9 @@ setopt PUSHD_SILENT
 alias ll='ls -la --color'
 alias g='git'
 
+# Start a local HTTP server with Python 3
+alias ,http='python3 -m http.server'
+
 # Archive and XZ compress a file or directory
 ,xz() {
 	local file="$1"

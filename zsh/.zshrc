@@ -52,6 +52,13 @@ setopt PUSHD_SILENT
 alias ll='ls -la --color'
 alias g='git'
 
+# Aliases for opening applications on macOS
+alias gmacs='open -a Emacs'
+alias binja='open -a Binary\ Ninja'
+alias ida='open -a ida64'
+
+# ===-- Custom commands -----------------------------------------------------===
+
 # Start a local HTTP server with Python 3
 alias ,http='python3 -m http.server'
 
@@ -72,15 +79,6 @@ alias ,http='python3 -m http.server'
 	local file="$1"
 	gpg --decrypt --cipher-algo AES256 -o "${file%.*}" "$file" && rm -i "$file"
 }
-
-# Open graphical Emacs on macOS
-alias ,gmacs='open -a Emacs'
-
-# Open Binary Ninja on macOS
-alias ,binja='open -a Binary\ Ninja'
-
-# Open IDA on macOS
-alias ,ida='open -a ida64'
 
 # ===-- Prompt --------------------------------------------------------------===
 

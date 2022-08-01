@@ -52,6 +52,8 @@ setopt PUSHD_SILENT
 alias ll='ls -la --color'
 alias g='git'
 
+alias emacs='emacs -nw'
+
 # Aliases for opening applications on macOS
 alias gmacs='open -a Emacs'
 alias binja='open -a Binary\ Ninja'

@@ -14,10 +14,11 @@ map("n", "<C-l>", ":noh<CR>zz", opts) -- Center line and clear highlight
 vim.cmd [[
 augroup jp_git_rebase
 	autocmd!
-	autocmd FileType gitrebase nnoremap <buffer> <localleader>p :Pick<CR>
-	autocmd FileType gitrebase nnoremap <buffer> <localleader>r :Reword<CR>
-	autocmd FileType gitrebase nnoremap <buffer> <localleader>e :Edit<CR>
-	autocmd FileType gitrebase nnoremap <buffer> <localleader>s :Squash<CR>
-	autocmd FileType gitrebase nnoremap <buffer> <localleader>d :Drop<CR>
+	autocmd FileType gitrebase nnoremap <buffer> p :Pick<CR>
+	autocmd FileType gitrebase nnoremap <buffer> r :Reword<CR>
+	autocmd FileType gitrebase nnoremap <buffer> e :Edit<CR>
+	autocmd FileType gitrebase nnoremap <buffer> s :Squash<CR>
+	autocmd FileType gitrebase nnoremap <buffer> f :Fixup<CR>
+	autocmd FileType gitrebase nnoremap <buffer> d :Drop<CR>
 augroup END
 ]]

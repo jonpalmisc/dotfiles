@@ -85,14 +85,17 @@ alias ,ida='open -a ida64'
 autoload colors && colors
 autoload -Uz vcs_info
 precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '[%b]'
+zstyle ':vcs_info:git:*' formats '%b'
 
 # Newline between commends, username and hostname
 CUSTOM_PROMPT+=$'\n'
-CUSTOM_PROMPT+='%n@%m '
+CUSTOM_PROMPT+="%F{magenta}"
+CUSTOM_PROMPT+='%n@%m'
+CUSTOM_PROMPT+="%F{reset}"
+CUSTOM_PROMPT+=':'
 
 # Current directory
-CUSTOM_PROMPT+="%F{magenta}"
+CUSTOM_PROMPT+="%F{blue}"
 CUSTOM_PROMPT+="%~ "
 CUSTOM_PROMPT+="%F{reset}"
 
@@ -106,7 +109,7 @@ CUSTOM_PROMPT+=$'\n'
 CUSTOM_PROMPT+="%(!.#.;) "
 
 setopt PROMPT_SUBST
-PROMPT=$CUSTOM_PROMPT
+PROMPT="$CUSTOM_PROMPT"
 
 # ===-- Packages ------------------------------------------------------------===
 

@@ -166,17 +166,13 @@
   (display-fill-column-indicator-mode -1)
   (display-line-numbers-mode -1))
 
+;; Org likes to load lots of modules by default; startup time can be
+;; significantly improved by not loading these. Org is also deferred
+;; here to save even more time on startup since I use it infrequently.
 (use-package org
   :defer
-  ;; Org likes to load LOTS of modules by default, none of which I
-  ;; personally need. Org startup time can be significantly improved
-  ;; by loading no additional modules.
   :preface (defvar org-modules '())
-
-  ;; Enable indentation by default in Org buffers.
   :custom (org-startup-indented t)
-
-  ;; Auto-wrap text while typing in Org buffers.
   :hook ((org-mode . turn-on-auto-fill)
          (org-mode . jp/config-org-appearance)))
 
@@ -198,15 +194,6 @@
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode))
 
-(use-package clojure-mode
-  :mode ("\\.clj\\'" . clojure-mode))
-
-(use-package fennel-mode
-  :mode ("\\.fnl\\'" . fennel-mode))
-
-(use-package fish-mode
-  :mode ("\\.fish\\'" . fish-mode))
-
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode)
   :hook (rust-mode . eglot-ensure))
@@ -218,18 +205,17 @@
   (zig-format-on-save nil)
   (zig-format-show-buffer nil))
 
-(use-package json-mode
-  :mode ("\\.json\\'" . json-mode))
-
 (use-package lua-mode
   :mode ("\\.lua\\'" . lua-mode))
+
+(use-package json-mode
+  :mode ("\\.json\\'" . json-mode))
 
 (use-package yaml-mode
   :mode ("\\.yml\\'" . yaml-mode))
 
 ;; Needed for indirect editing via `markdown-mode'
-(use-package edit-indirect
-  :defer)
+(use-package edit-indirect :defer)
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
@@ -249,35 +235,13 @@
 ;;; --- IDE Features -------------------------------------------------
 ;;;
 
-
-(use-package multiple-cursors
-  :commands mc/mark-next-like-this
-  :bind ("C->" . 'mc/mark-next-like-this)
-  :custom (mc/always-run-for-all t))
-
-(use-package yasnippet
-  :defer
-  ;; This package is hard-deferred because immediately enabling its
-  ;; global mode defeats the purpose of a `:hook' or `:commands'
-  ;; block. Because this is a large package that contributes to
-  ;; startup times, simply load it 1 second after startup is complete.
-  :bind ("M-i" . 'yas-insert-snippet)
-
-  ;; Prevent the "snippets loaded" message from appearing.
-  :config (advice-add 'yas-global-mode :around 'jp/silence-mb))
-
-;; The primary YASnippet package does not include any snippets, only
-;; the functionality for using them. The default snippet collection is
-;; shipped separately in this package.
-(use-package yasnippet-snippets
-  :defer
-  :after yasnippet
-  :config (yasnippet-snippets-initialize))
-
 (use-package magit
   :commands magit-status
   :config
-  ;; Remove expensive sections from the status window.
+
+  ;; Some sections in Magit's status output are particularly expensive
+  ;; to compute. Disabling them results in the status buffer opening
+  ;; more quickly.
   (remove-hook 'magit-status-sections-hook 'magit-insert-tags-header)
   (remove-hook 'magit-status-sections-hook 'magit-insert-merge-log)
   (remove-hook 'magit-status-sections-hook 'magit-insert-stashes)
@@ -303,125 +267,18 @@
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1))
 
-(use-package company
-  :commands (company-complete-common
-             company-complete-common-or-cycle
-             company-manual-begin
-             company-grab-line)
-  :hook (prog-mode . company-mode)
-  :custom
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0.15)
-  (company-show-numbers nil)
-  (company-tooltip-align-annotations t)
-
-  ;; Use case-insensitive completion to make things a bit easier.
-  (completion-ignore-case t)
-
-  ;; Avoid loading a bunch of backends at first. Additional backends
-  ;; will be automatically configured as needed.
-  (company-backends '(company-capf company-dabbrev))
-
-  ;; Restrict `company-dabbrev' completion to words in the current
-  ;; buffer; performance may suffer without this setting when many
-  ;; buffers are open.
-  (company-dabbrev-other-buffers nil)
-
-  ;; Ignore case when suggesting completions for buffer-local words,
-  ;; but retain capitalization on completion commit.
-  (company-dabbrev-ignore-case t)
-  (company-dabbrev-downcase nil))
-
 (use-package eglot
   :hook ((c-mode c++-mode objc-mode python-mode) . eglot-ensure)
   :custom
   (eglot-sync-connect nil)
   (eglot-highlight-symbol-face highlight)
-  (eglot-ignored-server-capabilities '(:hoverProvider))
+  ;; (eglot-ignored-server-capabilities '(:hoverProvider))
   :bind (("C-; r" . eglot-rename)
-	 ;; ("M-." . xref-find-definitions) [default]
-	 ;; ("M-?" . xref-find-references)  [default]
-	 ;; ("C-h ." . eldoc)               [default]
 	 ("C-; a" . eglot-code-actions)))
 
 ;; Use `deadgrep' for awesome text search.
 (use-package deadgrep
   :bind ("C-c C-f" . deadgrep))
-
-;; Use tree-sitter for faster and better syntax highlighting.
-(use-package tree-sitter
-  :hook (tree-sitter-after-on . tree-sitter-hl-mode)
-  :config (global-tree-sitter-mode))
-
-;; Download tree-sitter language packs.
-(use-package tree-sitter-langs
-  :defer 1
-  ;; Prevent the "languages already installed" message from appearing.
-  :config (advice-add 'tree-sitter-langs-install-grammars
-		      :around 'jp/silence-mb))
-
-
-;;;
-;;; --- Personal -----------------------------------------------------
-;;;
-
-
-(defun jp/open-in-ns-terminal ()
-  "Open the current working directory in Terminal on macOS."
-  (interactive)
-  (shell-command (concat "open -a Terminal " default-directory)))
-
-(defun jp/open-in-ns-finder ()
-  "Open the current working directory in Finder on macOS."
-  (interactive)
-  (shell-command (concat "open " default-directory)))
-
-(defun jp/format-git-issue-link ()
-  "Format a Git issue link in <org>/<repo>#<number> format."
-  (interactive)
-
-  (insert
-   (s-replace "/issues/" "#"
-	      (replace-regexp-in-string ".+com/" ""
-					(read-string "Issue link: ")))))
-
-(setq jp/clang-format-styles
-      '("LLVM" "Google" "Chromium" "Mozilla" "WebKit" "Microsoft" "GNU"))
-
-(defun jp/clang-format ()
-  "Format the current buffer in place using clang-format."
-  (interactive)
-
-  ;; Save a reference to the current buffer, as well as the point and
-  ;; window start positions before formatting.
-  (let ((input-buffer (current-buffer))
-        (saved-point (point))
-        (saved-window-start (window-start))
-
-        ;; Create a temporary buffer and file for use in formatting.
-        (temp-buffer (generate-new-buffer "*jp-clang-format*"))
-        (temp-file (make-temp-file "jp-clang-format"))
-
-        ;; Prompt for the format style to use.
-        (format (completing-read "Format style: " jp/clang-format-styles)))
-
-    ;; Run clang-format on the content of the current buffer.
-    (call-process-region
-     nil nil "clang-format" nil `(,temp-buffer ,temp-file) nil
-     (concat "--style=" format))
-
-    ;; Replace the contents of the input buffer with its formatted
-    ;; equivalent produced by clang-format.
-    (with-current-buffer temp-buffer
-      (copy-to-buffer input-buffer (point-min) (point-max)))
-
-    ;; Restore the point and window positions to their previous values.
-    (goto-char saved-point)
-    (set-window-start (selected-window) saved-window-start)
-
-    ;; Remove the temporary file and buffer used during formatting.
-    (delete-file temp-file)
-    (when (buffer-name temp-buffer) (kill-buffer temp-buffer))))
 
 
 ;;;
@@ -483,6 +340,60 @@
       modus-themes-syntax '(faint alt-syntax))
 
 (load-theme 'modus-vivendi)
+
+
+;;;
+;;; --- Personal -----------------------------------------------------
+;;;
+
+
+(defun jp/open-in-ns-terminal ()
+  "Open the current working directory in Terminal on macOS."
+  (interactive)
+  (shell-command (concat "open -a Terminal " default-directory)))
+
+(defun jp/open-in-ns-finder ()
+  "Open the current working directory in Finder on macOS."
+  (interactive)
+  (shell-command (concat "open " default-directory)))
+
+(setq jp/clang-format-styles
+      '("LLVM" "Google" "Chromium" "Mozilla" "WebKit" "Microsoft" "GNU"))
+
+(defun jp/clang-format ()
+  "Format the current buffer in place using clang-format."
+  (interactive)
+
+  ;; Save a reference to the current buffer, as well as the point and
+  ;; window start positions before formatting.
+  (let ((input-buffer (current-buffer))
+        (saved-point (point))
+        (saved-window-start (window-start))
+
+        ;; Create a temporary buffer and file for use in formatting.
+        (temp-buffer (generate-new-buffer "*jp-clang-format*"))
+        (temp-file (make-temp-file "jp-clang-format"))
+
+        ;; Prompt for the format style to use.
+        (format (completing-read "Format style: " jp/clang-format-styles)))
+
+    ;; Run clang-format on the content of the current buffer.
+    (call-process-region
+     nil nil "clang-format" nil `(,temp-buffer ,temp-file) nil
+     (concat "--style=" format))
+
+    ;; Replace the contents of the input buffer with its formatted
+    ;; equivalent produced by clang-format.
+    (with-current-buffer temp-buffer
+      (copy-to-buffer input-buffer (point-min) (point-max)))
+
+    ;; Restore the point and window positions to their previous values.
+    (goto-char saved-point)
+    (set-window-start (selected-window) saved-window-start)
+
+    ;; Remove the temporary file and buffer used during formatting.
+    (delete-file temp-file)
+    (when (buffer-name temp-buffer) (kill-buffer temp-buffer))))
 
 
 ;;; ------------------------------------------------------------------

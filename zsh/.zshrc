@@ -120,3 +120,8 @@ source $ZDOTDIR/antigen.zsh
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-autosuggestions
 antigen apply
+
+# ===-- Tool-specific setup -------------------------------------------------===
+
+# Opam
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1

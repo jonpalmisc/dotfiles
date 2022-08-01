@@ -466,7 +466,7 @@
 ;; Configure UI font
 (defun jp/config-mono-font ()
   "Set the default font if it is available."
-  (setq jp/mono-font "Go Mono")
+  (setq jp/mono-font "Berkeley Mono Variable")
   (when (member jp/mono-font (font-family-list))
     (set-face-attribute 'default nil :font jp/mono-font)
     (set-face-attribute 'fixed-pitch nil :font jp/mono-font)))
@@ -482,13 +482,7 @@
       modus-themes-region '(bg-only)
       modus-themes-syntax '(faint alt-syntax))
 
-;; Use light theme when in graphical mode, dark theme in terminal.
-(if (display-graphic-p)
-    (load-theme 'modus-operandi)
-  (load-theme 'modus-vivendi))
-
-;; Make the mode line mode minimal
-(setq-default mode-line-format "%* %b %l:%c")
+(load-theme 'modus-vivendi)
 
 
 ;;; ------------------------------------------------------------------

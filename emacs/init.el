@@ -272,9 +272,16 @@
   :custom
   (eglot-sync-connect nil)
   (eglot-highlight-symbol-face highlight)
-  ;; (eglot-ignored-server-capabilities '(:hoverProvider))
+  (eglot-ignored-server-capabilities '(:hoverProvider))
   :bind (("C-; r" . eglot-rename)
 	 ("C-; a" . eglot-code-actions)))
+
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  (corfu-scroll-margin 2)
+
+  :hook ((prog-mode . corfu-mode)))
 
 ;; Use `deadgrep' for awesome text search.
 (use-package deadgrep

@@ -76,6 +76,12 @@ alias ida='open -a ida64'
 
 # ===-- Custom commands -----------------------------------------------------===
 
+# Highlight error outpur red
+,color() {
+    set -o pipefail
+    "$@" 2> >(sed $'s,.*,\e[31m&\e[m,'>&2)
+}
+
 # Start a local HTTP server with Python 3
 alias ,http='python3 -m http.server'
 

@@ -15,7 +15,7 @@
     "args": { "panel": "replace" }
   },
   {
-    "keys": ["ctrl+x", "ctrl+g"],
+    "keys": ["ctrl+x", "g"],
     "command": "sublime_merge_open_repo"
   },
 

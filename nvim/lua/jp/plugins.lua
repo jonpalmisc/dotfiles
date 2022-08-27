@@ -26,6 +26,8 @@ packer.startup(function(use)
 	use "tpope/vim-sleuth"
 	use "terrortylor/nvim-comment"
 
+	use "neovim/nvim-lspconfig"
+
 	if IS_FRESH_INSTALL then
 		require("packer").sync()
 	end

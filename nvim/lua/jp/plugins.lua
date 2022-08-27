@@ -1,4 +1,4 @@
---===-- jp/plugins.lua ---------------------------------------------------------
+--==--{ plugins.lua - Plugin manager and dependency setup }---------------------
 
 local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -14,57 +14,17 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 	vim.cmd [[packadd packer.nvim]]
 end
 
---===---------------------------------------------------------------------------
-
 local ok, packer = pcall(require, "packer")
 if not ok then
 	return
 end
 
-return packer.startup(function(use)
+packer.startup(function(use)
 	use "wbthomason/packer.nvim"
-
-	-- mod/editor ----------------------------------------------------------
 
 	use "windwp/nvim-autopairs"
 	use "tpope/vim-sleuth"
 	use "terrortylor/nvim-comment"
-
-	-- mod/completion ------------------------------------------------------
-
-	use "hrsh7th/nvim-cmp"
-	use "hrsh7th/cmp-buffer"
-	use "hrsh7th/cmp-path"
-	use "hrsh7th/cmp-cmdline"
-	use "hrsh7th/cmp-nvim-lsp"
-	use "saadparwaiz1/cmp_luasnip"
-
-	use "L3MON4D3/LuaSnip"
-
-	-- mod/lsp -------------------------------------------------------------
-
-	use "neovim/nvim-lspconfig"
-
-	-- mod/ui --------------------------------------------------------------
-
-	use "mhartington/oceanic-next"
-	use "nvim-lualine/lualine.nvim"
-	use "RRethy/nvim-base16"
-
-	use {
-		"nvim-telescope/telescope.nvim",
-		requires = { { "nvim-lua/plenary.nvim" } },
-	}
-	-- mod/treesitter ------------------------------------------------------
-
-	use {
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-	}
-
-	-- startup -------------------------------------------------------------
-
-	use "lewis6991/impatient.nvim"
 
 	if IS_FRESH_INSTALL then
 		require("packer").sync()

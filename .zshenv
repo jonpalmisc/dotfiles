@@ -1,4 +1,4 @@
 export ZDOTDIR="$HOME/.zshconfig"
 
-export EDITOR="emacs -nw"
+export EDITOR="nvim"
 export VISUAL="$EDITOR"

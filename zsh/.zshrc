@@ -69,6 +69,8 @@ alias g='git'
 
 alias emacs='emacs -nw'
 
+alias lldbr='lldb -o run'
+
 # Aliases for opening applications on macOS
 alias gmacs='open -a Emacs'
 alias binja='open -a Binary\ Ninja'

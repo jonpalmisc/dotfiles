@@ -6,13 +6,18 @@
       "enabled": true,
       "command": [
         "clangd",
-        "--clang-tidy",
+        "--index",
         "--header-insertion-decorators",
         "--inlay-hints"
       ]
     },
     "rust-analyzer": {
       "enabled": true
+    },
+    "zig": {
+      "command": ["zls"],
+      "enabled": true,
+      "selector": "source.zig"
     }
   }
 }

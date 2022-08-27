@@ -1,13 +1,11 @@
---===-- init.lua ---------------------------------------------------------------
+--==--{ init.lua - Root configuration file }------------------------------------
 
-require "jp.options"
-require "jp.keymaps"
-require "jp.plugins"
 require "jp.startup"
 
-require "jp.mod.editor"
-require "jp.mod.treesitter"
-require "jp.mod.completion"
-require "jp.mod.lsp"
-require "jp.mod.telescope"
-require "jp.mod.ui"
+require "jp.program"
+require "jp.plugins"
+
+require "jp.editor"
+require "jp.ide"
+
+require "jp.bindings"

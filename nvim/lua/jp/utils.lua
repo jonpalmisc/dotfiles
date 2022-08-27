@@ -1,3 +1,5 @@
+--==--{ utils.lua - Shorthands and convenience functions }----------------------
+
 local M = {}
 
 function M.map(mode, lhs, rhs, opts)

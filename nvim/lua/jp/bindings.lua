@@ -1,10 +1,9 @@
---===-- jp/keymaps.lua ---------------------------------------------------------
+--==--{ bindings.lua - Key bindings for built-in and plugin operations }--------
 
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap
 
-vim.g.mapleader = ";"
-vim.g.maplocalleader = ";"
+-- NOTE: Leader keys are configured early in 'program.lua'.
 
 map("n", "<A-k>", ":m .-2<CR>==", opts) -- Swap line up
 map("n", "<A-j>", ":m .+1<CR>==", opts) -- Swap line down

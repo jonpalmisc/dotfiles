@@ -27,6 +27,10 @@ packer.startup(function(use)
 	use "terrortylor/nvim-comment"
 
 	use "neovim/nvim-lspconfig"
+	use {
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+	}
 
 	if IS_FRESH_INSTALL then
 		require("packer").sync()

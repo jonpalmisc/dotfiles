@@ -32,6 +32,8 @@ packer.startup(function(use)
 		run = ":TSUpdate",
 	}
 
+	use "lewis6991/impatient.nvim"
+
 	if IS_FRESH_INSTALL then
 		require("packer").sync()
 	end

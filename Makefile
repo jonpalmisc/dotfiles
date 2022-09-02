@@ -5,13 +5,14 @@ BN_CONFIG_PATH := ~/Library/Application\ Support/Binary\ Ninja
 EMACS_CONFIG_PATH := ~/.emacs.d
 FISH_CONFIG_PATH := ~/.config/fish
 GIT_CONFIG_PATH := ~/.config/git
+IDA_CONFIG_PATH := ~/.idapro
 HS_CONFIG_PATH := ~/.hammerspoon
 NVIM_CONFIG_PATH := ~/.config/nvim
 SSH_CONFIG_PATH := ~/.ssh/config
 SUBL_CONFIG_PATH := ~/Library/Application\ Support/Sublime\ Text/Packages/User
 ZSH_CONFIG_PATH := ~/.zshconfig
 
-.PHONY:	bn emacs fish git hs nvim ssh subl zsh misc
+.PHONY:	bn emacs fish git ida hs nvim ssh subl zsh misc
 
 all:
 	$(error Targets must be run individually)
@@ -36,6 +37,12 @@ git:
 	$(LN) `pwd`/git/ignore $(GIT_CONFIG_PATH)/ignore
 
 	$(LN) `pwd`/git/templates $(GIT_CONFIG_PATH)/templates
+
+ida:
+	$(RM) $(IDA_CONFIG_PATH)/cfg
+	mkdir -p $(IDA_CONFIG_PATH)
+
+	$(LN) `pwd`/ida/cfg $(IDA_CONFIG_PATH)/cfg
 
 hs:
 	$(RM) $(HS_CONFIG_PATH)

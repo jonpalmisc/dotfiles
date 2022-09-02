@@ -24,6 +24,8 @@
   "tab_size": 8,
   "use_tab_stops": true,
 
+  "tab_completion": false,
+
   // --- Behavior --------------------------------------------------------------
 
   "ensure_newline_at_eof_on_save": true,

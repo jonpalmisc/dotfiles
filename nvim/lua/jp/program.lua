@@ -48,3 +48,7 @@ local disabled_plugins = {
 for _, plugin in pairs(disabled_plugins) do
 	vim.g["loaded_" .. plugin] = 1
 end
+
+-- Configure (local) leader before any plugins or other files use it
+vim.g.mapleader = ";"
+vim.g.maplocalleader = ";"

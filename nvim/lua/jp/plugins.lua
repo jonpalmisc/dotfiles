@@ -40,6 +40,11 @@ packer.startup(function(use)
 		run = ":TSUpdate",
 	}
 
+	use {
+		"nvim-telescope/telescope.nvim",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	}
+
 	use "lewis6991/impatient.nvim"
 
 	if IS_FRESH_INSTALL then

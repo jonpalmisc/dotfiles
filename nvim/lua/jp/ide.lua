@@ -89,7 +89,7 @@ if not ok then
 	return
 end
 
-local compare = require('cmp.config.compare')
+local compare = require "cmp.config.compare"
 
 local ok, luasnip = pcall(require, "luasnip")
 if not ok then
@@ -97,7 +97,7 @@ if not ok then
 end
 
 -- Custom format function to limit dialog width
-local format = function (entry, item)
+local format = function(entry, item)
 	local MIN_WIDTH = 16
 	local MAX_WIDTH = 32
 
@@ -105,9 +105,9 @@ local format = function (entry, item)
 
 	local truncated_label = vim.fn.strcharpart(label, 0, MAX_WIDTH)
 	if truncated_label ~= label then
-		item.abbr = truncated_label .. '…'
+		item.abbr = truncated_label .. "…"
 	elseif string.len(label) < MIN_WIDTH then
-		local padding = string.rep(' ', MIN_WIDTH - string.len(label))
+		local padding = string.rep(" ", MIN_WIDTH - string.len(label))
 		item.abbr = label .. padding
 	end
 
@@ -119,7 +119,7 @@ cmp.setup {
 		entries = "native",
 	},
 	formatting = {
-		format = format
+		format = format,
 	},
 	snippet = {
 		expand = function(args)
@@ -188,3 +188,67 @@ treesitter.setup {
 	highlight = { enable = true },
 	indent = { enable = true, disable = { "yaml" } },
 }
+
+--==----------------------------------------------------------------------------
+
+local ok, telescope = pcall(require, "telescope")
+
+if not ok then
+	return
+end
+
+local mappings = {
+	i = {
+		-- Quit the prompt with a single press of <ESC>
+		["<ESC>"] = require("telescope.actions").close,
+	},
+}
+
+local defaults = {
+	mappings = mappings,
+
+	-- Use 'ripgrep' for grep-like activity
+	vimgrep_arguments = {
+		"rg",
+		"--color=never",
+		"--no-heading",
+		"--with-filename",
+		"--line-number",
+		"--column",
+		"--smart-case",
+	},
+
+	-- Hide caret on selected result (highlight is enough)
+	selection_caret = "  ",
+
+	-- Hide preview and prompt/results titles
+	preview = false,
+	prompt_title = false,
+	results_title = false,
+
+	-- Place chooser at the bottom of the screen, Ivy-like
+	layout_strategy = "bottom_pane",
+
+	-- Limit chooser height and place the prompt at the bottom
+	layout_config = {
+		height = 10,
+		prompt_position = "bottom",
+	},
+	storting_strategy = "ascending",
+
+	-- Hide certain border elements to match Ivy-style appearance
+	borderchars = {
+		prompt = { " ", " ", "─", " ", " ", " ", "─", "─" },
+		results = { "─", " ", " ", " ", "─", "─", " ", " " },
+	},
+}
+
+telescope.setup {
+	defaults = defaults,
+}
+
+local map = require("jp.utils").map
+
+map("n", "<leader>fb", "<cmd> :Telescope buffers <CR>")
+map("n", "<leader>ff", "<cmd> :Telescope find_files <CR>")
+map("n", "<leader>fw", "<cmd> :Telescope live_grep <CR>")

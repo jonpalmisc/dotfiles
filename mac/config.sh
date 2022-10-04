@@ -43,3 +43,7 @@ defaults write com.apple.Safari IncludeDevelopMenu -bool true
 
 # Don't open files (read: unzip archives) upon download completion
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+
+# Prevent popups when devices in DFU mode are connected
+defaults write -g ignore-devices -bool true
+defaults write com.apple.AMPDevicesAgent dontAutomaticallySyncIPods -bool true

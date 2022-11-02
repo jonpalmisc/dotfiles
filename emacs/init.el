@@ -337,17 +337,6 @@
 
 (jp/config-mono-font)
 
-;; Configure appearance for the Modus theme family.
-(setq modus-themes-italic-constructs t
-      modus-themes-mixed-fonts nil
-      modus-themes-variable-pitch-ui nil
-      modus-themes-org-blocks 'gray-background
-      modus-themes-mode-line '(borderless)
-      modus-themes-region '(bg-only)
-      modus-themes-syntax '(faint alt-syntax))
-
-(load-theme 'modus-vivendi)
-
 
 ;;;
 ;;; --- Personal -----------------------------------------------------

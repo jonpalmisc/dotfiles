@@ -354,7 +354,7 @@
   (shell-command (concat "open " default-directory)))
 
 (setq jp/clang-format-styles
-      '("LLVM" "Google" "Chromium" "Mozilla" "WebKit" "Microsoft" "GNU"))
+      '("Default" "LLVM" "Google" "Chromium" "Mozilla" "WebKit" "Microsoft" "GNU"))
 
 (defun jp/clang-format ()
   "Format the current buffer in place using clang-format."
@@ -376,7 +376,10 @@
     ;; Run clang-format on the content of the current buffer.
     (call-process-region
      nil nil "clang-format" nil `(,temp-buffer ,temp-file) nil
-     (concat "--style=" format))
+
+     ;; Pass style argument if using non-default format.
+     (if (string-equal format "Default")
+	 "--style=file" (concat "--style=" format)))
 
     ;; Replace the contents of the input buffer with its formatted
     ;; equivalent produced by clang-format.

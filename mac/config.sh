@@ -46,4 +46,8 @@ defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
 # Prevent popups when devices in DFU mode are connected
 defaults write -g ignore-devices -bool true
+defaults write com.apple.iTunesHelper ignore-devices -bool YES
 defaults write com.apple.AMPDevicesAgent dontAutomaticallySyncIPods -bool true
+defaults write com.apple.AMPDeviceDiscoveryAgent ignore-devices 1
+defaults write com.apple.AMPDeviceDiscoveryAgent reveal-devices 0
+defaults write com.apple.MobileDeviceUpdater Disabled -bool YES

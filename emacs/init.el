@@ -38,6 +38,45 @@
 
 
 ;;;
+;;; --- Environment Configuration ------------------------------------
+;;;
+
+
+;; This is the bulk of the work done by `jp/load-env-file'. It has
+;; been extracted into a separate function for readability.
+(defun jp/process-env-buffer ()
+  "Load environment variables from the current buffer."
+  (when-let (env (read (current-buffer)))
+    ;; Populate standard environment variables from the file.
+    (setq-default process-environment
+                  (append env (default-value 'process-environment)))
+
+    ;; Configure `exec-path' from the `PATH' environment variable.
+    (setq-default exec-path
+                  (append (split-string (getenv "PATH") path-separator t)
+                          (list exec-directory)))
+
+    ;; Set the preferred terminal shell using the `SHELL' variable.
+    (setq-default shell-file-name
+                  (or (getenv "SHELL")
+                      (default-value 'shell-file-name)))))
+
+(defun jp/load-env-file (file)
+  "Load serialized environment variables at FILE (if it exists)."
+  (if (null (file-exists-p file))
+      (message "No environment variable file found at " file)
+    (with-temp-buffer
+      (insert-file-contents file)
+      (jp/process-env-buffer))))
+
+;; It is VERY important that the environment is configured before
+;; straight (or any external package) is loaded, otherwise GCC JIT
+;; might not work correctly if Emacs cannot find the appropriate
+;; libraries in the environment on macOS.
+(jp/load-env-file (concat user-emacs-directory "env.el"))
+
+
+;;;
 ;;; --- Package Management -------------------------------------------
 ;;;
 
@@ -74,41 +113,6 @@
 
 ;; Instruct `use-package' to always install all declared packages.
 (setq use-package-always-ensure t)
-
-
-;;;
-;;; --- Environment Configuration ------------------------------------
-;;;
-
-
-;; This is the bulk of the work done by `jp/load-env-file'. It has
-;; been extracted into a separate function for readability.
-(defun jp/process-env-buffer ()
-  "Load environment variables from the current buffer."
-  (when-let (env (read (current-buffer)))
-    ;; Populate standard environment variables from the file.
-    (setq-default process-environment
-                  (append env (default-value 'process-environment)))
-
-    ;; Configure `exec-path' from the `PATH' environment variable.
-    (setq-default exec-path
-                  (append (split-string (getenv "PATH") path-separator t)
-                          (list exec-directory)))
-
-    ;; Set the preferred terminal shell using the `SHELL' variable.
-    (setq-default shell-file-name
-                  (or (getenv "SHELL")
-                      (default-value 'shell-file-name)))))
-
-(defun jp/load-env-file (file)
-  "Load serialized environment variables at FILE (if it exists)."
-  (if (null (file-exists-p file))
-      (message "No environment variable file found at " file)
-    (with-temp-buffer
-      (insert-file-contents file)
-      (jp/process-env-buffer))))
-
-(jp/load-env-file (concat user-emacs-directory "env.el"))
 
 
 ;;;

@@ -87,10 +87,12 @@ alias ida='open -a ida64'
 # Start a local HTTP server with Python 3
 alias ,http='python3 -m http.server'
 
+# Quickly get the local IP of the machine (macOS)
+alias ,local-ip='ipconfig getifaddr en0'
+
 # Archive and XZ compress a file or directory
 ,xz() {
-	local file="$1"
-	tar -cvJf "${file%.*}.tar.xz" "$file"
+	tar -cvJf "$1.tar.xz" "$1"
 }
 
 # Encrypt a file with AES-256 using a passphrase
@@ -114,13 +116,13 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 # Newline between commends, username and hostname
 CUSTOM_PROMPT+=$'\n'
-CUSTOM_PROMPT+="%F{magenta}"
+CUSTOM_PROMPT+="%F{red}"
 CUSTOM_PROMPT+='%n@%m'
 CUSTOM_PROMPT+="%F{reset}"
 CUSTOM_PROMPT+=':'
 
 # Current directory
-CUSTOM_PROMPT+="%F{blue}"
+CUSTOM_PROMPT+="%F{yellow}"
 CUSTOM_PROMPT+="%~ "
 CUSTOM_PROMPT+="%F{reset}"
 

@@ -1,17 +1,8 @@
---==------------------------------- init.lua -------------------------------==--
+--==------------------------------== EDITOR ==------------------------------==--
 --
---			   N E O V I M   C O N F I G
---
---==------------------------------------------------------------------------==--
-
-local ok, impatient = pcall(require, "impatient")
-if ok then
-	impatient.enable_profile()
-end
-
---==------------------------------------------------------------------------==--
---
---				  CORE OPTIONS
+-- This portion of this configuration deals exclusively with preferences built
+-- into Neovim; it should not attempt to configure or load plugins, and all of
+-- its effects should still apply as expected in the absence of Packer.
 --
 --==------------------------------------------------------------------------==--
 
@@ -20,7 +11,7 @@ local vim_options = {
 	history = 100, -- Set max history size
 	lazyredraw = true, -- Use faster scrolling
 	synmaxcol = 160, -- Set max column for syntax highlighting
-	updatetime = 250, -- Run faster?
+	updatetime = 250, -- Run faster
 	swapfile = false, -- Disable swapfile
 
 	backup = false, -- Disable backup files
@@ -28,85 +19,107 @@ local vim_options = {
 
 	completeopt = { "menuone", "noselect" },
 
-	conceallevel = 0,
+	pumheight = 8, -- Limit popup menu height
 
-	pumheight = 12, -- Limit popup menu height to 12
+	--===-------------------------------------------------------------------
+
+	encoding = "utf-8", -- Always use UTF-8 (Part 1)
+	fileencoding = "utf-8", -- Always use UTF-8 (Part 2)
+
+	clipboard = "unnamedplus", -- Use the system clipboard
+
+	autoindent = true, -- Use auto-indentation
+	smartindent = true, -- Use "smart" auto-indentation
+	backspace = { "indent", "eol", "start" }, -- Use "normal" backspace
+
+	showmatch = true, -- Highlight character pairs
+
+	hlsearch = true, -- Highlight search matches
+	ignorecase = true, -- Ignore case when searching
+	smartcase = true, -- Don't ignore case if the search is mixed-case
+
+	wrap = false, -- Don't wrap long lines
+	scrolloff = 2, -- Add vertical scrolling margin
+
+	conceallevel = 0, -- Don't hide characters
 }
 
 for k, v in pairs(vim_options) do
 	vim.opt[k] = v
 end
 
-local disabled_plugins = {
-	"2html_plugin",
-	"black",
-	"getscript",
-	"getscriptPlugin",
-	"gzip",
-	"logipat",
-	"matchit",
-	"netrw",
-	"netrwFileHandlers",
-	"netrwPlugin",
-	"netrwSettings",
-	"remote_plugins",
-	"rrhelper",
-	"spellfile_plugin",
-	"tar",
-	"tarPlugin",
-	"vimball",
-	"vimballPlugin",
-	"zip",
-	"zipPlugin",
-}
-
-for _, plugin in pairs(disabled_plugins) do
-	vim.g["loaded_" .. plugin] = 1
-end
-
 -- Configure (local) leader before any plugins or other files use it
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
 
---==------------------------------------------------------------------------==--
+vim.cmd [[set iskeyword-=-]] -- Treat hyphens as word separators
+vim.cmd [[set iskeyword-=_]] -- Treat underscores as word separators
+
+--==-----------------------------== PLUGINS ==------------------------------==--
 --
---				    PLUGINS
+-- Plugin configuration and anything that depends on Packer should begin after
+-- this point. Core settings or anything that doesnt depend on a plugin should
+-- NOT be configured below here, since it will not be applied if Packer is not
+-- present or fails to load!
 --
 --==------------------------------------------------------------------------==--
 
-local install_path = vim.fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	IS_FRESH_INSTALL = vim.fn.system {
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	}
-
-	vim.cmd [[packadd packer.nvim]]
+-- Attempt to load 'impatient' to improve startup time.
+local ok, impatient = pcall(require, "impatient")
+if ok then
+	impatient.enable_profile()
 end
 
-local ok, packer = pcall(require, "packer")
-if not ok then
-	return
+local ensure_packer = function()
+	local fn = vim.fn
+
+	local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+	if fn.empty(fn.glob(install_path)) > 0 then
+		fn.system {
+			"git",
+			"clone",
+			"--depth",
+			"1",
+			"https://github.com/wbthomason/packer.nvim",
+			install_path,
+		}
+
+		vim.cmd [[packadd packer.nvim]]
+		return true
+	end
+
+	return false
 end
 
-packer.startup(function(use)
+local packer_bootstrap = ensure_packer()
+
+function packer_config(use)
 	use "wbthomason/packer.nvim"
 
-	use "windwp/nvim-autopairs"
-	use "tpope/vim-sleuth"
+	use "lewis6991/impatient.nvim"
+
+	--== Basic Editing ==---------------------------------------------------
+
+	use "cohama/lexima.vim" -- Auto-close parentheses, etc.
+	use "tpope/vim-sleuth" -- Auto-detect indentation preferences
+
+	-- Rapid (un)commenting helpers
 	use "numToStr/Comment.nvim"
 
-	use "hrsh7th/nvim-cmp"
-	use "hrsh7th/cmp-buffer"
-	use "hrsh7th/cmp-path"
-	use "hrsh7th/cmp-nvim-lsp"
+	--== Autocompletion & Snippets ==---------------------------------------
 
-	use "L3MON4D3/LuaSnip"
-	use "saadparwaiz1/cmp_luasnip"
+	use {
+		"hrsh7th/nvim-cmp",
+		requires = {
+			"hrsh7th/cmp-nvim-lsp", -- Use LSP suggestions
+			"hrsh7th/cmp-buffer", -- Suggest words in the buffer
+			"hrsh7th/cmp-path", -- Complete local filesystem paths
+		},
+	}
+
+	use { "L3MON4D3/LuaSnip", requires = { "saadparwaiz1/cmp_luasnip" } }
+
+	--== IDE Features ==----------------------------------------------------
 
 	use "neovim/nvim-lspconfig"
 	use {
@@ -114,68 +127,33 @@ packer.startup(function(use)
 		run = ":TSUpdate",
 	}
 
-	use {
-		"nvim-telescope/telescope.nvim",
-		requires = { { "nvim-lua/plenary.nvim" } },
-	}
+	--==--------------------------------------------------------------------
 
-	use "lewis6991/impatient.nvim"
-
-	if IS_FRESH_INSTALL then
+	if packer_bootstrap then
 		require("packer").sync()
 	end
-end)
-
---==------------------------------------------------------------------------==--
---
---				     EDITOR
---
---==------------------------------------------------------------------------==--
-
-local vim_options = {
-	encoding = "utf-8", -- Always use UTF-8 (Part 1)
-	fileencoding = "utf-8", -- Always use UTF-8 (Part 2)
-
-	clipboard = "unnamedplus", -- Use the system clipboard
-
-	autoindent = true, -- Use auto-indentation
-	smartindent = true, -- Use *smart* auto-indentation
-	backspace = { "indent", "eol", "start" }, -- Use expected backspace behavior
-
-	showmatch = true, -- Highlight character pairs
-
-	hlsearch = true, -- Highlight search matches
-	ignorecase = true, -- Ignore case when searching
-	smartcase = true, -- Ignore `ignorecase` if the search is mixed-case
-
-	wrap = false, -- Don't wrap long lines
-	scrolloff = 2, -- Add vertical scrolling margin
-
-	textwidth = 80, -- Use the correct true column limit
-}
-
-for k, v in pairs(vim_options) do
-	vim.opt[k] = v
 end
 
-vim.cmd [[set iskeyword-=-]] -- Treat hyphens as word separators
-vim.cmd [[set iskeyword-=_]] -- Treat underscores as word separators
+-- Attempt to load packer; if it still cannot be loaded (fatal config issue),
+-- stop loading this config here.
+local ok, packer = pcall(require, "packer")
+if not ok then
+	return
+end
 
-require("nvim-autopairs").setup()
+-- Load Packer and plugins.
+packer.startup(packer_config)
+
 require("Comment").setup()
 
---==------------------------------------------------------------------------==--
---
---				      IDE
---
---==------------------------------------------------------------------------==--
+--==-------------------------------== LSP ==--------------------------------==--
 
 local ok, _ = pcall(require, "lspconfig")
 if not ok then
 	return
 end
 
-local opts = { noremap = true, silent = true }
+local map_opts = { noremap = true, silent = true }
 
 local on_attach = function(client, bufnr)
 	vim.api.nvim_buf_set_keymap(
@@ -183,42 +161,42 @@ local on_attach = function(client, bufnr)
 		"n",
 		"<localleader>gD",
 		"<cmd>lua vim.lsp.buf.declaration()<CR>",
-		opts
+		map_opts
 	)
 	vim.api.nvim_buf_set_keymap(
 		bufnr,
 		"n",
 		"<localleader>gd",
 		"<cmd>lua vim.lsp.buf.definition()<CR>",
-		opts
+		map_opts
 	)
 	vim.api.nvim_buf_set_keymap(
 		bufnr,
 		"n",
 		"<localleader>gr",
 		"<cmd>lua vim.lsp.buf.references()<CR>",
-		opts
+		map_opts
 	)
 	vim.api.nvim_buf_set_keymap(
 		bufnr,
 		"n",
 		"<localleader>K",
 		"<cmd>lua vim.lsp.buf.hover()<CR>",
-		opts
+		map_opts
 	)
 	vim.api.nvim_buf_set_keymap(
 		bufnr,
 		"n",
 		"<localleader>lr",
 		"<cmd>lua vim.lsp.buf.rename()<CR>",
-		opts
+		map_opts
 	)
 	vim.api.nvim_buf_set_keymap(
 		bufnr,
 		"n",
 		"<localleader>la",
 		"<cmd>lua vim.lsp.buf.code_action()<CR>",
-		opts
+		map_opts
 	)
 end
 
@@ -246,9 +224,6 @@ for _, lsp in pairs(servers) do
 	require("lspconfig")[lsp].setup {
 		on_attach = on_attach,
 		capabilities = capabilities,
-		flags = {
-			debounce_text_changes = 150,
-		},
 	}
 end
 
@@ -259,37 +234,14 @@ if not ok then
 	return
 end
 
-local compare = require "cmp.config.compare"
-
 local ok, luasnip = pcall(require, "luasnip")
 if not ok then
 	return
 end
 
--- Custom format function to limit dialog width
-local format = function(entry, item)
-	local MIN_WIDTH = 16
-	local MAX_WIDTH = 32
-
-	local label = item.abbr
-
-	local truncated_label = vim.fn.strcharpart(label, 0, MAX_WIDTH)
-	if truncated_label ~= label then
-		item.abbr = truncated_label .. "…"
-	elseif string.len(label) < MIN_WIDTH then
-		local padding = string.rep(" ", MIN_WIDTH - string.len(label))
-		item.abbr = label .. padding
-	end
-
-	return item
-end
-
 cmp.setup {
 	view = {
 		entries = "native",
-	},
-	formatting = {
-		format = format,
 	},
 	snippet = {
 		expand = function(args)
@@ -358,102 +310,3 @@ treesitter.setup {
 	highlight = { enable = true },
 	indent = { enable = true, disable = { "yaml" } },
 }
-
---==----------------------------------------------------------------------------
-
-local ok, telescope = pcall(require, "telescope")
-
-if not ok then
-	return
-end
-
-local mappings = {
-	i = {
-		-- Quit the prompt with a single press of <ESC>
-		["<ESC>"] = require("telescope.actions").close,
-	},
-}
-
-local defaults = {
-	mappings = mappings,
-
-	-- Use 'ripgrep' for grep-like activity
-	vimgrep_arguments = {
-		"rg",
-		"--color=never",
-		"--no-heading",
-		"--with-filename",
-		"--line-number",
-		"--column",
-		"--smart-case",
-	},
-
-	-- Hide caret on selected result (highlight is enough)
-	selection_caret = "  ",
-
-	-- Hide preview and prompt/results titles
-	preview = false,
-	prompt_title = false,
-	results_title = false,
-
-	-- Place chooser at the bottom of the screen, Ivy-like
-	layout_strategy = "bottom_pane",
-
-	-- Limit chooser height and place the prompt at the bottom
-	layout_config = {
-		height = 10,
-		prompt_position = "bottom",
-	},
-	storting_strategy = "ascending",
-
-	-- Hide certain border elements to match Ivy-style appearance
-	borderchars = {
-		prompt = { " ", " ", "─", " ", " ", " ", "─", "─" },
-		results = { "─", " ", " ", " ", "─", "─", " ", " " },
-	},
-}
-
-telescope.setup {
-	defaults = defaults,
-}
-
-function jp_map(mode, lhs, rhs, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-
-	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-end
-
-jp_map("n", "<leader>fb", "<cmd> :Telescope buffers <CR>")
-jp_map("n", "<leader>ff", "<cmd> :Telescope find_files <CR>")
-jp_map("n", "<leader>fw", "<cmd> :Telescope live_grep <CR>")
-
---==------------------------------------------------------------------------==--
---
---				    BINDINGS
---
---==------------------------------------------------------------------------==--
-
-local opts = { noremap = true, silent = true }
-local map = vim.api.nvim_set_keymap
-
--- NOTE: Leader keys are configured early in 'program.lua'.
-
-map("n", "<A-k>", ":m .-2<CR>==", opts) -- Swap line up
-map("n", "<A-j>", ":m .+1<CR>==", opts) -- Swap line down
-
-map("n", "<C-l>", ":noh<CR>zz", opts) -- Center line and clear highlight
-
-vim.cmd [[
-augroup jp_git_rebase
-	autocmd!
-	autocmd FileType gitrebase nnoremap <buffer> p :Pick<CR>
-	autocmd FileType gitrebase nnoremap <buffer> r :Reword<CR>
-	autocmd FileType gitrebase nnoremap <buffer> e :Edit<CR>
-	autocmd FileType gitrebase nnoremap <buffer> s :Squash<CR>
-	autocmd FileType gitrebase nnoremap <buffer> f :Fixup<CR>
-	autocmd FileType gitrebase nnoremap <buffer> d :Drop<CR>
-augroup END
-]]

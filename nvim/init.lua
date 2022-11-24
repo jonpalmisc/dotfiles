@@ -55,6 +55,30 @@ vim.g.maplocalleader = ";"
 vim.cmd [[set iskeyword-=-]] -- Treat hyphens as word separators
 vim.cmd [[set iskeyword-=_]] -- Treat underscores as word separators
 
+local map_opts = { noremap = true, silent = true }
+local map = vim.api.nvim_set_keymap
+
+map("n", "<A-k>", ":m .-2<CR>==", map_opts) -- Swap line up
+map("n", "<A-j>", ":m .+1<CR>==", map_opts) -- Swap line down
+
+--==------------------------------------------------------------------------==--
+
+local rebase_group = vim.api.nvim_create_augroup("GitRebaseJP", {})
+
+function create_rebase_autocmd(cmd)
+	vim.api.nvim_create_autocmd(
+		"FileType",
+		{ pattern = "gitrebase", group = rebase_group, command = cmd }
+	)
+end
+
+create_rebase_autocmd "nnoremap <buffer> p :Pick<CR>"
+create_rebase_autocmd "nnoremap <buffer> r :Reword<CR>"
+create_rebase_autocmd "nnoremap <buffer> e :Edit<CR>"
+create_rebase_autocmd "nnoremap <buffer> s :Squash<CR>"
+create_rebase_autocmd "nnoremap <buffer> f :Fixup<CR>"
+create_rebase_autocmd "nnoremap <buffer> d :Drop<CR>"
+
 --==-----------------------------== PLUGINS ==------------------------------==--
 --
 -- Plugin configuration and anything that depends on Packer should begin after

@@ -180,6 +180,8 @@
   :hook ((org-mode . turn-on-auto-fill)
          (org-mode . jp/config-org-appearance)))
 
+(require 'ox-man)
+
 
 ;;;
 ;;; --- Language/Mode Support ----------------------------------------

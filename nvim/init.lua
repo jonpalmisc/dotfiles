@@ -136,6 +136,7 @@ function packer_config(use)
 		"hrsh7th/nvim-cmp",
 		requires = {
 			"hrsh7th/cmp-nvim-lsp", -- Use LSP suggestions
+			"hrsh7th/cmp-nvim-lua", -- Auto-complete Neovim Lua APIs
 			"hrsh7th/cmp-buffer", -- Suggest words in the buffer
 			"hrsh7th/cmp-path", -- Complete local filesystem paths
 		},
@@ -302,6 +303,7 @@ cmp.setup {
 	},
 	sources = {
 		{ name = "nvim_lsp" },
+		{ name = "nvim_lua" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "path" },

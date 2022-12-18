@@ -7,11 +7,12 @@ path_prepend() {
 
 typeset -U path
 
-# path_prepend /opt/local/bin
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_EMOJI=1
+
 path_prepend /opt/homebrew/bin
 
 path_prepend "$HOME/.cargo/bin"
-path_prepend "/Applications/Emacs.app/Contents/MacOS"
 
 # ===-- General -------------------------------------------------------------===
 

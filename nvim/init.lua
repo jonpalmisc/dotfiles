@@ -171,87 +171,6 @@ packer.startup(packer_config)
 
 require("Comment").setup()
 
---==-------------------------------== LSP ==--------------------------------==--
-
-local ok, _ = pcall(require, "lspconfig")
-if not ok then
-	return
-end
-
-local map_opts = { noremap = true, silent = true }
-
-local on_attach = function(client, bufnr)
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<localleader>gD",
-		"<cmd>lua vim.lsp.buf.declaration()<CR>",
-		map_opts
-	)
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<localleader>gd",
-		"<cmd>lua vim.lsp.buf.definition()<CR>",
-		map_opts
-	)
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<localleader>gr",
-		"<cmd>lua vim.lsp.buf.references()<CR>",
-		map_opts
-	)
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<localleader>K",
-		"<cmd>lua vim.lsp.buf.hover()<CR>",
-		map_opts
-	)
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<localleader>lr",
-		"<cmd>lua vim.lsp.buf.rename()<CR>",
-		map_opts
-	)
-	vim.api.nvim_buf_set_keymap(
-		bufnr,
-		"n",
-		"<localleader>la",
-		"<cmd>lua vim.lsp.buf.code_action()<CR>",
-		map_opts
-	)
-end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem = {
-	snippetSupport = true,
-	resolveSupport = {
-		properties = {
-			"documentation",
-			"detail",
-			"additionalTextEdits",
-		},
-	},
-	documentationFormat = { "markdown", "plaintext" },
-	labelDetailsSupport = true,
-	deprecatedSupport = true,
-	tagSupport = { valueSet = { 1 } },
-	preselectSupport = true,
-	insertReplaceSupport = true,
-	commitCharactersSupport = true,
-}
-
-local servers = { "pyright", "rust_analyzer", "clangd", "zls" }
-for _, lsp in pairs(servers) do
-	require("lspconfig")[lsp].setup {
-		on_attach = on_attach,
-		capabilities = capabilities,
-	}
-end
-
 --==----------------------------------------------------------------------------
 
 local ok, cmp = pcall(require, "cmp")
@@ -309,6 +228,71 @@ cmp.setup {
 		{ name = "path" },
 	},
 }
+
+--==-------------------------------== LSP ==--------------------------------==--
+
+local ok, _ = pcall(require, "lspconfig")
+if not ok then
+	return
+end
+
+local map_opts = { noremap = true, silent = true }
+
+local on_attach = function(client, bufnr)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<localleader>gD",
+		"<cmd>lua vim.lsp.buf.declaration()<CR>",
+		map_opts
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<localleader>gd",
+		"<cmd>lua vim.lsp.buf.definition()<CR>",
+		map_opts
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<localleader>gr",
+		"<cmd>lua vim.lsp.buf.references()<CR>",
+		map_opts
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<localleader>K",
+		"<cmd>lua vim.lsp.buf.hover()<CR>",
+		map_opts
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<localleader>lr",
+		"<cmd>lua vim.lsp.buf.rename()<CR>",
+		map_opts
+	)
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		"n",
+		"<localleader>la",
+		"<cmd>lua vim.lsp.buf.code_action()<CR>",
+		map_opts
+	)
+end
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities);
+
+local servers = { "pyright", "rust_analyzer", "clangd", "zls" }
+for _, lsp in pairs(servers) do
+	require("lspconfig")[lsp].setup {
+		on_attach = on_attach,
+		capabilities = capabilities,
+	}
+end
 
 --==----------------------------------------------------------------------------
 

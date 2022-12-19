@@ -10,3 +10,4 @@
 
 [init]
 	templateDir = ~/.config/git/templates
+	defaultBranch = master

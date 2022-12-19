@@ -5,6 +5,7 @@ BN_CONFIG_PATH		:= ~/Library/Application\ Support/Binary\ Ninja
 EMACS_CONFIG_PATH	:= ~/.emacs.d
 FISH_CONFIG_PATH	:= ~/.config/fish
 GIT_CONFIG_PATH		:= ~/.config/git
+GNUPG_CONFIG_PATH	:= ~/.gnupg
 IDA_CONFIG_PATH		:= ~/.idapro
 HS_CONFIG_PATH		:= ~/.hammerspoon
 NVIM_CONFIG_PATH	:= ~/.config/nvim
@@ -12,7 +13,7 @@ SSH_CONFIG_PATH		:= ~/.ssh/config
 SUBL_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Text/Packages/User
 ZSH_CONFIG_PATH		:= ~/.config/zsh
 
-.PHONY:	bn emacs fish git ida hs nvim ssh subl zsh misc
+.PHONY:	bn emacs fish git gnupg ida hs nvim ssh subl zsh misc
 
 all:
 	$(error Targets must be run individually)
@@ -35,6 +36,12 @@ git:
 
 	$(LN) `pwd`/git/.gitconfig ~/.gitconfig
 	$(LN) `pwd`/git/ignore $(GIT_CONFIG_PATH)/ignore
+
+gnupg:
+	mkdir -p $(GNUPG_CONFIG_PATH)
+	
+	$(LN) `pwd`/gnupg/gpg.conf $(GNUPG_CONFIG_PATH)/gpg.conf
+	$(LN) `pwd`/gnupg/gpg-agent.conf $(GNUPG_CONFIG_PATH)/gpg-agent.conf
 
 ida:
 	$(RM) $(IDA_CONFIG_PATH)/cfg

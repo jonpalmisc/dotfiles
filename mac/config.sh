@@ -16,7 +16,7 @@ defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 0
 # Configure dock appearance
 defaults write com.apple.dock 'orientation' -string 'left'
 defaults write com.apple.dock magnification -bool false
-defaults write com.apple.dock tilesize -int 40
+defaults write com.apple.dock tilesize -int 44
 
 # Show hard drives, etc. on the desktop
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true

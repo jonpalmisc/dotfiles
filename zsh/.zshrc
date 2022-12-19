@@ -7,11 +7,8 @@ path_prepend() {
 
 typeset -U path
 
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_EMOJI=1
-
+path_prepend /opt/jpkg/bin
 path_prepend /opt/homebrew/bin
-
 path_prepend "$HOME/.cargo/bin"
 
 # ===-- General -------------------------------------------------------------===
@@ -153,5 +150,6 @@ antigen apply
 
 # ===-- Tool-specific setup -------------------------------------------------===
 
-# Opam
-[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2>&1
+# Attempt to tame Homebrew a bit
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_EMOJI=1

@@ -10,7 +10,7 @@ HS_CONFIG_PATH := ~/.hammerspoon
 NVIM_CONFIG_PATH := ~/.config/nvim
 SSH_CONFIG_PATH := ~/.ssh/config
 SUBL_CONFIG_PATH := ~/Library/Application\ Support/Sublime\ Text/Packages/User
-ZSH_CONFIG_PATH := ~/.zshconfig
+ZSH_CONFIG_PATH		:= ~/.config/zsh
 
 .PHONY:	bn emacs fish git ida hs nvim ssh subl zsh misc
 

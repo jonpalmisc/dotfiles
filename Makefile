@@ -36,8 +36,6 @@ git:
 	$(LN) `pwd`/git/.gitconfig ~/.gitconfig
 	$(LN) `pwd`/git/ignore $(GIT_CONFIG_PATH)/ignore
 
-	$(LN) `pwd`/git/templates $(GIT_CONFIG_PATH)/templates
-
 ida:
 	$(RM) $(IDA_CONFIG_PATH)/cfg
 	mkdir -p $(IDA_CONFIG_PATH)

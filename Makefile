@@ -11,9 +11,10 @@ HS_CONFIG_PATH		:= ~/.hammerspoon
 NVIM_CONFIG_PATH	:= ~/.config/nvim
 SSH_CONFIG_PATH		:= ~/.ssh/config
 SUBL_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Text/Packages/User
+SMERGE_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Merge/Packages/User
 ZSH_CONFIG_PATH		:= ~/.config/zsh
 
-.PHONY:	bn emacs fish git gnupg ida hs nvim ssh subl zsh misc
+.PHONY:	bn emacs fish git gnupg ida hs nvim ssh subl smerge zsh misc
 
 all:
 	$(error Targets must be run individually)
@@ -64,6 +65,10 @@ ssh:
 subl:
 	$(RM) $(SUBL_CONFIG_PATH)
 	$(LN) `pwd`/subl $(SUBL_CONFIG_PATH)
+
+smerge:
+	$(RM) $(SMERGE_CONFIG_PATH)
+	$(LN) `pwd`/smerge $(SMERGE_CONFIG_PATH)
 
 zsh:
 	curl -L git.io/antigen > `pwd`/zsh/antigen.zsh

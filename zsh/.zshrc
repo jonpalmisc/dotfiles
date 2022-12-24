@@ -154,3 +154,8 @@ antigen apply
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_EMOJI=1
 export HOMEBREW_NO_ENV_HINTS=1
+
+if command -v nvim &>/dev/null; then
+	export EDITOR="nvim"
+	export VISUAL="$EDITOR"
+fi

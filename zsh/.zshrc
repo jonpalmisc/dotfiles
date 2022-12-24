@@ -92,7 +92,7 @@ alias ,local-ip='ipconfig getifaddr en0'
 
 # Archive and XZ compress a file or directory
 ,xz() {
-	tar -cvJf "$1.tar.xz" "$1"
+	tar -cJf "$1.tar.xz" "$1"
 }
 
 # Encrypt a file with AES-256 using a passphrase

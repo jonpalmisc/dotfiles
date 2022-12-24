@@ -4,6 +4,7 @@
 
 [gpg]
 	signingKey = A2D8C5DE
+	program = /opt/homebrew/bin/gpg
 
 [commit]
 	gpgSign = true

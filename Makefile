@@ -1,20 +1,20 @@
-RM := rm -fr
-LN := ln -s -f
+RM	:= rm -fr
+LN	:= ln -s -f
 
 BN_CONFIG_PATH		:= ~/Library/Application\ Support/Binary\ Ninja
 EMACS_CONFIG_PATH	:= ~/.emacs.d
 FISH_CONFIG_PATH	:= ~/.config/fish
 GIT_CONFIG_PATH		:= ~/.config/git
 GNUPG_CONFIG_PATH	:= ~/.gnupg
-IDA_CONFIG_PATH		:= ~/.idapro
 HS_CONFIG_PATH		:= ~/.hammerspoon
+IDA_CONFIG_PATH		:= ~/.idapro
 NVIM_CONFIG_PATH	:= ~/.config/nvim
 SSH_CONFIG_PATH		:= ~/.ssh/config
 SUBL_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Text/Packages/User
 SMERGE_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Merge/Packages/User
 ZSH_CONFIG_PATH		:= ~/.config/zsh
 
-.PHONY:	bn emacs fish git gnupg ida hs nvim ssh subl smerge zsh misc
+.PHONY:	bn emacs fish git gnupg hs ida nvim ssh subl smerge zsh misc
 
 all:
 	$(error Targets must be run individually)
@@ -44,15 +44,15 @@ gnupg:
 	$(LN) `pwd`/gnupg/gpg.conf $(GNUPG_CONFIG_PATH)/gpg.conf
 	$(LN) `pwd`/gnupg/gpg-agent.conf $(GNUPG_CONFIG_PATH)/gpg-agent.conf
 
+hs:
+	$(RM) $(HS_CONFIG_PATH)
+	$(LN) `pwd`/hs $(HS_CONFIG_PATH)
+
 ida:
 	$(RM) $(IDA_CONFIG_PATH)/cfg
 	mkdir -p $(IDA_CONFIG_PATH)
 
 	$(LN) `pwd`/ida/cfg $(IDA_CONFIG_PATH)/cfg
-
-hs:
-	$(RM) $(HS_CONFIG_PATH)
-	$(LN) `pwd`/hs $(HS_CONFIG_PATH)
 
 nvim:
 	$(RM) $(NVIM_CONFIG_PATH)

@@ -3,3 +3,5 @@
 # C++ language server artifacts
 .cache
 compile_commands.json
+
+emake_build/

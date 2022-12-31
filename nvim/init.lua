@@ -17,6 +17,8 @@ local vim_options = {
 	backup = false, -- Disable backup files
 	autoread = true, -- Auto-reload modified files
 
+	mouse = "", -- Less mouse
+
 	completeopt = { "menuone", "noselect" },
 
 	pumheight = 8, -- Limit popup menu height
@@ -284,7 +286,7 @@ local on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities);
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local servers = { "pyright", "rust_analyzer", "clangd", "zls" }
 for _, lsp in pairs(servers) do

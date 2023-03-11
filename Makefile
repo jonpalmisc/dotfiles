@@ -13,6 +13,7 @@ SSH_CONFIG_PATH		:= ~/.ssh/config
 SUBL_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Text/Packages/User
 SMERGE_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Merge/Packages/User
 TMUX_CONFIG_PATH	:= ~/.tmux.conf
+WEZTERM_CONFIG_PATH	:= ~/.config/wezterm
 ZSH_CONFIG_PATH		:= ~/.config/zsh
 
 
@@ -86,6 +87,11 @@ smerge:
 tmux:
 	$(RM) $(TMUX_CONFIG_PATH)
 	$(LN) `pwd`/tmux/tmux.conf $(TMUX_CONFIG_PATH)
+
+.PHONY: wezterm
+wezterm:
+	$(RM) $(WEZTERM_CONFIG_PATH)
+	$(LN) `pwd`/wezterm $(WEZTERM_CONFIG_PATH)
 
 .PHONY: zsh
 zsh:

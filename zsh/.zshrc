@@ -7,9 +7,13 @@ path_prepend() {
 
 typeset -U path
 
-path_prepend /opt/jpkg/bin
-path_prepend /opt/homebrew/bin
+# These are listed below in order of REVERSE priority!
+path_prepend /Applications/Emacs.app/Contents/MacOS
 path_prepend "$HOME/.cargo/bin"
+path_prepend /opt/arm-gnu/12.2.1/bin
+path_prepend /opt/homebrew/bin
+path_prepend /opt/jpkg/bin
+path_prepend /opt/srd/bin
 
 # ===-- General -------------------------------------------------------------===
 

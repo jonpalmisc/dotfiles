@@ -154,7 +154,14 @@ function packer_config(use)
 		run = ":TSUpdate",
 	}
 
+	use {
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.1",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	}
 	--==--------------------------------------------------------------------
+
+	use { "catppuccin/nvim", as = "catppuccin" }
 
 	if packer_bootstrap then
 		require("packer").sync()
@@ -322,3 +329,59 @@ treesitter.setup {
 	highlight = { enable = true },
 	indent = { enable = true, disable = { "yaml" } },
 }
+
+--==----------------------------------------------------------------------------
+
+local ok, telescope = pcall(require, "telescope")
+
+if not ok then
+	return
+end
+
+local telescope_actions = require "telescope.actions"
+
+local defaults = {
+	mappings = {
+		i = {
+			["<esc>"] = telescope_actions.close,
+		},
+	},
+
+	vimgrep_arguments = {
+		"rg",
+		"--color=never",
+		"--no-heading",
+		"--with-filename",
+		"--line-number",
+		"--column",
+		"--smart-case",
+	},
+
+	selection_caret = "  ",
+	preview = false,
+	prompt_title = false,
+	results_title = false,
+	storting_strategy = "ascending",
+
+	layout_strategy = "bottom_pane",
+	layout_config = {
+		height = 10,
+		prompt_position = "bottom",
+	},
+	borderchars = {
+		prompt = { " ", " ", "─", " ", " ", " ", "─", "─" },
+		results = { "─", " ", " ", " ", "─", "─", " ", " " },
+	},
+}
+
+telescope.setup {
+	defaults = defaults,
+}
+
+map("n", "<leader>fb", "<cmd> :Telescope buffers <CR>", map_opts)
+map("n", "<leader>ff", "<cmd> :Telescope find_files <CR>", map_opts)
+map("n", "<leader>fw", "<cmd> :Telescope live_grep <CR>", map_opts)
+
+--==----------------------------------------------------------------------------
+
+vim.cmd.colorscheme "catppuccin-macchiato"

@@ -5,6 +5,7 @@ end
 
 treesitter.setup {
 	ensure_installed = {
+		"bash",
 		"c",
 		"cmake",
 		"comment",

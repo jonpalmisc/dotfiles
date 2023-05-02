@@ -46,3 +46,6 @@ telescope.setup { defaults = defaults }
 jp.map("n", "<leader>fb", "<cmd> :Telescope buffers <CR>")
 jp.map("n", "<leader>ff", "<cmd> :Telescope find_files <CR>")
 jp.map("n", "<leader>fw", "<cmd> :Telescope live_grep <CR>")
+
+jp.map("n", "<leader>fs", "<cmd> :Telescope lsp_document_symbols <CR>")
+jp.map("n", "<leader>fr", "<cmd> :Telescope lsp_references <CR>")

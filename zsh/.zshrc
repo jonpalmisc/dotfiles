@@ -111,6 +111,10 @@ alias ,local-ip='ipconfig getifaddr en0'
 	gpg --decrypt --cipher-algo AES256 -o "${file%.*}" "$file" && rm -i "$file"
 }
 
+,codesign() {
+	codesign -s - --force --deep $1
+}
+
 # ===-- Prompt --------------------------------------------------------------===
 
 autoload colors && colors

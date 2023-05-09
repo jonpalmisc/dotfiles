@@ -40,3 +40,14 @@ alias ,local-ip='ipconfig getifaddr en0'
 ,codesign() {
 	codesign -s - --force --deep "$1"
 }
+
+# Print the paths of all the files in `compile_commands.json`.
+,cc-json-files() {
+	file="${1:-compile_commands.json}"
+	jq -r '.[] | .file' <$file
+}
+
+# Run `clang-format` on all of the files in `compile_commands.json`.
+,cc-json-format() {
+	clang-format $@ $(,cc-json-files)
+}

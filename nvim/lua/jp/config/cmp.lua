@@ -8,6 +8,13 @@ if not ok then
 	return
 end
 
+-- First load VSCode-style snippets from installed packages, then load and
+-- append personal/custom snippets.
+require("luasnip.loaders.from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load { paths = { "./snippets" } }
+
+luasnip.config.setup {}
+
 cmp.setup {
 	view = {
 		entries = "native",

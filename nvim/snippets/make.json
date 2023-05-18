@@ -1,0 +1,7 @@
+{
+  "PHONY": {
+    "prefix": "phony",
+    "description": "Shortcut to create a phony target listing.",
+    "body": [".PHONY: ${1}"]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "jp-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "license"
+        ],
+        "path": "./license.json"
+      },
+      {
+        "language": "make",
+        "path": "./make.json"
+      }
+    ]
+  }
+}

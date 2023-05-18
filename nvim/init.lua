@@ -71,5 +71,3 @@ require "jp.config.treesitter"
 require "jp.config.telescope"
 
 --==----------------------------------------------------------------------------
-
-vim.cmd.colorscheme "catppuccin-macchiato"

@@ -63,7 +63,6 @@ function packer_config(use)
 	}
 	--==--------------------------------------------------------------------
 
-	use { "catppuccin/nvim", as = "catppuccin" }
 
 	if is_fresh_install then
 		require("packer").sync()

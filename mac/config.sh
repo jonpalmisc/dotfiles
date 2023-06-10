@@ -51,3 +51,8 @@ defaults write com.apple.AMPDevicesAgent dontAutomaticallySyncIPods -bool true
 defaults write com.apple.AMPDeviceDiscoveryAgent ignore-devices 1
 defaults write com.apple.AMPDeviceDiscoveryAgent reveal-devices 0
 defaults write com.apple.MobileDeviceUpdater Disabled -bool YES
+
+# ===-- Application: Quartz Debug -------------------------------------------===
+
+defaults write com.apple.QuartzDebug QuartzDebugPrivateInterface -bool YES
+defaults write com.apple.QuartzDebug QDShowWindowInfoOnMouseOver -bool YES

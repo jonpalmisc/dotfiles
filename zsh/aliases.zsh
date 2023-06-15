@@ -41,6 +41,18 @@ alias ,local-ip='ipconfig getifaddr en0'
 	codesign -s - --force --deep "$1"
 }
 
+,clang-format-dwim() {
+	clang-format -i --fallback-style=WebKit $@
+}
+
+,clang-format-webkit() {
+	clang-format -i --style=WebKit $@
+}
+
+,clang-format-llvm() {
+	clang-format -i --style=LLVM $@
+}
+
 # Print the paths of all the files in `compile_commands.json`.
 ,cc-json-files() {
 	file="${1:-compile_commands.json}"
@@ -49,5 +61,5 @@ alias ,local-ip='ipconfig getifaddr en0'
 
 # Run `clang-format` on all of the files in `compile_commands.json`.
 ,cc-json-format() {
-	clang-format $@ $(,cc-json-files)
+	,clang-format-dwim $@ $(,cc-json-files)
 }

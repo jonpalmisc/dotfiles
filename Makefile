@@ -25,6 +25,7 @@ all:
 bn:
 	$(RM) $(BN_CONFIG_PATH)/startup.py
 	$(LN) `pwd`/$@/startup.py $(BN_CONFIG_PATH)/startup.py
+	$(LN) `pwd`/$@/settings.json $(BN_CONFIG_PATH)/settings.json
 
 .PHONY: emacs
 emacs:

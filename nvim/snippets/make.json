@@ -2,6 +2,6 @@
   "PHONY": {
     "prefix": "phony",
     "description": "Shortcut to create a phony target listing.",
-    "body": [".PHONY: ${1}"]
+    "body": [".PHONY: ${1:name}\n$1:\n\t${2:command}"]
   }
 }

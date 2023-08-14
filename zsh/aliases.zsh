@@ -13,6 +13,12 @@ alias ,http='python3 -m http.server'
 # Quickly get the local IP of the machine. (macOS)
 alias ,local-ip='ipconfig getifaddr en0'
 
+# Shake out any DNS weirdness on macOS.
+,flush-dns-mac() {
+	sudo dscacheutil -flushcache
+	sudo killall -HUP mDNSResponder
+}
+
 # Color standard error output red.
 ,color() {
 	set -o pipefail

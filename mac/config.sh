@@ -13,10 +13,14 @@ defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 0
 
 # ===------------------------------------------------------------------------===
 
+# Always show sound in the menu bar
+defaults write com.apple.controlcenter 'NSStatusItem Visible Sound' -bool True
+
 # Configure dock appearance
 defaults write com.apple.dock 'orientation' -string 'left'
 defaults write com.apple.dock magnification -bool false
 defaults write com.apple.dock tilesize -int 44
+defaults write com.apple.dock show-recents -bool False
 
 # Show hard drives, etc. on the desktop
 defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
@@ -43,14 +47,6 @@ defaults write com.apple.Safari IncludeDevelopMenu -bool true
 
 # Don't open files (read: unzip archives) upon download completion
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-
-# Prevent popups when devices in DFU mode are connected
-defaults write -g ignore-devices -bool true
-defaults write com.apple.iTunesHelper ignore-devices -bool YES
-defaults write com.apple.AMPDevicesAgent dontAutomaticallySyncIPods -bool true
-defaults write com.apple.AMPDeviceDiscoveryAgent ignore-devices 1
-defaults write com.apple.AMPDeviceDiscoveryAgent reveal-devices 0
-defaults write com.apple.MobileDeviceUpdater Disabled -bool YES
 
 # ===-- Application: Quartz Debug -------------------------------------------===
 

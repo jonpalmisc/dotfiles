@@ -1,0 +1,7 @@
+[configure]
+generator = "Ninja"
+args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=1"]
+
+[build]
+jobs = 6
+copy_cc = true

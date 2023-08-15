@@ -108,6 +108,7 @@ zsh:
 	$(LN) `pwd`/.zshenv ~/.zshenv
 
 	$(RM) $(ZSH_CONFIG_PATH)
+	mkdir -p ~/.config
 	$(LN) `pwd`/zsh $(ZSH_CONFIG_PATH)
 
 .PHONY: clean-zsh

@@ -2,6 +2,10 @@ alias ll='ls -la --color'
 alias g='git'
 alias lldbr='lldb -o run'
 
+# Poetry depends on a stupid Python package with the same name and shadows the
+# real one. Uninstalling it makes Poetry whine. This will have to do...
+alias xattr='/usr/bin/xattr'
+
 # Aliases for opening applications on macOS.
 alias gmacs='open -a Emacs'
 alias binja='open -a Binary\ Ninja'

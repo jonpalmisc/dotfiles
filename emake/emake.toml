@@ -1,6 +1,6 @@
 [configure]
 generator = "Ninja"
-args = ["-DCMAKE_EXPORT_COMPILE_COMMANDS=1"]
+args = ["-DCMAKE_BUILD_TYPE=RelWithDebInfo", "-DCMAKE_EXPORT_COMPILE_COMMANDS=1"]
 
 [build]
 jobs = 6

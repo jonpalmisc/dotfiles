@@ -5,19 +5,26 @@ end
 
 treesitter.setup {
 	ensure_installed = {
-		"bash",
-		"c",
-		"cmake",
 		"comment",
+
+		"c",
 		"cpp",
-		"css",
-		"go",
-		"lua",
+		"cmake",
+		"llvm",
 		"make",
-		"python",
 		"rust",
+
+		"css",
+		"html",
+		"javascript",
+		"typescript",
+		"tsx",
+
+		"bash",
+		"lua",
+		"python",
+
 		"yaml",
-		"zig",
 	},
 	sync_install = false,
 	highlight = { enable = true },

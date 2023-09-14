@@ -21,7 +21,7 @@ if ok then
 	capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 end
 
-local servers = { "pyright", "rust_analyzer", "clangd", "zls" }
+local servers = { "clangd", "rust_analyzer", "tsserver", "pyright" }
 for _, server in pairs(servers) do
 	lsp[server].setup {
 		on_attach = on_attach,

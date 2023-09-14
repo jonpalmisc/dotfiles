@@ -1,19 +1,16 @@
 # ===-- Path ----------------------------------------------------------------===
 
 # Add an item to the path if it exists.
-path_prepend() {
+,path-prepend() {
 	[ -d "$1" ] && path=($1 $path)
 }
 
 typeset -U path
 
 # These are listed below in order of REVERSE priority!
-path_prepend /Applications/Emacs.app/Contents/MacOS
-path_prepend "$HOME/.cargo/bin"
-path_prepend /opt/arm-gnu/12.2.1/bin
-path_prepend /opt/homebrew/bin
-path_prepend /opt/srd/bin
-path_prepend /opt/jpkg/bin
+,path-prepend "$HOME/.cargo/bin"
+,path-prepend /opt/homebrew/bin
+,path-prepend "$HOME/Developer/Prefix/bin"
 
 # ===-- Variables -----------------------------------------------------------===
 

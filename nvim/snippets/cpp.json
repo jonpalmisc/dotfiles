@@ -1,0 +1,6 @@
+{
+  "hguard": {
+    "prefix": "hguard",
+    "body": ["#ifndef ${1:HEADER}_H\n#define $1_H\n\n#endif"]
+  }
+}

@@ -12,6 +12,10 @@
         "path": "./license.json"
       },
       {
+        "language": ["c", "cpp"],
+        "path": "./cpp.json"
+      },
+      {
         "language": "make",
         "path": "./make.json"
       }

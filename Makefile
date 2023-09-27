@@ -10,6 +10,7 @@ GNUPG_CONFIG_PATH	:= ~/.gnupg
 HS_CONFIG_PATH		:= ~/.hammerspoon
 IDA_CONFIG_PATH		:= ~/.idapro
 NVIM_CONFIG_PATH	:= ~/.config/nvim
+PAM_CONFIG_PATH		:= /etc/pam.d
 RADARE_CONFIG_PATH	:= ~/.config/radare2
 SSH_CONFIG_PATH		:= ~/.ssh/config
 SUBL_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Text/Packages/User
@@ -75,6 +76,10 @@ ida:
 nvim:
 	$(RM) $(NVIM_CONFIG_PATH)
 	$(LN) `pwd`/nvim $(NVIM_CONFIG_PATH)
+
+.PHONY: pam
+pam:
+	$(LN) `pwd`/pam/sudo $(PAM_CONFIG_PATH)/sudo_local
 
 .PHONY: radare2
 radare2:

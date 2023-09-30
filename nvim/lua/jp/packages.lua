@@ -64,8 +64,11 @@ function packer_config(use)
 		tag = "0.1.1",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	}
+
 	--==--------------------------------------------------------------------
 
+	use 'rktjmp/lush.nvim'
+	use '~/Developer/Source/Other/industrial'
 
 	if is_fresh_install then
 		require("packer").sync()

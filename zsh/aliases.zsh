@@ -29,9 +29,24 @@ alias ,local-ip='ipconfig getifaddr en0'
 	"$@" 2> >(sed $'s,.*,\e[31m&\e[m,' >&2)
 }
 
-# Archive and XZ compress a file or directory.
+# Create a XZ-compressed archive from a file or directory.
 ,xz() {
 	tar -cJf "$1.tar.xz" "$1"
+}
+
+# Unarchive a XZ-compressed archive.
+,unxz() {
+	tar -xJf "$1"
+}
+
+# Create a Gzip-compressed archive from a file or directory.
+,gz() {
+	tar -czvf "$1.tar.gz" "$1"
+}
+
+# Unarchive a Gzip-compressed archive.
+,ungz() {
+	tar -xzvf "$1"
 }
 
 # Encrypt a file with AES-256 using a passphrase.

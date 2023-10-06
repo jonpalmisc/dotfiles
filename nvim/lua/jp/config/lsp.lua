@@ -9,7 +9,7 @@ local on_attach = function(client, buf)
 	jp.buf_map(buf, "n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 	jp.buf_map(buf, "n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 	jp.buf_map(buf, "n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-	jp.buf_map(buf, "n", "<localleader>K", "<cmd>lua vim.lsp.buf.hover()<CR>")
+	jp.buf_map(buf, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
 	jp.buf_map(buf, "n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>")
 	jp.buf_map(buf, "n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 end

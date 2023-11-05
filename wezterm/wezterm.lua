@@ -28,6 +28,9 @@ local ansi_colors = {
 return {
 	font = wezterm.font "MD IO",
 
+	initial_cols = 96,
+	initial_rows = 32,
+
 	use_ime = false, -- Interpret C-q, etc. correctly
 
 	colors = {

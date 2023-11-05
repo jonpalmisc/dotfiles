@@ -88,3 +88,7 @@ alias ,local-ip='ipconfig getifaddr en0'
 ,cc-json-format() {
 	,clang-format-dwim $@ $(,cc-json-files)
 }
+
+,git-commit-empty() {
+	git commit --allow-empty $@
+}

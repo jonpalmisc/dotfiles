@@ -1,3 +1,4 @@
 e asm.xrefs		= false
 e asm.comments		= false
 e asm.usercomments	= true
+e bin.relocs.apply	= true

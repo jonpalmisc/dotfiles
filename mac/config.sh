@@ -4,6 +4,9 @@
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 defaults write NSGlobalDomain KeyRepeat -int 2
 
+# Disable press & hold
+defaults write -g ApplePressAndHoldEnabled 0
+
 # Disable force click
 defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool false
 

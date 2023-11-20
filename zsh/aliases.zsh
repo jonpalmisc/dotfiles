@@ -17,6 +17,14 @@ alias ,http='python3 -m http.server'
 # Quickly get the local IP of the machine. (macOS)
 alias ,local-ip='ipconfig getifaddr en0'
 
+# Run a command with CFLAGS, etc. pointed to Homebrew's prefix.
+,hb-flags() {
+	CFLAGS=-I$(brew --prefix)/include \
+	CXXFLAGS=-I$(brew --prefix)/include \
+	LDFLAGS=-L$(brew --prefix)/lib \
+		$@
+}
+
 # Shake out any DNS weirdness on macOS.
 ,flush-dns-mac() {
 	sudo dscacheutil -flushcache
@@ -41,12 +49,12 @@ alias ,local-ip='ipconfig getifaddr en0'
 
 # Create a Gzip-compressed archive from a file or directory.
 ,gz() {
-	tar -czvf "$1.tar.gz" "$1"
+	tar -czf "$1.tar.gz" "$1"
 }
 
 # Unarchive a Gzip-compressed archive.
 ,ungz() {
-	tar -xzvf "$1"
+	tar -xzf "$1"
 }
 
 # Encrypt a file with AES-256 using a passphrase.
@@ -67,7 +75,7 @@ alias ,local-ip='ipconfig getifaddr en0'
 }
 
 ,clang-format-dwim() {
-	clang-format -i --fallback-style=WebKit $@
+	clang-format -i --fallback-style=LLVM $@
 }
 
 ,clang-format-webkit() {
@@ -89,6 +97,12 @@ alias ,local-ip='ipconfig getifaddr en0'
 	,clang-format-dwim $@ $(,cc-json-files)
 }
 
+# Shorthand to create an empty Git commit without polluting shell history.
 ,git-commit-empty() {
 	git commit --allow-empty $@
+}
+
+# Convert a FLAC file to MP3.
+,ffmpeg-flac-to-mp3() {
+	ffmpeg -i "$1" -b:a 320k -map_metadata 0 -id3v2_version 3 "$1.mp3"
 }

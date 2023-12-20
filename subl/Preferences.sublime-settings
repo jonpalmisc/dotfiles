@@ -11,7 +11,7 @@
 
   "margin": 0,
 
-  "rulers": [80],
+  "rulers": [80, 100],
 
   "caret_extra_top": 1,
   "caret_extra_bottom": 1,
@@ -28,6 +28,8 @@
 
   // --- Behavior --------------------------------------------------------------
 
+  "goto_anything_exclude_gitignore": true,
+
   "ensure_newline_at_eof_on_save": true,
   "trim_trailing_white_space_on_save": "all",
 
@@ -35,5 +37,4 @@
   "show_errors_inline": false,
 
   "hot_exit": "disabled",
-  "create_window_at_startup": true,
 }

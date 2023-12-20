@@ -14,10 +14,12 @@
   "rendering.hlil.scopingStyle": "braces",
   "rendering.strings.maxAnnotationLength": 128,
   "ui.developerMode": true,
-  "ui.font.view.name": "MD IO",
-  "ui.font.view.size": 12,
+  "ui.featureMap.location": "top",
+  "ui.font.view.name": "Berkeley Mono",
   "ui.font.view.style": "Regular",
   "ui.settings.displayIdentifiers": true,
   "ui.theme.name": "Ninja Dark",
-  "ui.view.linear.enableStickyHeader": false
+  "ui.view.linear.enableStickyHeader": false,
+  "ui.view.types.useTypeBrowser": true,
+  "ui.view.variables.pvsComplexityLimit": 99
 }

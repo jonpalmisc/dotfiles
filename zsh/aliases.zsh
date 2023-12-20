@@ -17,13 +17,26 @@ alias ,http='python3 -m http.server'
 # Quickly get the local IP of the machine. (macOS)
 alias ,local-ip='ipconfig getifaddr en0'
 
-# Run a command with CFLAGS, etc. pointed to Homebrew's prefix.
-,hb-flags() {
-	CFLAGS=-I$(brew --prefix)/include \
-	CXXFLAGS=-I$(brew --prefix)/include \
-	LDFLAGS=-L$(brew --prefix)/lib \
-		$@
+# Run a command with CFLAGS, etc. updated to use a given prefix.
+,with-prefix() {
+	prefix="$1"
+	shift
+
+	CFLAGS+=" -I$prefix/include" \
+	CXXFLAGS+=" -I$prefix/include" \
+	LDFLAGS+=" -L$prefix/lib" \
+	$@
 }
+
+# Set CFLAGS, etc. to use a given prefix.
+,export-prefix() {
+	export CFLAGS="$CFLAGS -I$1/include"
+	export CXXFLAGS="$CXXFLAGS -I$1/include"
+	export LDFLAGS="$LDFLAGS -L$1/lib"
+}
+
+alias ,with-brew-prefix=",with-prefix $(brew --prefix)"
+alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 
 # Shake out any DNS weirdness on macOS.
 ,flush-dns-mac() {

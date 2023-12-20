@@ -26,7 +26,7 @@ local ansi_colors = {
 }
 
 return {
-	font = wezterm.font "MD IO",
+	font = wezterm.font "Berkeley Mono",
 
 	initial_cols = 96,
 	initial_rows = 32,
@@ -43,6 +43,7 @@ return {
 		ansi = ansi_colors,
 		brights = ansi_colors,
 	},
+	bold_brightens_ansi_colors = "No",
 
 	hide_tab_bar_if_only_one_tab = true,
 }

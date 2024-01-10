@@ -33,3 +33,6 @@ window-padding-x = 6
 window-padding-y = 6
 
 quit-after-last-window-closed = true
+window-save-state = never
+
+macos-option-as-alt = true

@@ -87,6 +87,10 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 	codesign -s - --force --deep "$1"
 }
 
+,clang-format-jp() {
+	clang-format "-style=file:$HOME/.files/etc/.clang-format" -i $@
+}
+
 ,clang-format-dwim() {
 	clang-format -i --fallback-style=LLVM $@
 }

@@ -123,3 +123,19 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 ,ffmpeg-flac-to-mp3() {
 	ffmpeg -i "$1" -b:a 320k -map_metadata 0 -id3v2_version 3 "$1.mp3"
 }
+
+,tio-icrnl() {
+	tio -m INLCRNL --mute $@
+}
+
+,iproxy-listen-ssh() {
+	iproxy 2222:22
+}
+
+,ssh-srd-iproxy-unsafe() {
+	gsed -i '/\[localhost\]:2222/d' ~/.ssh/known_hosts && ssh -o "StrictHostKeyChecking no" -p 2222 root@localhost
+}
+
+,pythonpath-prepend() {
+	[ -d "$1" ] && export PYTHONPATH="$1:${PYTHONPATH}"
+}

@@ -54,5 +54,6 @@ require("lazy").setup {
 
 	"rktjmp/lush.nvim", -- Theme-building platform
 	"rktjmp/shipwright.nvim", -- Export functionality for Lush
-	{ dir = "~/Developer/Source/Other/industrial" }, -- Personal theme
+
+	{ dir = "~/Developer/Source/Personal/industrial" }, -- Personal theme
 }

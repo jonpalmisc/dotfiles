@@ -37,9 +37,6 @@ defaults write NSGlobalDomain "NSToolbarTitleViewRolloverDelay" -float "0"
 defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
-# Prevent creation of `.DS_Store` files
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-
 # ===------------------------------------------------------------------------===
 
 # Default to plaintext documents in TextEdit

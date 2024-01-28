@@ -139,3 +139,11 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 ,pythonpath-prepend() {
 	[ -d "$1" ] && export PYTHONPATH="$1:${PYTHONPATH}"
 }
+
+,cryptexctl-default-udid() {
+	cryptexctl device list | tail -n1 | awk '{print $1}'
+}
+
+,cryptexctl-export-default-udid() {
+	export CRYPTEXCTL_UDID=$(,cryptexctl-default-udid)
+}

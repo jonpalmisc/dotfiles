@@ -10,6 +10,7 @@ typeset -U path
 # These are listed below in order of REVERSE priority!
 ,path-prepend "$HOME/.cargo/bin"
 ,path-prepend /opt/homebrew/bin
+,path-prepend "$HOME/Developer/Extra/SRD/bin"
 ,path-prepend "$HOME/Developer/Prefix/bin"
 
 # ===-- Variables -----------------------------------------------------------===

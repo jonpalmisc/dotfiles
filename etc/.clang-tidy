@@ -1,0 +1,34 @@
+---
+Checks:
+  - bugprone-*
+  - -bugprone-bool-pointer-implicit-conversion
+  - -bugprone-easily-swappable-parameters
+  - -bugprone-exception-escape
+  - -bugprone-implicit-widening-of-multiplication-result
+  - -bugprone-reserved-identifier
+  - cppcoreguidelines-interfaces-global-init
+  - cppcoreguidelines-narrowing-conversions
+  - cppcoreguidelines-pro-type-member-init
+  - cppcoreguidelines-pro-type-static-cast-downcast
+  - cppcoreguidelines-slicing
+  - google-default-arguments
+  - google-explicit-constructor
+  - misc-misplaced-const
+  - misc-redundant-expression
+  - misc-static-assert
+  - modernize-*
+  - -modernize-avoid-c-arrays
+  - -modernize-use-nodiscard
+  - -modernize-use-trailing-return-type
+  - performance-*
+  - -performance-no-int-to-ptr
+  - readability-*
+  - -readability-braces-around-statements
+  - -readability-function-cognitive-complexity
+  - -readability-identifier-length
+  - -readability-implicit-bool-conversion
+  - -readability-magic-numbers
+  - -readability-qualified-auto
+
+SystemHeaders: false
+...

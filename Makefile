@@ -66,11 +66,11 @@ gnupg:
 	mkdir -p $(GNUPG_CONFIG_PATH)
 	chown -R $$(whoami) $(GNUPG_CONFIG_PATH)
 
-	chmod 600 $(GNUPG_CONFIG_PATH)/*
-	chmod 700 $(GNUPG_CONFIG_PATH)
-	
 	$(LN) `pwd`/gnupg/gpg.conf $(GNUPG_CONFIG_PATH)/gpg.conf
 	$(LN) `pwd`/gnupg/gpg-agent.conf $(GNUPG_CONFIG_PATH)/gpg-agent.conf
+
+	chmod 600 $(GNUPG_CONFIG_PATH)/*
+	chmod 700 $(GNUPG_CONFIG_PATH)
 
 .PHONY: hs
 hs:
@@ -125,8 +125,6 @@ wezterm:
 
 .PHONY: zsh
 zsh:
-	curl -L git.io/antigen > `pwd`/zsh/antigen.zsh
-
 	$(RM) ~/.zshenv
 	$(LN) `pwd`/.zshenv ~/.zshenv
 

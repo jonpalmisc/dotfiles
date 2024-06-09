@@ -147,3 +147,11 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 ,cryptexctl-export-default-udid() {
 	export CRYPTEXCTL_UDID=$(,cryptexctl-default-udid)
 }
+
+,venv() {
+	if [ ! -d ".venv" ]; then
+		python3 -m venv .venv
+	fi
+
+	source .venv/bin/activate
+}

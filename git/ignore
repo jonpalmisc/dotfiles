@@ -4,6 +4,7 @@
 .cache
 compile_commands.json
 
+.venv/
 __pycache__/
 
 emake_build/

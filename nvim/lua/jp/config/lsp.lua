@@ -11,6 +11,8 @@ local on_attach = function(client, buf)
 	jp.buf_map(buf, "n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>")
 	jp.buf_map(buf, "n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>")
 	jp.buf_map(buf, "n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>")
+
+	jp.buf_map(buf, "i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

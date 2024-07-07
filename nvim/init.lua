@@ -59,17 +59,8 @@ require "jp.plugin.rebase"
 
 require "jp.packages"
 
-local ok, impatient = pcall(require, "impatient")
-if ok then
-	impatient.enable_profile()
-end
-
-require "jp.config.comment"
+require "jp.config.mini"
 require "jp.config.cmp"
 require "jp.config.lsp"
-require "jp.config.treesitter"
 require "jp.config.telescope"
-require "jp.config.files"
 require "jp.config.theme"
-
---==----------------------------------------------------------------------------

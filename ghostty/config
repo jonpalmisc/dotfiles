@@ -4,10 +4,10 @@ foreground = eeeeee
 selection-background = 1d3c3b
 selection-foreground = eeeeee
 
-font-family = Berkeley Mono
+font-family = MD IO
 font-size = 12
 
-adjust-cell-width = -12%
+adjust-cell-width = -10%
 
 palette = 0=#666666
 palette = 1=#f0866f

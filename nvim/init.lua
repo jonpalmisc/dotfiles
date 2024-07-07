@@ -69,6 +69,7 @@ require "jp.config.cmp"
 require "jp.config.lsp"
 require "jp.config.treesitter"
 require "jp.config.telescope"
+require "jp.config.files"
 require "jp.config.theme"
 
 --==----------------------------------------------------------------------------

@@ -52,8 +52,10 @@ require("lazy").setup {
 		dependencies = { "nvim-lua/plenary.nvim" },
 	},
 
+	{ 'echasnovski/mini.nvim', version = '*' },
+
 	"rktjmp/lush.nvim", -- Theme-building platform
 	"rktjmp/shipwright.nvim", -- Export functionality for Lush
 
-	{ dir = "~/Developer/Source/Personal/industrial" }, -- Personal theme
+	{ dir = "~/Developer/Source/Personal/nvim_industrial_theme" }, -- Personal theme
 }

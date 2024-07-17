@@ -70,6 +70,16 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 	tar -xzf "$1"
 }
 
+# Create a ZSTD-compressed archive from a file or directory.
+,zstd() {
+	tar -c $1 | zstd -21 --ultra -T4 >"$1.tar.zst"
+}
+
+# Unarchive a ZSTD-compressed archive.
+,unzstd() {
+	tar -xf "$1"
+}
+
 # Encrypt a file with AES-256 using a passphrase.
 ,encrypt() {
 	local file="$1"

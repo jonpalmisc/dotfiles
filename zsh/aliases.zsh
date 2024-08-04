@@ -19,6 +19,10 @@ alias ,http='python3 -m http.server'
 # Quickly get the local IP of the machine. (macOS)
 alias ,local-ip='ipconfig getifaddr en0'
 
+mkcd() {
+	mkdir -p "$1" && cd "$1"
+}
+
 # Run a command with CFLAGS, etc. updated to use a given prefix.
 ,with-prefix() {
 	prefix="$1"

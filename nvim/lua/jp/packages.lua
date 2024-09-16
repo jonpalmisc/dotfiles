@@ -12,26 +12,50 @@ end
 
 vim.opt.rtp:prepend(lazy_path)
 
-require("lazy").setup {
-	-- Lots of minimal "mini plugins" that implement functionality I want.
-	{ 'echasnovski/mini.nvim', version = '*' },
+require("lazy").setup({
+	-- Personal color scheme.
+	{
+		dir = "~/Developer/Source/Personal/nvim_industrial_theme",
+		lazy = false,
+		priority = 1000,
+		config = function()
+			vim.opt.termguicolors = true
+			vim.cmd "colorscheme industrial"
+		end,
+	},
 
-	-- Well-maintained configurations for many common LSP servers for
-	-- automatic integration with Neovim's LSP support.
-	"neovim/nvim-lspconfig",
+	-- Auto-close and auto-delete pairs.
+	{ "m4xshen/autoclose.nvim", config = true },
 
-	-- Auto-detects indentation on a per-file basis so that Neovim inserts
+	-- Auto-detect indentation on a per-file basis so that Neovim inserts
 	-- the right amount of indentation by default during editing.
 	"tpope/vim-sleuth",
 
+	-- Well-maintained configurations for many common LSP servers for
+	-- automatic integration with Neovim's LSP support.
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			require("jp.config.lsp").setup()
+		end,
+	},
+
 	-- Pop-up code completion.
-	--
-	-- TODO: Migrating to the completion offered `mini.nvim` in the future
-	-- might be nice, but for now, this offers a better set of completion
-	-- sources and more predictable behavior.
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
+			-- Snippet engine.
+			{
+				"L3MON4D3/LuaSnip",
+				dependencies = {
+					-- Use popular snippets from VSCode.
+					"rafamadriz/friendly-snippets",
+				},
+				config = function(_, _)
+					require "jp.config.luasnip"
+				end,
+			},
+
 			-- Integrate with LSP for completion.
 			"hrsh7th/cmp-nvim-lsp",
 			-- Auto-complete Neovim Lua APIs.
@@ -40,37 +64,82 @@ require("lazy").setup {
 			"hrsh7th/cmp-buffer",
 			-- Helps complete local filesystem paths.
 			"hrsh7th/cmp-path",
-		},
-	},
-
-	-- Popular plugin for code snippet expansion.
-	{
-		"L3MON4D3/LuaSnip",
-		dependencies = {
 			-- Show snippets in the completion popup.
 			"saadparwaiz1/cmp_luasnip",
-			-- Use popular snippets from VSCode.
-			"rafamadriz/friendly-snippets",
 		},
+		event = "InsertEnter",
+		opts = function()
+			return require "jp.config.cmp"
+		end,
 	},
 
 	-- Generic fuzzy-finder API, provides "command palette"-like search
 	-- interfaces for files, LSP symbols, etc.
 	{
 		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		cmd = { "Telescope" },
+		opts = function()
+			return require "jp.config.telescope"
+		end,
 	},
 
-	-- Framework for easily building themes.
+	-- Traditional-style sidebar.
 	{
-		"rktjmp/lush.nvim",
+		"nvim-tree/nvim-tree.lua",
+		cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+		opts = function()
+			return require "jp.config.tree"
+		end,
+	},
+
+	-- Magit-like Git interface.
+	{
+		"NeogitOrg/neogit",
 		dependencies = {
-			-- Used for exporting theme to other formats.
-			"rktjmp/shipwright.nvim"
+			"nvim-lua/plenary.nvim", -- required
+		},
+		cmd = { "Neogit" },
+		config = true,
+	},
+
+	"rktjmp/lush.nvim", -- Framework for easily building themes.
+	"rktjmp/shipwright.nvim", -- Used for exporting theme to other formats.
+}, {
+	defaults = {
+		lazy = true,
+	},
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"2html_plugin",
+				"tohtml",
+				"getscript",
+				"getscriptPlugin",
+				"gzip",
+				"logipat",
+				"netrw",
+				"netrwPlugin",
+				"netrwSettings",
+				"netrwFileHandlers",
+				"matchit",
+				"tar",
+				"tarPlugin",
+				"rrhelper",
+				"spellfile_plugin",
+				"vimball",
+				"vimballPlugin",
+				"zip",
+				"zipPlugin",
+				"tutor",
+				"rplugin",
+				"syntax",
+				"synmenu",
+				"optwin",
+				"compiler",
+				"bugreport",
+				"ftplugin",
+			},
 		},
 	},
-
-	-- Personal theme.
-	{ dir = "~/Developer/Source/Personal/nvim_industrial_theme" },
-}
+})

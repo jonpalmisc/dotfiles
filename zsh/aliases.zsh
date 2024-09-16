@@ -44,6 +44,10 @@ mkcd() {
 alias ,with-brew-prefix=",with-prefix $(brew --prefix)"
 alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 
+,pyint() {
+	python3 -c "i = ($1); print(i); print(hex(i))"
+}
+
 # Shake out any DNS weirdness on macOS.
 ,flush-dns-mac() {
 	sudo dscacheutil -flushcache

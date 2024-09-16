@@ -1,4 +1,6 @@
 ---
 BasedOnStyle: WebKit
 PointerAlignment: Right
+AlignTrailingComments: Always
+QualifierAlignment: Right
 ...

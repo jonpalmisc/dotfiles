@@ -25,16 +25,17 @@ require("lazy").setup({
 	},
 
 	-- Auto-close and auto-delete pairs.
-	{ "m4xshen/autoclose.nvim", config = true },
+	{ "m4xshen/autoclose.nvim", lazy = false, config = true },
 
 	-- Auto-detect indentation on a per-file basis so that Neovim inserts
 	-- the right amount of indentation by default during editing.
-	"tpope/vim-sleuth",
+	{ "tpope/vim-sleuth", lazy = false },
 
 	-- Well-maintained configurations for many common LSP servers for
 	-- automatic integration with Neovim's LSP support.
 	{
 		"neovim/nvim-lspconfig",
+		lazy = false,
 		config = function()
 			require("jp.config.lsp").setup()
 		end,

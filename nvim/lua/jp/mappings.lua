@@ -14,3 +14,6 @@ map("n", "<leader>fr", "<cmd> :Telescope lsp_references <CR>")
 
 -- Tree
 map("n", "<C-b>", "<cmd> :NvimTreeToggle <CR>")
+
+-- Neogit
+map("n", "<leader>gg", "<cmd> :Neogit <CR>")

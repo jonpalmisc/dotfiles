@@ -10,3 +10,4 @@ __pycache__/
 
 emake_build/
 ebuild/
+cmake-build-*/

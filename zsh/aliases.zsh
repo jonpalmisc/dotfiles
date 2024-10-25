@@ -60,9 +60,21 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 	"$@" 2> >(sed $'s,.*,\e[31m&\e[m,' >&2)
 }
 
+TAR_PRIVACY_FLAGS=(--uid 0 --gid 0 --no-xattrs --exclude='.DS_Store')
+
+# Create a Tar archive from a file or directory.
+,tar() {
+	tar $TAR_PRIVACY_FLAGS -cf "$1.tar" "$1"
+}
+
+# Unarchive a Tar archive.
+,untar() {
+	tar -xf "$1"
+}
+
 # Create a XZ-compressed archive from a file or directory.
 ,xz() {
-	tar -cJf "$1.tar.xz" "$1"
+	tar $TAR_PRIVACY_FLAGS -cJf "$1.tar.xz" "$1"
 }
 
 # Unarchive a XZ-compressed archive.
@@ -72,7 +84,7 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 
 # Create a Gzip-compressed archive from a file or directory.
 ,gz() {
-	tar -czf "$1.tar.gz" "$1"
+	tar $TAR_PRIVACY_FLAGS -czf "$1.tar.gz" "$1"
 }
 
 # Unarchive a Gzip-compressed archive.
@@ -82,12 +94,22 @@ alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 
 # Create a ZSTD-compressed archive from a file or directory.
 ,zstd() {
-	tar -c $1 | zstd -21 --ultra -T4 >"$1.tar.zst"
+	tar $TAR_PRIVACY_FLAGS -c $1 | zstd -21 --ultra -T4 >"$1.tar.zst"
 }
 
 # Unarchive a ZSTD-compressed archive.
 ,unzstd() {
 	tar -xf "$1"
+}
+
+# Create an AES-256 encrypted Zip archive with 7zip.
+,7z-zip-encrypt() {
+	7z a -tzip -p -mem=AES256 "$1.zip" "$1"
+}
+
+# Create an AES-256 encrypted Zip archive with 7zip, but without compression.
+,7z-zip-encrypt-0() {
+	7z a -tzip -mx=0 -p -mem=AES256 "$1.zip" "$1"
 }
 
 # Encrypt a file with AES-256 using a passphrase.

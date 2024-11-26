@@ -1,4 +1,4 @@
-alias ll='ls -la --color'
+alias ll='ls -laFh --color'
 alias g='git'
 alias lldbr='lldb -o run'
 
@@ -45,7 +45,7 @@ alias ,with-brew-prefix=",with-prefix $(brew --prefix)"
 alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
 
 ,pyint() {
-	python3 -c "i = ($1); print(i); print(hex(i))"
+	python3 -c "i = ($1); print(i); print(hex(i)); print(bin(i))"
 }
 
 # Shake out any DNS weirdness on macOS.

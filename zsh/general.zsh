@@ -18,6 +18,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 setopt MENU_COMPLETE
 setopt AUTO_LIST
 setopt COMPLETE_IN_WORD
+setopt MAGIC_EQUAL_SUBST
 
 # ===-- Navigation ----------------------------------------------------------===
 

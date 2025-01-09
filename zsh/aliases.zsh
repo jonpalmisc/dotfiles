@@ -11,7 +11,8 @@ alias xattr='/usr/bin/xattr'
 # Aliases for opening applications on macOS.
 alias gmacs='open -a Emacs'
 alias binja='open -a Binary\ Ninja'
-alias ida='open -a ida64'
+alias ida64='open -a ida64'
+alias ida='open -a /Applications/IDA\ Professional\ 9.0.app'
 
 # Start a local HTTP server with Python 3.
 alias ,http='python3 -m http.server'

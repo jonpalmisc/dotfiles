@@ -24,9 +24,6 @@ require("lazy").setup({
 		end,
 	},
 
-	-- Auto-close and auto-delete pairs.
-	{ "m4xshen/autoclose.nvim", lazy = false, config = true },
-
 	-- Auto-detect indentation on a per-file basis so that Neovim inserts
 	-- the right amount of indentation by default during editing.
 	{ "tpope/vim-sleuth", lazy = false },
@@ -67,6 +64,14 @@ require("lazy").setup({
 			"hrsh7th/cmp-path",
 			-- Show snippets in the completion popup.
 			"saadparwaiz1/cmp_luasnip",
+
+			-- Auto-close parentheses, etc.
+			{
+				"windwp/nvim-autopairs",
+				config = function(_, opts)
+					require "jp.config.autopairs"
+				end,
+			},
 		},
 		event = "InsertEnter",
 		opts = function()

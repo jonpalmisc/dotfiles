@@ -31,6 +31,19 @@ require("lazy").setup({
 	-- the right amount of indentation by default during editing.
 	{ "tpope/vim-sleuth", lazy = false },
 
+	-- Better syntax highlighting, among other things.
+	{
+		"nvim-treesitter/nvim-treesitter",
+		build = ":TSUpdate",
+
+		event = { "BufReadPost", "BufNewFile" },
+		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+
+		config = function()
+			require "jp.config.treesitter"
+		end,
+	},
+
 	-- Well-maintained configurations for many common LSP servers for
 	-- automatic integration with Neovim's LSP support.
 	{

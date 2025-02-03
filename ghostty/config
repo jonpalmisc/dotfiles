@@ -5,6 +5,7 @@ selection-background = 1d3c3b
 selection-foreground = eeeeee
 
 font-family = MD IO
+font-style = Medium
 font-size = 13
 
 adjust-cell-width = -10%

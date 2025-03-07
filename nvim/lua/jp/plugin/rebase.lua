@@ -1,15 +1,17 @@
-local rebase_group = vim.api.nvim_create_augroup("GitRebaseJP", {})
+local augroup = vim.api.nvim_create_augroup("JPGitRebase", { clear = true })
 
-function create_rebase_autocmd(cmd)
-	vim.api.nvim_create_autocmd(
-		"FileType",
-		{ pattern = "gitrebase", group = rebase_group, command = cmd }
-	)
-end
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "gitrebase",
+	group = augroup,
+	callback = function()
+		local map = vim.keymap.set
+		local opts = { noremap = true, silent = true, buffer = true }
 
-create_rebase_autocmd "nnoremap <buffer> p :Pick<CR>"
-create_rebase_autocmd "nnoremap <buffer> r :Reword<CR>"
-create_rebase_autocmd "nnoremap <buffer> e :Edit<CR>"
-create_rebase_autocmd "nnoremap <buffer> s :Squash<CR>"
-create_rebase_autocmd "nnoremap <buffer> f :Fixup<CR>"
-create_rebase_autocmd "nnoremap <buffer> d :Drop<CR>"
+		map("n", "p", ":Pick <CR>", opts)
+		map("n", "r", ":Reword<CR>")
+		map("n", "e", ":Edit<CR>")
+		map("n", "s", ":Squash<CR>")
+		map("n", "f", ":Fixup<CR>")
+		map("n", "d", ":Drop<CR>")
+	end,
+})

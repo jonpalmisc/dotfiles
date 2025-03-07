@@ -4,6 +4,8 @@ local map = vim.keymap.set
 map("n", "<A-k>", ":m .-2<CR>==") -- Swap line up.
 map("n", "<A-j>", ":m .+1<CR>==") -- Swap line down.
 
+map("c", "<C-a>", "<Home>")
+
 -- Telescope
 map("n", "<leader>fb", "<cmd> :Telescope buffers <CR>")
 map("n", "<leader>ff", "<cmd> :Telescope find_files <CR>")

@@ -10,7 +10,7 @@ font-size = 13
 
 adjust-cell-width = -10%
 
-palette = 0=#666666
+palette = 0=#989898
 palette = 1=#f0866f
 palette = 2=#7fda95
 palette = 3=#e7b00d
@@ -18,7 +18,7 @@ palette = 4=#7dc0ee
 palette = 5=#df92d1
 palette = 6=#73d0ce
 palette = 7=#eeeeee
-palette = 8=#666666
+palette = 8=#989898
 palette = 9=#f0866f
 palette = 10=#7fda95
 palette = 11=#e7b00d

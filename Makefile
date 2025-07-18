@@ -4,7 +4,6 @@ LN	:= ln -s -f
 BN_CONFIG_PATH		:= ~/Library/Application\ Support/Binary\ Ninja
 EMACS_CONFIG_PATH	:= ~/.emacs.d
 EMAKE_CONFIG_PATH	:= ~/.config/emake.toml
-FISH_CONFIG_PATH	:= ~/.config/fish
 GHOSTTY_CONFIG_PATH	:= ~/.config/ghostty
 GIT_CONFIG_PATH		:= ~/.config/git
 GNUPG_CONFIG_PATH	:= ~/.gnupg
@@ -40,11 +39,6 @@ emacs:
 emake:
 	$(RM) $(EMAKE_CONFIG_PATH)
 	$(LN) `pwd`/emake/emake.toml $(EMAKE_CONFIG_PATH)
-
-.PHONY: fish
-fish:
-	$(RM) $(FISH_CONFIG_PATH)
-	$(LN) `pwd`/fish $(FISH_CONFIG_PATH)
 
 .PHONY: ghostty
 ghostty:

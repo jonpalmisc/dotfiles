@@ -6,9 +6,9 @@ selection-foreground = eeeeee
 
 font-family = MD IO
 font-style = Medium
-font-size = 13
+font-size = 12
 
-adjust-cell-width = -10%
+adjust-cell-width = -8%
 
 palette = 0=#989898
 palette = 1=#f0866f

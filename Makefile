@@ -18,7 +18,6 @@ SUBL_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Text/Packages/User
 SMERGE_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Merge/Packages/User
 TMUX_CONFIG_PATH	:= ~/.tmux.conf
 VSCODE_CONFIG_PATH	:= ~/Library/Application\ Support/Code/User
-WEZTERM_CONFIG_PATH	:= ~/.config/wezterm
 ZSH_CONFIG_PATH		:= ~/.config/zsh
 
 
@@ -123,11 +122,6 @@ tmux:
 vscode:
 	$(RM) $(VSCODE_CONFIG_PATH)/settings.json
 	$(LN) `pwd`/vscode/settings.json $(VSCODE_CONFIG_PATH)/settings.json
-
-.PHONY: wezterm
-wezterm:
-	$(RM) $(WEZTERM_CONFIG_PATH)
-	$(LN) `pwd`/wezterm $(WEZTERM_CONFIG_PATH)
 
 .PHONY: zsh
 zsh:

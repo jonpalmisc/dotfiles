@@ -1,7 +1,8 @@
 {
-	"theme": "Merge Dark.sublime-theme",
+	"theme": "auto",
 
-	"font_face": "Berkeley Mono",
+	"font_face": "MD IO Medium",
 	"font_size": 12,
 	"tab_size": 8,
+	"ignore_diff_white_space": true,
 }

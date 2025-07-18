@@ -1,0 +1,26 @@
+{
+    "editor.cursorSmoothCaretAnimation": "on",
+    "cmake.configureOnOpen": false,
+    "[cpp]": {
+        "editor.wordBasedSuggestions": "off",
+        "editor.semanticHighlighting.enabled": true,
+        "editor.stickyScroll.defaultModel": "foldingProviderModel",
+        "editor.suggest.insertMode": "replace"
+    },
+    "workbench.colorTheme": "Monokai Pro Light",
+    "C_Cpp.default.compileCommands": [
+        "compile_commands.json"
+    ],
+    "search.useGlobalIgnoreFiles": true,
+    "editor.fontFamily": "\"MD IO Medium\", Menlo, Monaco, 'Courier New', monospace",
+    "files.trimTrailingWhitespace": true,
+    "cSpell.userWords": [
+        "Fretboard",
+        "Palmisciano"
+    ],
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "workbench.sideBar.location": "right",
+    "explorer.excludeGitIgnore": true,
+    "editor.lineHeight": 1.25
+}

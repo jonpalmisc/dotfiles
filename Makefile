@@ -7,7 +7,6 @@ EMAKE_CONFIG_PATH	:= ~/.config/emake.toml
 GHOSTTY_CONFIG_PATH	:= ~/.config/ghostty
 GIT_CONFIG_PATH		:= ~/.config/git
 GNUPG_CONFIG_PATH	:= ~/.gnupg
-HS_CONFIG_PATH		:= ~/.hammerspoon
 IDA_CONFIG_PATH		:= ~/.idapro
 NVIM_CONFIG_PATH	:= ~/.config/nvim
 PAM_CONFIG_PATH		:= /etc/pam.d
@@ -65,11 +64,6 @@ gnupg:
 
 	chmod 600 $(GNUPG_CONFIG_PATH)/*
 	chmod 700 $(GNUPG_CONFIG_PATH)
-
-.PHONY: hs
-hs:
-	$(RM) $(HS_CONFIG_PATH)
-	$(LN) `pwd`/hs $(HS_CONFIG_PATH)
 
 .PHONY: ida
 ida:

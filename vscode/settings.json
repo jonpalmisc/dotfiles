@@ -22,5 +22,6 @@
     "files.trimFinalNewlines": true,
     "workbench.sideBar.location": "right",
     "explorer.excludeGitIgnore": true,
-    "editor.lineHeight": 1.25
+    "editor.lineHeight": 1.25,
+    "editor.tabSize": 8
 }

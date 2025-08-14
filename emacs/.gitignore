@@ -1,14 +1,9 @@
+custom.el
+init.elc
+
+auto-save-list/
 eln-cache/
 elpa/
-straight/
 transient/
-games/
-.cache/
-projects
-.lsp-session*
-.mc-lists*
 
-env.el
-custom.el
-
-*~
+dotemacs*.tar.xz

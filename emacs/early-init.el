@@ -1,5 +1,6 @@
 ;;; --- early-init.el -------------------- -*- lexical-binding: t; -*-
 
+
 (defun jp/gc-raise ()
   "Raise garbage collection thresholds to limit pauses."
   (setq gc-cons-threshold most-positive-fixnum
@@ -17,35 +18,49 @@
 ;; Disable garbage collection at startup.
 (jp/gc-raise)
 
-;; Increase process throughput for better performance with LSP, etc.
-(setq read-process-output-max (* 1024 1024))
+;; Put custom stuff in separate file.
+(setq custom-file (locate-user-emacs-file "custom.el"))
 
-;; Disable package.el entirely (and at startup) since straight.el will
-;; be used for package management instead.
-(setq package-enable-at-startup nil
-      site-run-file nil)
+;; Prefer loading newer files over older, byte-compiled ones.
+;;
+;; This is particularly important when iterating on a config.
+(setq load-prefer-newer t)
 
-;; Disable all window chrome, etc. and configure the default window
-;; dimensions. Configuring these options here yields better startup
-;; time than performing the same configuration in init.el.
+;; Silence annoying and confusing bytecode warnings.
+(setopt byte-compile-warnings '(not obsolete)
+	warning-suppress-log-types '((comp) (bytecomp))
+	native-comp-async-report-warnings-errors 'silent)
+
+;; Disable toolbar & menubar; configure the default window size.
+;;
+;; Configuring these options here yields better startup time than
+;; performing the same configuration in 'init.el'.
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(menu-bar-lines . 0) default-frame-alist)
+(push '(ns-transparent-titlebar . t) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(width . 100) default-frame-alist)
 (push '(height . 64) default-frame-alist)
 
-(setq frame-inhibit-implied-resize t)
-(setq frame-resize-pixelwise t)
+;; Allow window sizes that aren't perfect multiples of the grid cell
+;; dimensions. Without this, macOS window snapping behaves weirdly.
+(setopt frame-resize-pixelwise t
+	frame-inhibit-implied-resize t)
 
-;; Loading modes for the scratch buffer can increase startup time.
-(setq initial-major-mode 'fundamental-mode
-      initial-scratch-message nil)
+;; Set the scratch buffer to fundamental mode for faster startup time
+;; and remove the initial content.
+(setopt initial-major-mode 'fundamental-mode
+	initial-scratch-message nil)
 
 ;; Disable special file handlers at startup for better performance.
 (defvar jp/file-name-handler-alist-backup file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
+;; Silence startup messages.
+(setopt inhibit-startup-message t
+	inhibit-startup-echo-area-message (user-login-name))
+
 ;; Restore special file handlers after startup is complete.
 (add-hook 'emacs-startup-hook
-  (lambda ()
-    (setq file-name-handler-alist jp/file-name-handler-alist-backup)))
+	  (lambda ()
+	    (setq file-name-handler-alist jp/file-name-handler-alist-backup)))

@@ -49,6 +49,7 @@
 ;;; --- Basic editing & options --------------------------------------
 ;;;
 
+
 ;; Do not create the annoying backfiles (tildes) or lockfiles (hash)
 ;; that Emacs likes to create by default.
 (setopt make-backup-files nil
@@ -61,6 +62,7 @@
 (electric-pair-mode 1)              ; Auto-close parentheses, etc.
 (column-number-mode)                ; Show column numbers in mode line
 
+(global-hl-line-mode)			    ; Highlight cursor line
 (global-display-fill-column-indicator-mode) ; Show fill column ruler
 
 (defun jp/set-fill-length-70 ()
@@ -83,7 +85,7 @@
 ;; existing indentation style, which can be guessed from the buffer
 ;; using the 'dtrt-indent' package.
 (use-package dtrt-indent
-  :hook ((c-mode c++-mode objc-mode python-mode) . dtrt-indent-mode))
+  :hook ((c-mode c++-mode objc-mode python-mode js-mode) . dtrt-indent-mode))
 
 
 ;;;
@@ -154,7 +156,8 @@
   :custom
   (eglot-sync-connect nil)
   (eglot-highlight-symbol-face highlight)
-  (eglot-ignored-server-capabilities '(:inlayHintProvider)))
+  (eglot-ignored-server-capabilities '(:inlayHintProvider
+				       :documentOnTypeFormattingProvider)))
 
 
 ;;;
@@ -167,29 +170,58 @@
   (interactive)
   (org-babel-remove-result-one-or-many t))
 
-(defun jp/config-org-appearance ()
+(defun jp/org-config-appearance ()
   "Disable line numbers and fill indicator in Org buffers."
   (display-fill-column-indicator-mode -1)
   (display-line-numbers-mode -1))
 
-;; Org likes to load lots of modules by default; startup time can be
-;; significantly improved by not loading these. Org is also deferred
-;; here to save even more time on startup since I use it infrequently.
+(defun jp/org-agenda ()
+  "Open personal Org agenda view."
+  (interactive)
+  (org-agenda nil "A"))
+
+(defun jp/org-capture-task ()
+  "Capture a new task."
+  (interactive)
+  (org-capture nil "t"))
+
 (use-package org
   :bind (("C-c a" . org-agenda)
-	 ("C-c c" . org-capture))
+	 ("C-c A" . jp/org-agenda)
+	 ("C-c c" . org-capture)
+	 ("C-c t" . jp/org-capture-task))
   :hook ((org-mode . turn-on-auto-fill)
-         (org-mode . jp/config-org-appearance))
-  :preface (defvar org-modules '())
+         ((org-mode org-agenda-mode) . jp/org-config-appearance))
   :custom
   (org-startup-indented t)
+  (org-agenda-files '("~/Global.org"))
   (org-default-notes-file "~/Global.org")
-  (org-agenda-files '("~/Global.org")))
+  (org-agenda-window-setup 'only-window)
+
+  (org-agenda-custom-commands
+   '(("A" "Personal agenda"
+      ((agenda "" ((org-agenda-overriding-header "Last week\n")
+		   (org-agenda-span 'week)
+		   (org-agenda-start-day "-7d")))
+       (agenda "" ((org-agenda-overriding-header "This week\n")
+		   (org-agenda-span 'week)
+		   (org-agenda-start-day "+0d")))
+       (agenda "" ((org-agenda-overriding-header "Next week\n")
+		   (org-agenda-span 'week)
+		   (org-agenda-start-day "+7d")))
+       (todo nil ((org-agenda-overriding-header "Backlog\n")
+		  (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled)))))
+
+      ((org-agenda-scheduled-leaders '("" ""))
+       (org-agenda-remove-tags nil)
+       (org-agenda-prefix-format "  ")
+       (org-agenda-sorting-strategy '(time-up todo-state-down priority-down)))))))
 
 
 ;;;
 ;;; --- Extra keybindings --------------------------------------------
 ;;;
+
 
 (use-package emacs
   :bind (("C-x C-b" . switch-to-buffer)

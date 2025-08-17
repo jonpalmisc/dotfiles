@@ -103,6 +103,8 @@
   :hook ((prog-mode . corfu-mode))
   :custom
   (corfu-auto t)
+  (corfu-cycle t)
+  (corfu-auto-prefix 2)
   (corfu-scroll-margin 2))
 
 ;; Better minibuffer completion.
@@ -112,14 +114,20 @@
 ;; Multiple & fuzzy completion style that works very well in
 ;; conjunction with Vertico.
 (use-package orderless
-  :custom (completion-styles '(orderless)))
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 (defun jp/config-mono-font ()
   "Set the default font if it is available."
   (setq jp/mono-font "MD IO")
+
   (when (member jp/mono-font (font-family-list))
     (set-face-attribute 'default nil :font jp/mono-font)
-    (set-face-attribute 'fixed-pitch nil :font jp/mono-font)))
+    (set-face-attribute 'fixed-pitch nil :font jp/mono-font))
+
+  (setopt line-spacing 0.1))
 
 (jp/config-mono-font)
 

@@ -58,7 +58,11 @@
 (setopt truncate-lines t)		; Don't wrap long lines
 (setopt ring-bell-function 'ignore)	; Disable flashing bell
 
-(global-auto-revert-mode)           ; Reload files from disk on change
+;; Automatically reload files from disk on change.
+(setopt auto-revert-avoid-polling t)
+(setopt auto-revert-check-vc-info t)
+(global-auto-revert-mode)
+
 (electric-pair-mode 1)              ; Auto-close parentheses, etc.
 (column-number-mode)                ; Show column numbers in mode line
 
@@ -79,6 +83,11 @@
 
 ;; Remove trailing whitespace before saving buffers.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Prevent the "ls does not support dired" message by not attempting
+;; to use use the flag at all on Darwin.
+(when (string= system-type "darwin")
+  (setq dired-use-ls-dired nil))
 
 ;; Emacs has very strange defaults for indentation, and formatting
 ;; styles vary from project to project. It is best to mimic the
@@ -140,25 +149,21 @@
 ;;;
 
 
+;; Graphical, interactive Git interface.
 (use-package magit
   :commands magit-status
-  :config
-  ;; Make all popup menus inside Magit's UI closable with ESC.
-  (define-key transient-map [escape] #'transient-quit-one)
-
   :custom
-  ;; Don't auto-save repo buffers; this is unnecessary and auto-saving
-  ;; can cause unwanted side effects.
+  ;; Don't incessantly ask to save changes.
   (magit-save-repository-buffers nil)
 
-  ;; Magit likes to create splits for new windows by default; this is
-  ;; annoying and not particularly useful. Instead, open new Magit
-  ;; windows in the current window, replacing the current buffer.
+  ;; Replace the current window when opening Magit, rather than
+  ;; creating a new one.
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1))
 
+;; Integration with language servers for completion.
 (use-package eglot
-  :hook ((c-mode c++-mode objc-mode python-mode) . eglot-ensure)
+  :hook ((c-mode c++-mode objc-mode python-mode js-mode) . eglot-ensure)
   :bind (("C-; r" . eglot-rename)
 	 ("C-; a" . eglot-code-actions))
   :custom
@@ -245,6 +250,7 @@
 
 	 ("C-=" . text-scale-increase)
 	 ("C--" . text-scale-decrease)))
+
 
 ;;--------------------------------------------------------------------
 

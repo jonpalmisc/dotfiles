@@ -55,19 +55,19 @@
 (setopt make-backup-files nil
 	create-lockfiles nil)
 
-(setopt truncate-lines t)		; Don't wrap long lines
-(setopt ring-bell-function 'ignore)	; Disable flashing bell
+(setopt truncate-lines t)		; Don't wrap long lines.
+(setopt ring-bell-function 'ignore)	; Disable flashing bell.
 
 ;; Automatically reload files from disk on change.
 (setopt auto-revert-avoid-polling t)
 (setopt auto-revert-check-vc-info t)
 (global-auto-revert-mode)
 
-(electric-pair-mode 1)              ; Auto-close parentheses, etc.
-(column-number-mode)                ; Show column numbers in mode line
+(setopt cursor-type 'bar)		; Use traditional bar cursor.
+(global-hl-line-mode)			; Highlight cursor line.
 
-(global-hl-line-mode)			    ; Highlight cursor line
-(global-display-fill-column-indicator-mode) ; Show fill column ruler
+(electric-pair-mode 1)              ; Auto-close parentheses, etc.
+(column-number-mode)                ; Show column numbers in mode line.
 
 (defun jp/set-fill-length-70 ()
   "Set the current buffer's fill length to 70 columns."
@@ -77,9 +77,11 @@
 (setopt fill-column 80)
 (add-hook 'emacs-lisp-mode-hook #'jp/set-fill-length-70)
 
-(setopt sentence-end-double-space nil)	; It is no longer the 1900s
-(setopt show-trailing-whitespace t)	; Show trailing spaces
-(setopt require-final-newline t)	; End files with a newline
+(global-display-fill-column-indicator-mode) ; Show fill column ruler.
+
+(setopt sentence-end-double-space nil)	; It is no longer the 1900s.
+(setopt show-trailing-whitespace t)	; Show trailing spaces.
+(setopt require-final-newline t)	; End files with a newline.
 
 ;; Remove trailing whitespace before saving buffers.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)

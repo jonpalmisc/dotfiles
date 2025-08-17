@@ -167,6 +167,10 @@
   (eglot-ignored-server-capabilities '(:inlayHintProvider
 				       :documentOnTypeFormattingProvider)))
 
+;; Good integration with Ripgrep.
+(use-package rg
+  :bind (("C-c s" . rg-menu)))
+
 
 ;;;
 ;;; --- Org ----------------------------------------------------------

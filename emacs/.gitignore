@@ -6,4 +6,7 @@ eln-cache/
 elpa/
 transient/
 
+bookmarks
+projects
+
 dotemacs*.tar.xz

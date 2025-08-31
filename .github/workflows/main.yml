@@ -1,0 +1,25 @@
+name: Freeze
+
+on:
+  workflow_dispatch:
+  push:
+    branches: "*"
+
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Get full repo history, default is HEAD commit only.
+
+      - name: Archive
+        run: tar -cJvf ${{ runner.temp }}/dotfiles-${{ github.sha }}.tar.xz .
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotfiles
+          path: ${{ runner.temp }}/dotfiles-${{ github.sha }}.tar.xz

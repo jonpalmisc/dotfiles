@@ -118,6 +118,14 @@
   (corfu-auto-prefix 2)
   (corfu-scroll-margin 2))
 
+;; Corfu support for terminal Emacs.
+;;
+;; TODO: Remove when using Emacs 31+.
+(use-package corfu-terminal
+  :config
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1)))
+
 ;; Better minibuffer completion.
 (use-package vertico
   :hook (after-init . vertico-mode))

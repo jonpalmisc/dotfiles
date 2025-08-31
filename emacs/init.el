@@ -96,7 +96,15 @@
 ;; existing indentation style, which can be guessed from the buffer
 ;; using the 'dtrt-indent' package.
 (use-package dtrt-indent
-  :hook ((c-mode c++-mode objc-mode python-mode js-mode) . dtrt-indent-mode))
+  :hook ((c-mode
+	  c++-mode
+	  objc-mode
+	  python-mode
+	  js-mode) . dtrt-indent-mode))
+
+;; This affects the way braces are indented automatically; the default
+;; is the GNU-style. Gross.
+(setopt c-default-style "bsd")
 
 
 ;;;

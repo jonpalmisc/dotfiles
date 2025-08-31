@@ -163,6 +163,19 @@
 
 
 ;;;
+;;; --- Extra language support ---------------------------------------
+;;;
+
+
+(use-package yaml-mode
+  :mode (("\\.ya?ml\\'" . yaml-mode))
+  :custom ((yaml-indent-offset 2)))
+
+(use-package toml-mode
+  :mode "\\.toml\\'")
+
+
+;;;
 ;;; --- IDE-like features --------------------------------------------
 ;;;
 

@@ -45,6 +45,7 @@ ghostty:
 	mkdir -p $(GHOSTTY_CONFIG_PATH)
 
 	$(LN) `pwd`/ghostty/config $(GHOSTTY_CONFIG_PATH)/config
+	$(LN) `pwd`/ghostty/themes $(GHOSTTY_CONFIG_PATH)/themes
 
 .PHONY: git
 git:

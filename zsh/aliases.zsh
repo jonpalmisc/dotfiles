@@ -8,8 +8,12 @@ alias rgi='rg -i'
 # real one. Uninstalling it makes Poetry whine. This will have to do...
 alias xattr='/usr/bin/xattr'
 
+if [ -d "/Applications/Emacs.app/" ]; then
+    alias gmacs='open -a Emacs'
+    alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+fi
+
 # Aliases for opening applications on macOS.
-alias gmacs='open -a Emacs'
 alias binja='open -a Binary\ Ninja'
 alias ida64='open -a ida64'
 alias ida='open -b com.hexrays.ida'

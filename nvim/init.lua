@@ -58,6 +58,8 @@ vim.opt.autoread = true -- Auto-reload modified files.
 vim.opt.number = true -- Show line numbers.
 vim.opt.signcolumn = "number" -- Show signs in place of line numbers.
 
+vim.opt.cursorline = true -- Highlight line with cursor.
+
 vim.opt.completeopt = { "menuone", "noselect" }
 vim.opt.pumheight = 8 -- Limit number of popup menu items.
 
@@ -127,6 +129,7 @@ require("lazy").setup({
         map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = true })
         map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = true })
         map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = true })
+        map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = true })
 
         map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = true })
       end

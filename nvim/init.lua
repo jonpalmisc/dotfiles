@@ -114,6 +114,48 @@ require("lazy").setup({
   -- the right amount of indentation by default during editing.
   { "tpope/vim-sleuth", lazy = false },
 
+  -- Better and faster syntax highlighting.
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+    lazy = false,
+    build = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        highlight = { enable = true },
+        ensure_installed = {
+          "asm",
+          "bash",
+          "c",
+          "cmake",
+          "cpp",
+          "css",
+          "diff",
+          "html",
+          "javascript",
+          "jsdoc",
+          "json",
+          "jsonc",
+          "lua",
+          "luadoc",
+          "markdown",
+          "markdown_inline",
+          "objc",
+          "printf",
+          "python",
+          "regex",
+          "rust",
+          "toml",
+          "typescript",
+          "vim",
+          "vimdoc",
+          "xml",
+          "yaml",
+        },
+      })
+    end,
+  },
+
   -- Well-maintained configurations for many common LSP servers for
   -- automatic integration with Neovim's LSP support.
   {
@@ -169,97 +211,19 @@ require("lazy").setup({
 
   -- Pop-up code completion.
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      -- Snippet engine.
-      {
-        "L3MON4D3/LuaSnip",
-        dependencies = {
-          -- Use popular snippets from VSCode.
-          "rafamadriz/friendly-snippets",
-        },
-
-        config = function(_, _)
-          require("luasnip.loaders.from_vscode").lazy_load()
-          require("luasnip.loaders.from_vscode").lazy_load({ paths = { "./snippets" } })
-        end,
-      },
-
-      "hrsh7th/cmp-nvim-lsp", -- Integrate with LSP for completion.
-      "hrsh7th/cmp-nvim-lua", -- Auto-complete Neovim Lua APIs.
-      "hrsh7th/cmp-buffer", -- Suggets words in the buffer as completions.
-      "hrsh7th/cmp-path", -- Helps complete local filesystem paths.
-      "saadparwaiz1/cmp_luasnip", -- Show snippets in the completion popup.
-
-      -- Auto-close parentheses, etc.
-      {
-        "windwp/nvim-autopairs",
-        config = function(_, opts)
-          require("nvim-autopairs").setup({
-            fast_wrap = {},
-            disable_filetype = {
-              "TelescopePrompt",
-              "vim",
-            },
-          })
-
-          require("cmp").event:on(
-            "confirm_done",
-            require("nvim-autopairs.completion.cmp").on_confirm_done()
-          )
-        end,
+    "saghen/blink.cmp",
+    lazy = false,
+    dependencies = { "rafamadriz/friendly-snippets" },
+    version = "1.*",
+    opts = {
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+      keymap = { preset = "enter" },
+      completion = { documentation = { auto_show = true } },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
       },
     },
-    event = "InsertEnter",
-    opts = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-
-      return {
-        view = {
-          entries = "native",
-        },
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = {
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }),
-
-          ["<Tab>"] = function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end,
-          ["<S-Tab>"] = function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end,
-        },
-        sources = {
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "buffer" },
-          { name = "nvim_lua" },
-          { name = "path" },
-        },
-      }
-    end,
+    opts_extend = { "sources.default" },
   },
 
   -- Generic fuzzy-finder API, provides "command palette"-like search
@@ -271,12 +235,6 @@ require("lazy").setup({
     opts = function()
       return {
         defaults = {
-          mappings = {
-            i = {
-              ["<esc>"] = require("telescope.actions").close,
-            },
-          },
-
           vimgrep_arguments = {
             "rg",
             "--color=never",
@@ -287,19 +245,17 @@ require("lazy").setup({
             "--smart-case",
           },
 
-          selection_caret = "  ",
           preview = false,
-          prompt_title = false,
-          results_title = false,
           storting_strategy = "ascending",
+          selection_caret = "  ",
 
           layout_strategy = "bottom_pane",
           layout_config = {
-            height = 10,
-            prompt_position = "bottom",
+            height = 12,
+            prompt_position = "top",
           },
           borderchars = {
-            prompt = { " ", " ", "─", " ", " ", " ", "─", "─" },
+            prompt = { "─", " ", "─", " ", " ", " ", "─", "─" },
             results = { "─", " ", " ", " ", "─", "─", " ", " " },
           },
         },
@@ -337,7 +293,9 @@ require("lazy").setup({
       "nvim-lua/plenary.nvim",
     },
     cmd = { "Neogit" },
-    config = true,
+    opts = {
+      disable_hint = true,
+    },
   },
 
   "rktjmp/lush.nvim", -- Framework for easily building themes.

@@ -236,6 +236,12 @@ require("lazy").setup({
     opts = function()
       return {
         defaults = {
+          mappings = {
+            i = {
+              ["<esc>"] = require("telescope.actions").close,
+            },
+          },
+
           vimgrep_arguments = {
             "rg",
             "--color=never",
@@ -247,6 +253,7 @@ require("lazy").setup({
           },
 
           preview = false,
+          results_title = false,
           storting_strategy = "ascending",
           selection_caret = "  ",
 

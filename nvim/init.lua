@@ -227,6 +227,35 @@ require("lazy").setup({
     opts_extend = { "sources.default" },
   },
 
+  -- Better status line.
+  {
+    lazy = false,
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      options = {
+        icons_enabled = false,
+        component_separators = { left = "", right = "" },
+        section_separators = { left = "", right = "" },
+      },
+      sections = {
+        lualine_a = { "mode" },
+        lualine_b = {},
+        lualine_c = { "filename" },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = { "location" },
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { "filename" },
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
+    },
+  },
+
   -- Generic fuzzy-finder API, provides "command palette"-like search
   -- interfaces for files, LSP symbols, etc.
   {

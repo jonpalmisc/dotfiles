@@ -331,20 +331,22 @@ local map = vim.keymap.set
 
 ------- General/builtin --------------------------------------------------------
 
+map("n", "<C-l>", ":noh<CR>zz")
+map("n", "<C-d>", "<C-d>zz")
+map("n", "<C-u>", "<C-u>zz")
+
 map("n", "<A-k>", ":m .-2<CR>==") -- Swap line up.
 map("n", "<A-j>", ":m .+1<CR>==") -- Swap line down.
 
 map("c", "<C-a>", "<Home>")
+map("c", "<C-e>", "<End>")
 
 ------- Telescope --------------------------------------------------------------
 
-map("n", "<leader>B", "<cmd> :Telescope buffers <CR>")
-map("n", "<leader>P", "<cmd> :Telescope find_files <CR>")
-map("n", "<leader>R", "<cmd> :Telescope live_grep <CR>")
-
-------- Tree/sidebar -----------------------------------------------------------
-
-map("n", "<C-b>", "<cmd> :NvimTreeToggle <CR>")
+map("n", "<leader>B", "<cmd> :Telescope buffers<CR>")
+map("n", "<leader>P", "<cmd> :Telescope find_files<CR>")
+map("n", "<leader>O", "<cmd> :Telescope lsp_workspace_symbols<CR>")
+map("n", "<leader>R", "<cmd> :Telescope live_grep<CR>")
 
 ------- Neogit -----------------------------------------------------------------
 

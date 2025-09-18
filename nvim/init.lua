@@ -128,6 +128,7 @@ require("lazy").setup({
           "bash",
           "c",
           "cmake",
+          "comment",
           "cpp",
           "css",
           "diff",
@@ -261,29 +262,6 @@ require("lazy").setup({
         },
       }
     end,
-  },
-
-  -- Traditional-style sidebar.
-  {
-    "nvim-tree/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    opts = {
-      filters = { dotfiles = true },
-      disable_netrw = true,
-      hijack_cursor = true,
-      sync_root_with_cwd = true,
-      update_focused_file = {
-        enable = true,
-        update_root = false,
-      },
-      view = {
-        width = 30,
-        preserve_window_proportions = true,
-      },
-      renderer = {
-        root_folder_label = false,
-      },
-    },
   },
 
   -- Magit-like Git interface.

@@ -289,7 +289,7 @@ require("lazy").setup({
           layout_strategy = "bottom_pane",
           layout_config = {
             height = 12,
-            prompt_position = "top",
+            prompt_position = "bottom",
           },
           borderchars = {
             prompt = { "─", " ", "─", " ", " ", " ", "─", "─" },

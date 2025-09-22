@@ -138,6 +138,7 @@ require("lazy").setup({
     config = function()
       require("nvim-treesitter.configs").setup({
         highlight = { enable = true },
+        indent = { enable = false },
         ensure_installed = {
           "asm",
           "bash",
@@ -382,7 +383,7 @@ local map = vim.keymap.set
 
 ------- General/builtin --------------------------------------------------------
 
-map("n", "<C-l>", ":noh<CR>zz")
+map("n", "<C-l>", "zz:noh<CR>")
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 

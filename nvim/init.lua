@@ -100,20 +100,34 @@ end
 vim.opt.rtp:prepend(lazy_path)
 
 require("lazy").setup({
-  -- Personal color scheme.
+  -- Nice theme to help me miss Emacs less.
   {
-    dir = "~/Developer/Source/Personal/nvim_industrial_theme",
+    "miikanissi/modus-themes.nvim",
     lazy = false,
     priority = 1000,
+    opts = {
+      dim_inactive = true,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = false },
+      },
+    },
     config = function()
       vim.opt.termguicolors = true
-      vim.cmd("colorscheme industrial")
+      vim.cmd("colorscheme modus")
     end,
   },
 
   -- Auto-detect indentation on a per-file basis so that Neovim inserts
   -- the right amount of indentation by default during editing.
   { "tpope/vim-sleuth", lazy = false },
+
+  -- Auto-insert character pairs.
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = true,
+  },
 
   -- Better and faster syntax highlighting.
   {

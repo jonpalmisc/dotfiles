@@ -15,6 +15,7 @@ vim.opt.smartindent = true
 
 vim.opt.wrap = false -- Don't wrap long lines.
 vim.opt.textwidth = 80 -- Use 80 columns for hard wrapping.
+vim.opt.formatoptions = vim.opt.formatoptions - "t" -- But don't auto-wrap  code.
 
 vim.opt.backspace = { "indent", "eol", "start" } -- Make backspace sensible.
 

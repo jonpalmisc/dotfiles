@@ -235,7 +235,17 @@ require("lazy").setup({
     opts = {
       fuzzy = { implementation = "prefer_rust_with_warning" },
       keymap = { preset = "enter" },
-      completion = { documentation = { auto_show = true } },
+      completion = {
+        documentation = { auto_show = true },
+        menu = {
+          draw = {
+            columns = {
+              { "label", "label_description", gap = 1 },
+              { "kind" },
+            },
+          },
+        },
+      },
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
       },

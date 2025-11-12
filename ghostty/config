@@ -15,3 +15,5 @@ quit-after-last-window-closed = true
 window-save-state = never
 
 macos-option-as-alt = true
+
+shell-integration-features = ssh-env

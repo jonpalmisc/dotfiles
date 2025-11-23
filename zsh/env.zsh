@@ -16,8 +16,9 @@ typeset -U path
 
 # ===-- Variables -----------------------------------------------------------===
 
-# Use Neovim as the default editor, if available.
+# Use Neovim as the default editor and manual pager, if available.
 if command -v nvim &>/dev/null; then
 	export EDITOR="nvim"
 	export VISUAL="$EDITOR"
+	export MANPAGER="nvim +Man\!"
 fi

@@ -8,7 +8,8 @@
 
 vim.opt.history = 100 -- Set max history size.
 
-vim.opt.mouse = "" -- No mouse!
+vim.opt.mouse = "a"
+vim.opt.mousescroll = "ver:1,hor:0"
 
 vim.opt.autoindent = true -- Indent automatically.
 vim.opt.smartindent = true

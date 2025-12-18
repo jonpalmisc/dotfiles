@@ -1,4 +1,4 @@
-theme = modus_operandi
+theme = light:modus_operandi,dark:modus_vivendi
 
 font-family = MD IO
 font-style = Medium

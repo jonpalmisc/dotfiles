@@ -217,7 +217,7 @@ require("lazy").setup({
 
       local lsp = require("lspconfig")
 
-      local servers = { "clangd", "rust_analyzer", "pyright", "ts_ls", "zls" }
+      local servers = { "clangd", "rust_analyzer", "pyright", "ts_ls", "zls", "sourcekit" }
       for _, server in pairs(servers) do
         lsp[server].setup({
           on_attach = on_attach,

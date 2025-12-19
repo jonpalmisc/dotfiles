@@ -114,25 +114,26 @@
 
 ;; Live help for long key combos.
 (use-package which-key
-  :config
-  (which-key-mode))
+  :hook (after-init . which-key-mode))
 
 ;; Modern & minimal text-completion popup.
 (use-package corfu
-  :hook ((prog-mode . corfu-mode))
+  :hook (prog-mode . corfu-mode)
   :custom
   (corfu-auto t)
   (corfu-cycle t)
   (corfu-auto-prefix 2)
   (corfu-scroll-margin 2))
 
+(defun jp/corfu-terminal ()
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1)))
+
 ;; Corfu support for terminal Emacs.
 ;;
 ;; TODO: Remove when using Emacs 31+.
 (use-package corfu-terminal
-  :config
-  (unless (display-graphic-p)
-    (corfu-terminal-mode +1)))
+  :hook (corfu-mode . jp/corfu-terminal))
 
 ;; Better minibuffer completion.
 (use-package vertico
@@ -294,4 +295,4 @@
 
 ;; Bring the GC threshold down to normal levels now that all
 ;; initialization is complete.
-(jp/gc-restore)
+(jp/gc-restore-deferred)

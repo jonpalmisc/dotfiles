@@ -8,8 +8,8 @@
 
 (defun jp/gc-restore ()
   "Restore garbage collection settings to reasonable runtime values."
-  (setq gc-cons-threshold (* 32 1024 1024)
-        gc-cons-percentage 0.1))
+  (setq gc-cons-threshold (* 128 1024 1024)
+        gc-cons-percentage 0.2))
 
 (defun jp/gc-restore-deferred ()
   "Restore GC settings, with a delay."

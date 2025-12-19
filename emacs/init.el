@@ -198,6 +198,7 @@
 
 ;; Graphical, interactive Git interface.
 (use-package magit
+  :defer 5
   :commands magit-status
   :custom
   ;; Don't incessantly ask to save changes.

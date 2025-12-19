@@ -1,5 +1,7 @@
 ;;; --- early-init.el -------------------- -*- lexical-binding: t; -*-
 
+;; Don't use default packaging system, we are going to use Straight.
+(setq package-enable-at-startup nil)
 
 (defun jp/gc-raise ()
   "Raise garbage collection thresholds to limit pauses."

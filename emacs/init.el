@@ -24,25 +24,40 @@
 ;;;
 
 
-(require 'package)
-(package-initialize)
+;; Saves a lot of startup time, and has no downsides since I'm not
+;; developing packages.
+(setopt straight-check-for-modifications nil)
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; Use Straight for package management, primarily for performance
+;; reasons (among other, better ones).
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(when (< emacs-major-version 29)
-  (unless (package-installed-p 'use-package)
-    (unless package-archive-contents
-      (package-refresh-contents))
-    (package-install 'use-package)))
-
+;; Hide excessive warnings, etc. related to native compilation.
 (add-to-list 'display-buffer-alist
              '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
                (display-buffer-no-window)
                (allow-no-window . t)))
 
+(straight-use-package 'use-package)
+(setopt straight-use-package-by-default t)
+
 ;; Always require packages specified in this config to be present.
 (require 'use-package-ensure)
-(setq use-package-always-ensure t)
+(setopt use-package-always-ensure t)
 
 
 ;;;

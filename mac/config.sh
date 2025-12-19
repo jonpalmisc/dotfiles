@@ -16,9 +16,6 @@ defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 0
 
 # ===------------------------------------------------------------------------===
 
-# Always show sound in the menu bar
-defaults write com.apple.controlcenter 'NSStatusItem Visible Sound' -bool True
-
 # Configure dock appearance
 defaults write com.apple.dock 'orientation' -string 'left'
 defaults write com.apple.dock magnification -bool false
@@ -47,8 +44,3 @@ defaults write com.apple.Safari IncludeDevelopMenu -bool true
 
 # Don't open files (read: unzip archives) upon download completion
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
-
-# ===-- Application: Quartz Debug -------------------------------------------===
-
-defaults write com.apple.QuartzDebug QuartzDebugPrivateInterface -bool YES
-defaults write com.apple.QuartzDebug QDShowWindowInfoOnMouseOver -bool YES

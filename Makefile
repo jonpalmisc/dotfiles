@@ -8,6 +8,7 @@ GHOSTTY_CONFIG_PATH	:= ~/.config/ghostty
 GIT_CONFIG_PATH		:= ~/.config/git
 GNUPG_CONFIG_PATH	:= ~/.gnupg
 IDA_CONFIG_PATH		:= ~/.idapro
+MAC_KEYBINDINGS_PATH	:= ~/Library/KeyBindings
 NVIM_CONFIG_PATH	:= ~/.config/nvim
 PAM_CONFIG_PATH		:= /etc/pam.d
 RADARE_CONFIG_PATH	:= ~/.config/radare2
@@ -72,6 +73,10 @@ ida:
 	mkdir -p $(IDA_CONFIG_PATH)
 
 	$(LN) `pwd`/ida/cfg $(IDA_CONFIG_PATH)/cfg
+.PHONY: mac
+mac:
+	mkdir -p $(MAC_KEYBINDINGS_PATH)
+	cp `pwd`/mac/DefaultKeyBinding.dict $(MAC_KEYBINDINGS_PATH)
 
 .PHONY: nvim
 nvim:

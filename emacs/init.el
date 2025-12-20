@@ -174,8 +174,16 @@
 
 (jp/config-mono-font)
 
+(defun jp/macos-dark-mode-p ()
+  "Is macOS in dark mode?"
+  (string= (shell-command-to-string "defaults read -g AppleInterfaceStyle") "Dark\n"))
+
 (use-package modus-themes
-  :config (load-theme 'modus-operandi :no-confirm-loading))
+  :config
+  (modus-themes-load-theme
+   (if (jp/macos-dark-mode-p)
+       'modus-vivendi
+     'modus-operandi)))
 
 
 ;;;

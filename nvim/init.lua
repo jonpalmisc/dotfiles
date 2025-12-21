@@ -1,416 +1,267 @@
---============================================================================--
---                                                                            --
---                   B A S I C   C O N F I G U R A T I O N                    --
---                                                                            --
---============================================================================--
+--[[  init.lua  ]]
 
-------- Editing/fundamentals ---------------------------------------------------
+-- For maximum portability, this config supports a "lite" and "full" mode. Full
+-- mode is enabled by the presence of a `local.lua` (which is ignored by Git). A
+-- fresh clone defaults to lite mode: no packages, no LSP, built-in colorscheme.
+local local_config = vim.fn.stdpath("config") .. "/local.lua"
+local full = vim.fn.filereadable(local_config) == 1
 
-vim.opt.history = 100 -- Set max history size.
+-- Configure leader before any plugins or mappings use it.
+vim.g.mapleader = ";"
+vim.g.maplocalleader = ";"
 
-vim.opt.mouse = "a"
-vim.opt.mousescroll = "ver:1,hor:0"
+--[[  CORE BEHAVIOR  ]]
 
-vim.opt.autoindent = true -- Indent automatically.
-vim.opt.smartindent = true
+vim.opt.history = 100 -- Command history size.
+vim.opt.clipboard = "unnamedplus" -- Use system clipboard.
 
-vim.opt.wrap = false -- Don't wrap long lines.
-vim.opt.textwidth = 80 -- Use 80 columns for hard wrapping.
-vim.opt.formatoptions = vim.opt.formatoptions - "t" -- But don't auto-wrap  code.
-
-vim.opt.backspace = { "indent", "eol", "start" } -- Make backspace sensible.
-
-vim.opt.clipboard = "unnamedplus" -- Integrate yank/paste with native clipboard.
-
-vim.cmd([[set iskeyword-=-]]) -- Treat hyphens as word separators.
-vim.cmd([[set iskeyword-=_]]) -- Treat underscores as word separators.
-
-vim.opt.showmatch = true -- Highlight character pairs.
-vim.opt.hlsearch = true -- Highlight search matches.
-
-vim.opt.ignorecase = true -- Ignore case when searching.
-vim.opt.smartcase = true -- Don't ignore case if the search is mixed-case.
-
-vim.opt.conceallevel = 0 -- Don't hide characters, e.g. in Markdown
+vim.opt.mouse = "a" -- Enable mouse.
+vim.opt.mousescroll = "ver:1,hor:0" -- Prevent horizontal scrolling.
 
 vim.opt.splitbelow = true -- Split below on horizontal splits.
 vim.opt.splitright = true -- Split to right on vertical splits.
 
--- Configure (local) leader before any plugins or other files use it.
-vim.g.mapleader = ";"
-vim.g.maplocalleader = ";"
+-- Use `fd` for finding files, if present.
+if vim.fn.executable("fd") == 1 then
+  function _G.FdFindFiles(cmdarg, _cmdcomplete)
+    -- The `funcfunc` can be called in two separate contexts: either the
+    -- user is requesting completion based on a search term, or the user has
+    -- provided a specific path they want to open.
+    --
+    -- We should always first check if this is the latter instance, as
+    -- attempting to search and match on an already-complete path can lead
+    -- to confusing E345 errors.
+    if #cmdarg > 0 and vim.fn.filereadable(cmdarg) == 1 then
+      return { cmdarg }
+    end
 
-------- File handling ----------------------------------------------------------
+    local args = { "fd", "--color=never", "--type", "f", "--" }
+    if #cmdarg > 0 then
+      table.insert(args, cmdarg)
+    end
 
-vim.opt.encoding = "utf-8" -- Always use UTF-8.
-vim.opt.fileencoding = "utf-8"
+    return vim.fn.systemlist(args)
+  end
+
+  vim.o.findfunc = "v:lua.FdFindFiles"
+end
+
+-- Use `rg` for `:grep`, if present.
+if vim.fn.executable("rg") == 1 then
+  vim.opt.grepprg = "rg --vimgrep"
+  vim.opt.grepformat = "%f:%l:%c:%m"
+end
+
+-- Always open quickfix list after running commands that populate it.
+vim.api.nvim_create_autocmd("QuickFixCmdPost", {
+  pattern = "[^l]*", -- Except with `l` functions.
+  callback = function()
+    vim.cmd("copen")
+  end,
+})
+
+--[[  EDITING EXPERIENCE  ]]
+
+vim.cmd([[set iskeyword-=-]]) -- Treat hyphens as word separators.
+vim.cmd([[set iskeyword-=_]]) -- Treat underscores as word separators.
+
+vim.opt.backspace = { "indent", "eol", "start" } -- Sensible backspace behavior.
+
+vim.opt.autoindent = true -- Match current indentation on new lines.
+vim.opt.smartindent = true -- Use smarter auto-indent when available.
+
+vim.opt.wrap = false -- Disable soft wrapping.
+vim.opt.textwidth = 80 -- Hard-wrap at 80 columns.
+vim.opt.joinspaces = false -- Single space after period on join.
+vim.opt.formatoptions = vim.opt.formatoptions - "t" -- Don't auto-wrap code.
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "rust",
+  callback = function()
+    vim.opt_local.textwidth = 100
+  end,
+})
+
+vim.opt.conceallevel = 0 -- Don't hide characters, e.g. in Markdown.
+
+vim.opt.ignorecase = true -- Ignore case when searching.
+vim.opt.smartcase = true -- Use case in mixed-case searches.
+
+vim.opt.autocomplete = true -- Use built-in autocomplete.
+vim.opt.complete:append("o") -- Use omnifunc.
+vim.opt.completeopt = {
+  "menuone", -- Always show menu.
+  "noselect", -- Don't auto-select first option.
+}
+
+-- Use more natural bindings for completion.
+vim.keymap.set("i", "<Tab>", function()
+  return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"
+end, { expr = true })
+vim.keymap.set("i", "<S-Tab>", function()
+  return vim.fn.pumvisible() == 1 and "<C-p>" or "<S-Tab>"
+end, { expr = true })
+
+--[[  FILE HANDLING  ]]
+
+vim.opt.encoding = "utf-8" -- Always use UTF-8 internally.
+vim.opt.fileencoding = "utf-8" -- Always use UTF-8 on disk.
 
 vim.opt.backup = false -- Disable backup files.
-vim.opt.swapfile = false -- Don't use swapfiles.
+vim.opt.swapfile = false -- Disable swap files.
+vim.opt.autoread = true -- Auto-reload modified files.
 
 vim.opt.hidden = true -- Enable background buffers.
 
-vim.opt.autoread = true -- Auto-reload modified files.
+--[[  APPEARANCE  ]]
 
-------- Appearance & visual behavior -------------------------------------------
+vim.opt.number = false -- Hide line numbers.
+vim.opt.signcolumn = "yes:1" -- Use constant & fixed-width sign column.
 
--- The combination of these two settings prevents the buffer content from
--- jumping back-and-forth horizontally when signs are added/removed.
---
-vim.opt.number = true -- Show line numbers.
-vim.opt.signcolumn = "number" -- Show signs in place of line numbers.
+vim.opt.pumheight = 8 -- Make popup menu 8 lines high.
+
+vim.opt.scrolloff = 6 -- Add vertical scroll margin.
+
+vim.opt.hlsearch = true -- Highlight search pattern.
+vim.opt.showmatch = true -- Highlight character pairs.
 
 vim.opt.cursorline = true -- Highlight line with cursor.
 
-vim.opt.completeopt = { "menuone", "noselect" }
-vim.opt.pumheight = 8 -- Limit number of popup menu items.
+vim.opt.colorcolumn = "+1" -- Show fill column indicator.
 
-vim.opt.scrolloff = 6 -- Add vertical scrolling margin.
+vim.opt.list = true -- Show invisible characters.
+vim.opt.listchars = { trail = "·" } -- Mark trailing whitespace.
 
-------- Performance & miscellaneous tweaks -------------------------------------
+-- Show trailing whitespace as a red background (instead of dots).
+vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
+  callback = function()
+    vim.api.nvim_set_hl(0, "Whitespace", { bg = "#cc3333", fg = "#cc3333" })
+  end,
+})
 
-vim.opt.lazyredraw = true -- Use faster scrolling?
-vim.opt.synmaxcol = 160 -- Syntax highlighting stop column (helps performance).
-vim.opt.updatetime = 250 -- Run faster, allegedly.
-vim.opt.shortmess = "I" -- Hide intro message.
+vim.opt.wildoptions = "pum" -- Use popup menu for command completion.
 
--- Disable some provider nonsense.
-vim.g.loaded_node_provider = 0
+vim.opt.termguicolors = true -- Use better colors in terminal.
+
+--[[  PERFORMANCE  ]]
+
+vim.opt.synmaxcol = 160 -- Don't syntax highlight past 160 characters.
+
+-- Reduce idle time debounce; makes plugins that use the `CursorHold`
+-- autocommand more responsive.
+vim.opt.updatetime = 250
+
+vim.opt.shortmess:append("I") -- Hide intro/startup message.
+
+-- Disabel unused providers (faster startup).
 vim.g.loaded_python3_provider = 0
-vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
 
---============================================================================--
---                                                                            --
---                    P A C K A G E   M A N A G E M E N T                     --
---                                                                            --
---============================================================================--
+-- Disable unused built-in plugins.
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
 
-local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazy_path) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazy_path,
+--[[  PACKAGE MANAGEMENT  ]]
+
+if full then
+  vim.pack.add({
+    "https://github.com/miikanissi/modus-themes.nvim",
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/windwp/nvim-autopairs",
+    "https://github.com/nvim-mini/mini.pick",
+    "https://github.com/sindrets/diffview.nvim",
+    "https://github.com/NeogitOrg/neogit",
+    "https://github.com/neovim/nvim-lspconfig",
+    "https://github.com/tpope/vim-sleuth",
+  })
+
+  require("modus-themes").setup({
+    styles = {
+      comments = { italic = true },
+      keywords = { italic = false },
+    },
+  })
+  vim.cmd("colorscheme modus")
+
+  require("nvim-autopairs").setup({})
+  require("mini.pick").setup()
+  require("diffview").setup({})
+
+  require("neogit").setup({
+    disable_hint = true,
+    graph_style = "unicode",
+    remember_settings = false,
+    use_per_project_settings = false,
   })
 end
 
-vim.opt.rtp:prepend(lazy_path)
+--[[  LSP  ]]
 
-require("lazy").setup({
-  -- Nice theme to help me miss Emacs less.
-  {
-    "miikanissi/modus-themes.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      dim_inactive = true,
-      styles = {
-        comments = { italic = true },
-        keywords = { italic = false },
-      },
-    },
-    config = function()
-      vim.opt.termguicolors = true
-      vim.cmd("colorscheme modus")
-    end,
-  },
+if full then
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(ev)
+      local map = vim.keymap.set
+      local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
 
-  -- Auto-detect indentation on a per-file basis so that Neovim inserts
-  -- the right amount of indentation by default during editing.
-  { "tpope/vim-sleuth", lazy = false },
-
-  -- Auto-insert character pairs.
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
-  },
-
-  -- Better and faster syntax highlighting.
-  {
-    "nvim-treesitter/nvim-treesitter",
-    branch = "master",
-    lazy = false,
-    build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
-        indent = { enable = false },
-        ensure_installed = {
-          "asm",
-          "bash",
-          "c",
-          "cmake",
-          "comment",
-          "cpp",
-          "css",
-          "diff",
-          "html",
-          "javascript",
-          "jsdoc",
-          "json",
-          "jsonc",
-          "lua",
-          "luadoc",
-          "markdown",
-          "markdown_inline",
-          "objc",
-          "printf",
-          "python",
-          "regex",
-          "rust",
-          "toml",
-          "typescript",
-          "vim",
-          "vimdoc",
-          "xml",
-          "yaml",
-        },
-      })
-    end,
-  },
-
-  -- Well-maintained configurations for many common LSP servers for
-  -- automatic integration with Neovim's LSP support.
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    config = function()
-      local on_attach = function(_, buf)
-        local map = vim.keymap.set
-
-        map("n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = true })
-        map("n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = true })
-        map("n", "<localleader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { buffer = true })
-        map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = true })
-        map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = true })
-        map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = true })
-        map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = true })
-
-        map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = true })
+      if client:supports_method("textDocument/completion") then
+        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
       end
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-      -- Further-configure completion options.
-      capabilities.textDocument.completion.completionItem = {
-        documentationFormat = { "markdown", "plaintext" },
-        snippetSupport = true,
-        preselectSupport = true,
-        insertReplaceSupport = true,
-        labelDetailsSupport = true,
-        deprecatedSupport = true,
-        commitCharactersSupport = true,
-        tagSupport = { valueSet = { 1 } },
-        resolveSupport = {
-          properties = {
-            "documentation",
-            "detail",
-            "additionalTextEdits",
-          },
-        },
-      }
-
-      local lsp = require("lspconfig")
-
-      local servers = { "clangd", "rust_analyzer", "pyright", "ts_ls", "zls", "sourcekit" }
-      for _, server in pairs(servers) do
-        lsp[server].setup({
-          on_attach = on_attach,
-          capabilities = capabilities,
-        })
-      end
+      map("n", "<localleader>gD", vim.lsp.buf.declaration, { buffer = ev.buf })
+      map("n", "<localleader>gd", vim.lsp.buf.definition, { buffer = ev.buf })
+      map("n", "<localleader>gi", vim.lsp.buf.implementation, { buffer = ev.buf })
+      map("n", "<localleader>gr", vim.lsp.buf.references, { buffer = ev.buf })
+      map("n", "<localleader>lr", vim.lsp.buf.rename, { buffer = ev.buf })
+      map("n", "<localleader>la", vim.lsp.buf.code_action, { buffer = ev.buf })
+      map("n", "<localleader>ld", vim.diagnostic.open_float, { buffer = ev.buf })
+      map("i", "<C-k>", vim.lsp.buf.signature_help, { buffer = ev.buf })
     end,
-  },
+  })
 
-  -- Pop-up code completion.
-  {
-    "saghen/blink.cmp",
-    lazy = false,
-    dependencies = { "rafamadriz/friendly-snippets" },
-    version = "1.*",
-    opts = {
-      fuzzy = { implementation = "prefer_rust_with_warning" },
-      keymap = { preset = "enter" },
-      completion = {
-        documentation = { auto_show = true },
-        menu = {
-          draw = {
-            columns = {
-              { "label", "label_description", gap = 1 },
-              { "kind" },
-            },
-          },
-        },
-      },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
-      },
-    },
-    opts_extend = { "sources.default" },
-  },
+  vim.lsp.enable({ "clangd", "rust_analyzer", "ty", "ts_ls" })
+end
 
-  -- Better status line.
-  {
-    lazy = false,
-    "nvim-lualine/lualine.nvim",
-    opts = {
-      options = {
-        icons_enabled = false,
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
-      },
-      sections = {
-        lualine_a = { "mode" },
-        lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = { "location" },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {},
-      },
-    },
-  },
-
-  -- Generic fuzzy-finder API, provides "command palette"-like search
-  -- interfaces for files, LSP symbols, etc.
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = { "Telescope" },
-    opts = function()
-      return {
-        defaults = {
-          mappings = {
-            i = {
-              ["<esc>"] = require("telescope.actions").close,
-            },
-          },
-
-          vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-          },
-
-          preview = false,
-          results_title = false,
-          storting_strategy = "ascending",
-          selection_caret = "  ",
-
-          layout_strategy = "bottom_pane",
-          layout_config = {
-            height = 12,
-            prompt_position = "bottom",
-          },
-          borderchars = {
-            prompt = { "─", " ", "─", " ", " ", " ", "─", "─" },
-            results = { "─", " ", " ", " ", "─", "─", " ", " " },
-          },
-        },
-      }
-    end,
-  },
-
-  -- Magit-like Git interface.
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = { "Neogit" },
-    opts = {
-      disable_hint = true,
-    },
-  },
-
-  "rktjmp/lush.nvim", -- Framework for easily building themes.
-  "rktjmp/shipwright.nvim", -- Used for exporting theme to other formats.
-}, {
-  defaults = {
-    lazy = true,
-  },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "2html_plugin",
-        "tohtml",
-        "getscript",
-        "getscriptPlugin",
-        "gzip",
-        "logipat",
-        "netrw",
-        "netrwPlugin",
-        "netrwSettings",
-        "netrwFileHandlers",
-        "matchit",
-        "tar",
-        "tarPlugin",
-        "rrhelper",
-        "spellfile_plugin",
-        "vimball",
-        "vimballPlugin",
-        "zip",
-        "zipPlugin",
-        "tutor",
-        "rplugin",
-        "syntax",
-        "synmenu",
-        "optwin",
-        "compiler",
-        "bugreport",
-        "ftplugin",
-      },
-    },
-  },
-})
-
---============================================================================--
---                                                                            --
---                           K E Y B I N D I N G S                            --
---                                                                            --
---============================================================================--
-
--- Since we use package lazy-loading based on command names, we register
--- mappings separately from package initialization so that triggering these
--- mappings can load packages on demand.
+--[[  KEYBINDINGS  ]]
 
 local map = vim.keymap.set
 
-------- General/builtin --------------------------------------------------------
+-- Quickly find files.
+map("n", "<leader>P", ":find ")
 
+-- Make `C-l` center & clear highlight.
 map("n", "<C-l>", "zz:noh<CR>")
+
+-- Re-center after `C-u` and `C-d`.
 map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 
-map("n", "<A-k>", ":m .-2<CR>==") -- Swap line up.
-map("n", "<A-j>", ":m .+1<CR>==") -- Swap line down.
+-- Emacs-style line permutation.
+map("n", "<A-k>", ":m .-2<CR>==")
+map("n", "<A-j>", ":m .+1<CR>==")
 
+-- Add some readline bindings in command mode.
 map("c", "<C-a>", "<Home>")
 map("c", "<C-e>", "<End>")
 
-------- Telescope --------------------------------------------------------------
+-- Quick binding for grep.
+map("n", "<leader>R", ":silent grep ")
 
-map("n", "<leader>B", "<cmd> :Telescope buffers<CR>")
-map("n", "<leader>P", "<cmd> :Telescope find_files<CR>")
-map("n", "<leader>O", "<cmd> :Telescope lsp_workspace_symbols<CR>")
-map("n", "<leader>R", "<cmd> :Telescope live_grep<CR>")
-
-------- Neogit -----------------------------------------------------------------
-
+-- Quick binding for Neogit.
 map("n", "<leader>G", "<cmd> :Neogit <CR>")
+
+--[[  LOCAL OVERRIDES  ]]
+
+if full then
+  dofile(local_config)
+end

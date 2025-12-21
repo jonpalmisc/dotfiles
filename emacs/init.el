@@ -98,9 +98,6 @@
 (setopt show-trailing-whitespace t)	; Show trailing spaces.
 (setopt require-final-newline t)	; End files with a newline.
 
-;; Remove trailing whitespace before saving buffers.
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
 ;; Prevent the "ls does not support dired" message by not attempting
 ;; to use use the flag at all on Darwin.
 (when (string= system-type "darwin")

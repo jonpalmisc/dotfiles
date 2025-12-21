@@ -133,8 +133,8 @@ require("lazy").setup({
   -- Better and faster syntax highlighting.
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
     lazy = false,
+    branch = "master",
     build = ":TSUpdate",
     config = function()
       require("nvim-treesitter.configs").setup({
@@ -180,52 +180,53 @@ require("lazy").setup({
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
-      local on_attach = function(_, buf)
-        local map = vim.keymap.set
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+          local map = vim.keymap.set
 
-        map("n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = true })
-        map("n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = true })
-        map("n", "<localleader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { buffer = true })
-        map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = true })
-        map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = true })
-        map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = true })
-        map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = true })
+          map("n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = ev.buf })
+          map("n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = ev.buf })
+          map("n", "<localleader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { buffer = ev.buf })
+          map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = ev.buf })
+          map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = ev.buf })
+          map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = ev.buf })
+          map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = ev.buf })
 
-        map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = true })
-      end
+          map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = ev.buf })
+        end,
+      })
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-      -- Further-configure completion options.
-      capabilities.textDocument.completion.completionItem = {
-        documentationFormat = { "markdown", "plaintext" },
-        snippetSupport = true,
-        preselectSupport = true,
-        insertReplaceSupport = true,
-        labelDetailsSupport = true,
-        deprecatedSupport = true,
-        commitCharactersSupport = true,
-        tagSupport = { valueSet = { 1 } },
-        resolveSupport = {
-          properties = {
-            "documentation",
-            "detail",
-            "additionalTextEdits",
-          },
-        },
-      }
-
-      local lsp = require("lspconfig")
-
-      local servers = { "clangd", "rust_analyzer", "pyright", "ts_ls", "zls", "sourcekit" }
-      for _, server in pairs(servers) do
-        lsp[server].setup({
-          on_attach = on_attach,
-          capabilities = capabilities,
-        })
-      end
+      -- vim.lsp.config("*", {})
+      vim.lsp.enable({ "clangd", "rust_analyzer", "pyright", "ty", "ts_ls", "zls" })
     end,
   },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   lazy = false,
+  --   config = function()
+  --     local on_attach = function(_, buf)
+  --       local map = vim.keymap.set
+  --
+  --       vim.x = 12;
+  --
+  --       map("n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = true })
+  --       map("n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = true })
+  --       map("n", "<localleader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { buffer = true })
+  --       map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = true })
+  --       map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = true })
+  --       map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = true })
+  --       map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = true })
+  --
+  --       map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = true })
+  --     end
+  --
+  --     vim.lsp.config("*", {
+  --       on_attach = on_attach,
+  --     })
+  --     vim.lsp.enable({ "clangd", "rust_analyzer", "pyright", "ty", "ts_ls", "zls" })
+  --   end,
+  -- },
 
   -- Pop-up code completion.
   {
@@ -235,7 +236,7 @@ require("lazy").setup({
     version = "1.*",
     opts = {
       fuzzy = { implementation = "prefer_rust_with_warning" },
-      keymap = { preset = "enter" },
+      keymap = { preset = "super-tab" },
       completion = {
         documentation = { auto_show = true },
         menu = {
@@ -256,8 +257,8 @@ require("lazy").setup({
 
   -- Better status line.
   {
-    lazy = false,
     "nvim-lualine/lualine.nvim",
+    lazy = false,
     opts = {
       options = {
         icons_enabled = false,
@@ -336,7 +337,26 @@ require("lazy").setup({
     cmd = { "Neogit" },
     opts = {
       disable_hint = true,
+      graph_style = "unicode",
+      remember_settings = false,
+      use_per_project_settings = false,
     },
+  },
+  {
+    "ej-shafran/compile-mode.nvim",
+    lazy = false,
+    version = "^5.0.0",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      vim.g.compile_mode = {
+        input_word_completion = true,
+        bang_expansion = true,
+        recompile_no_fail = true,
+        buffer_name = "[Compile]",
+      }
+    end,
   },
 
   "rktjmp/lush.nvim", -- Framework for easily building themes.
@@ -354,10 +374,6 @@ require("lazy").setup({
         "getscriptPlugin",
         "gzip",
         "logipat",
-        "netrw",
-        "netrwPlugin",
-        "netrwSettings",
-        "netrwFileHandlers",
         "matchit",
         "tar",
         "tarPlugin",
@@ -413,4 +429,9 @@ map("n", "<leader>R", "<cmd> :Telescope live_grep<CR>")
 
 ------- Neogit -----------------------------------------------------------------
 
-map("n", "<leader>G", "<cmd> :Neogit <CR>")
+map("n", "<leader>G", "<cmd> :Neogit cwd=%:p:h <CR>")
+
+------- Compile Mode -----------------------------------------------------------
+
+map("n", "<leader>C", "<cmd> :Compile <CR>")
+map("n", "<leader>c", "<cmd> :Recompile <CR>")

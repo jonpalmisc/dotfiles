@@ -187,6 +187,10 @@
   ;; Don't incessantly ask to save changes.
   (magit-save-repository-buffers nil)
 
+  ;; Allegedly improves performance by bypassing the need to find it
+  ;; in $PATH with the shell.
+  (magit-git-executable "/opt/homebrew/bin/git")
+
   ;; Replace the current window when opening Magit, rather than
   ;; creating a new one.
   (magit-display-buffer-function

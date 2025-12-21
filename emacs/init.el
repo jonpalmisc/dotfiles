@@ -81,8 +81,8 @@
 (setopt cursor-type 'bar)		; Use traditional bar cursor.
 (global-hl-line-mode)			; Highlight cursor line.
 
-(electric-pair-mode 1)              ; Auto-close parentheses, etc.
-(column-number-mode)                ; Show column numbers in mode line.
+(electric-pair-mode 1)		   ; Auto-close parentheses, etc.
+(column-number-mode)		   ; Show column numbers in mode line.
 
 (defun jp/set-fill-length-70 ()
   "Set the current buffer's fill length to 70 columns."
@@ -235,11 +235,6 @@
 ;;; --- Org ----------------------------------------------------------
 ;;;
 
-
-(defun jp/org-babel-clear-results ()
-  "Clear all result blocks in an Org buffer."
-  (interactive)
-  (org-babel-remove-result-one-or-many t))
 
 (defun jp/org-config-appearance ()
   "Disable line numbers and fill indicator in Org buffers."

@@ -1,12 +1,13 @@
 ;;; --- early-init.el -------------------- -*- lexical-binding: t; -*-
 
-;; Don't use default packaging system, we are going to use Straight.
+;; Since we are using `straight.el' for package management, avoid
+;; needlessly loading `package.el' and slowing down startup.
 (setq package-enable-at-startup nil)
 
 (defun jp/gc-raise ()
   "Raise garbage collection thresholds to limit pauses."
   (setq gc-cons-threshold most-positive-fixnum
-	gc-cons-percentage 0.6))
+	gc-cons-percentage 1.0))
 
 (defun jp/gc-restore ()
   "Restore garbage collection settings to reasonable runtime values."
@@ -21,7 +22,7 @@
 (jp/gc-raise)
 
 ;; Put custom stuff in separate file.
-(setq custom-file (locate-user-emacs-file "custom.el"))
+(setopt custom-file (locate-user-emacs-file "custom.el"))
 
 ;; Prefer loading newer files over older, byte-compiled ones.
 ;;
@@ -37,12 +38,13 @@
 ;;
 ;; Configuring these options here yields better startup time than
 ;; performing the same configuration in 'init.el'.
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(ns-transparent-titlebar . t) default-frame-alist)
-(push '(vertical-scroll-bars . nil) default-frame-alist)
-(push '(width . 100) default-frame-alist)
-(push '(height . 64) default-frame-alist)
+(setopt default-frame-alist
+	'((menu-bar-lines . 0)
+	  (tool-bar-lines . 0)
+	  (ns-transparent-titlebar . t)
+	  (vertical-scroll-bars . nil)
+	  (width . 100)
+	  (height . 64)))
 
 ;; Allow window sizes that aren't perfect multiples of the grid cell
 ;; dimensions. Without this, macOS window snapping behaves weirdly.

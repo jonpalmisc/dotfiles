@@ -201,6 +201,8 @@
   :hook ((c-mode c++-mode objc-mode python-mode js-mode) . eglot-ensure)
   :bind (("C-; r" . eglot-rename)
 	 ("C-; a" . eglot-code-actions))
+  :config
+  (add-to-list 'eglot-server-programs '((python-mode) . ("ty" "server")))
   :custom
   (eglot-sync-connect nil)
   (eglot-highlight-symbol-face highlight)

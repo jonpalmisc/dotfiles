@@ -101,7 +101,7 @@
 ;; Prevent the "ls does not support dired" message by not attempting
 ;; to use use the flag at all on Darwin.
 (when (string= system-type "darwin")
-  (setq dired-use-ls-dired nil))
+  (setopt dired-use-ls-dired nil))
 
 ;; Emacs has very strange defaults for indentation, and formatting
 ;; styles vary from project to project. It is best to mimic the
@@ -178,7 +178,7 @@
 (jp/config-mono-font)
 
 (defun jp/macos-dark-mode-p ()
-  "Is macOS in dark mode?"
+  "Is macOS currently in dark mode?"
   (string= (shell-command-to-string "defaults read -g AppleInterfaceStyle") "Dark\n"))
 
 (use-package modus-themes
@@ -242,14 +242,13 @@
 
 ;; Graphical, interactive Git interface.
 (use-package magit
-  :defer 5
   :commands magit-status
   :custom
   ;; Don't incessantly ask to save changes.
   (magit-save-repository-buffers nil)
 
-  ;; Allegedly improves performance by bypassing the need to find it
-  ;; in $PATH with the shell.
+  ;; Allegedly improves performance by eliminating the need to use the
+  ;; shell to get $PATH.
   (magit-git-executable "/opt/homebrew/bin/git")
 
   ;; Replace the current window when opening Magit, rather than
@@ -265,9 +264,13 @@
   :config
   (add-to-list 'eglot-server-programs '((python-mode) . ("ty" "server")))
   :custom
+  ;; Don't block UI while connecting.
   (eglot-sync-connect nil)
+  ;; Use more subtle highlighting.
   (eglot-highlight-symbol-face highlight)
+  ;; Unsure what this is; it line height from jumping around.
   (eglot-code-action-indications '(eldoc-hint))
+  ;; Don't want either of these anti-features.
   (eglot-ignored-server-capabilities '(:inlayHintProvider
 				       :documentOnTypeFormattingProvider)))
 

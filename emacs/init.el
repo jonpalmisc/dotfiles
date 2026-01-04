@@ -128,6 +128,11 @@
 (use-package which-key
   :hook (after-init . which-key-mode))
 
+;; Sublime-style multiple cursors.
+(use-package multiple-cursors
+  :bind ("C->" . 'mc/mark-next-like-this)
+  :custom (mc/always-run-for-all t))
+
 ;; Modern & minimal text-completion popup.
 (use-package corfu
   :hook (prog-mode . corfu-mode)
@@ -221,6 +226,17 @@
 ;;; --- IDE-like features --------------------------------------------
 ;;;
 
+
+;; Snippet engine; needed for auto-complete, etc.
+(use-package yasnippet
+  :bind ("M-i" . 'yas-insert-snippet))
+
+;; The primary YASnippet package does not include any snippets, only
+;; the functionality for using them. The default snippet collection is
+;; shipped separately in this package.
+(use-package yasnippet-snippets
+  :after yasnippet
+  :config (yasnippet-snippets-initialize))
 
 ;; Graphical, interactive Git interface.
 (use-package magit

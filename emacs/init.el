@@ -205,6 +205,10 @@
 ;;;
 
 
+(use-package cmake-mode
+  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+         ("\\.cmake\\'" . cmake-mode)))
+
 (use-package yaml-mode
   :mode (("\\.ya?ml\\'" . yaml-mode))
   :custom ((yaml-indent-offset 2)))

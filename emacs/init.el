@@ -182,6 +182,23 @@
        'modus-vivendi
      'modus-operandi)))
 
+(defun jp/macos-pbpaste ()
+  "Get the contents of the macOS pasteboard."
+  (shell-command-to-string "pbpaste"))
+
+(defun jp/macos-pbcopy (text &optional push)
+  "Set the contents of the macOS pasteboard."
+  (let ((process-connection-type nil))
+    (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+      (process-send-string proc text)
+      (process-send-eof proc))))
+
+;; When running in the terminal, we need to set these so copy/paste
+;; syncs with the system clipboard properly.
+(unless (display-graphic-p)
+  (setq interprogram-cut-function 'jp/macos-pbcopy
+	interprogram-paste-function 'jp/macos-pbpaste))
+
 
 ;;;
 ;;; --- Extra language support ---------------------------------------

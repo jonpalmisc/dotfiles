@@ -249,6 +249,7 @@
   :custom
   (eglot-sync-connect nil)
   (eglot-highlight-symbol-face highlight)
+  (eglot-code-action-indications '(eldoc-hint))
   (eglot-ignored-server-capabilities '(:inlayHintProvider
 				       :documentOnTypeFormattingProvider)))
 

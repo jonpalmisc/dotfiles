@@ -130,8 +130,8 @@
 
 ;; Sublime-style multiple cursors.
 (use-package multiple-cursors
-  :bind ("C->" . 'mc/mark-next-like-this)
-  :custom (mc/always-run-for-all t))
+  :defer t
+  :bind ("C->" . 'mc/mark-next-like-this))
 
 ;; Modern & minimal text-completion popup.
 (use-package corfu
@@ -150,6 +150,7 @@
 ;;
 ;; TODO: Remove when using Emacs 31+.
 (use-package corfu-terminal
+  :after corfu
   :hook (corfu-mode . jp/corfu-terminal))
 
 ;; Better minibuffer completion.
@@ -229,6 +230,7 @@
 
 ;; Snippet engine; needed for auto-complete, etc.
 (use-package yasnippet
+  :hook (prog-mode . yas-minor-mode)
   :bind ("M-i" . 'yas-insert-snippet))
 
 ;; The primary YASnippet package does not include any snippets, only

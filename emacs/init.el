@@ -130,8 +130,14 @@
 
 ;; Sublime-style multiple cursors.
 (use-package multiple-cursors
+  ;; Adds a perceivable delay to startup time, but an imperceivable
+  ;; delay when loaded on-demand; also used infrequently enough that
+  ;; the on-demand delay is justified.
   :defer t
-  :bind ("C->" . 'mc/mark-next-like-this))
+  :bind ("C->" . 'mc/mark-next-like-this) ; TODO: Terminal mode?
+  ;; Disable annoying prompt asking you if you would like to do the
+  ;; exact thing you requested to do.
+  :custom (mc/always-run-for-all t))
 
 ;; Modern & minimal text-completion popup.
 (use-package corfu

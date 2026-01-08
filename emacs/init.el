@@ -171,18 +171,6 @@
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion)))))
 
-(defun jp/config-mono-font ()
-  "Set the default font if it is available."
-  (setq jp/mono-font "MD IO")
-
-  (when (member jp/mono-font (font-family-list))
-    (set-face-attribute 'default nil :font jp/mono-font)
-    (set-face-attribute 'fixed-pitch nil :font jp/mono-font))
-
-  (setopt line-spacing 0.1))
-
-(jp/config-mono-font)
-
 (defun jp/macos-dark-mode-p ()
   "Is macOS currently in dark mode?"
   (string= (shell-command-to-string "defaults read -g AppleInterfaceStyle") "Dark\n"))

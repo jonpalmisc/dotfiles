@@ -44,7 +44,11 @@
 	  (ns-transparent-titlebar . t)
 	  (vertical-scroll-bars . nil)
 	  (width . 100)
-	  (height . 64)))
+	  (height . 64)
+	  (font . "MD IO")))
+
+;; Use a bit more line height in GUI Emacs.
+(setopt line-spacing 0.1)
 
 ;; Allow window sizes that aren't perfect multiples of the grid cell
 ;; dimensions. Without this, macOS window snapping behaves weirdly.

@@ -9,9 +9,10 @@
 (defun jp/show-startup-stats ()
   "Show initialization duration in the minibuffer after startup."
   (message
-   "Emacs started in %s seconds"
+   "Emacs started in %s seconds with %d GCs."
    (format "%.2f" (float-time
-                   (time-subtract after-init-time before-init-time)))))
+                   (time-subtract after-init-time before-init-time)))
+   gcs-done))
 
 ;; Show total startup time once Emacs has finished loading.
 (add-hook 'emacs-startup-hook #'jp/show-startup-stats)

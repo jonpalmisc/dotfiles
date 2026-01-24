@@ -19,6 +19,12 @@ typeset -U path
 # Use Neovim as the default editor and manual pager, if available.
 if command -v nvim &>/dev/null; then
 	export EDITOR="nvim"
-	export VISUAL="$EDITOR"
 	export MANPAGER="nvim +Man\!"
 fi
+
+# Use Emacs as the default editor, if available.
+if [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ]; then
+    export EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+fi
+
+export VISUAL="$EDITOR"

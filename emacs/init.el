@@ -210,6 +210,9 @@
 ;;;
 
 
+(use-package rust-mode
+  :mode (("\\.rs\\'" . rust-mode)))
+
 (use-package cmake-mode
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)))
@@ -257,7 +260,7 @@
 
 ;; Integration with language servers for completion.
 (use-package eglot
-  :hook ((c-mode c++-mode objc-mode python-mode js-mode) . eglot-ensure)
+  :hook ((c-mode c++-mode objc-mode python-mode js-mode rust-mode) . eglot-ensure)
   :bind (("C-; r" . eglot-rename)
 	 ("C-; a" . eglot-code-actions))
   :config

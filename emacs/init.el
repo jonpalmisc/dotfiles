@@ -125,6 +125,10 @@
 ;;;
 
 
+;; Enable mouse support in terminal mode.
+(unless (display-graphic-p)
+  (xterm-mouse-mode))
+
 ;; Live help for long key combos.
 (use-package which-key
   :hook (after-init . which-key-mode))

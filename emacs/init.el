@@ -211,7 +211,10 @@
 
 
 (use-package rust-mode
-  :mode (("\\.rs\\'" . rust-mode)))
+  :mode (("\\.rs\\'" . rust-mode))
+  ;; By default, this binding gets stolen by `rust-mode', which is
+  ;; annoying. How else am I meant to wrap my comments?
+  :bind (:map rust-mode-map ("M-q" . nil)))
 
 (use-package cmake-mode
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)

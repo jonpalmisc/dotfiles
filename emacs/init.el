@@ -74,6 +74,8 @@
 (setopt truncate-lines t)		; Don't wrap long lines.
 (setopt ring-bell-function 'ignore)	; Disable flashing bell.
 
+(setopt use-short-answers t)		; Allow 'y' instead of 'yes'.
+
 ;; Automatically reload files from disk on change.
 (setopt auto-revert-avoid-polling t)
 (setopt auto-revert-check-vc-info t)

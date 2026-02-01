@@ -11,4 +11,5 @@ straight/
 bookmarks
 projects
 
-dotemacs*.tar.xz
+*.tar.xz
+.mc-lists.el

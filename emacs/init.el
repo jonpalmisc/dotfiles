@@ -285,7 +285,8 @@
 
 ;; Good integration with Ripgrep.
 (use-package rg
-  :bind (("C-c s" . rg-menu)))
+  :bind (("C-c s" . rg-menu))
+  :custom (rg-show-header . nil))
 
 
 ;;;

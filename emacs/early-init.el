@@ -24,6 +24,9 @@
 ;; Put custom stuff in separate file.
 (setopt custom-file (locate-user-emacs-file "custom.el"))
 
+;; Allegedly improves performance.
+(setq read-process-output-max (* 1024 1024))
+
 ;; Prefer loading newer files over older, byte-compiled ones.
 ;;
 ;; This is particularly important when iterating on a config.

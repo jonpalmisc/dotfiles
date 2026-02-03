@@ -84,8 +84,9 @@
 (setopt cursor-type 'bar)		; Use traditional bar cursor.
 (global-hl-line-mode)			; Highlight cursor line.
 
-(electric-pair-mode 1)		   ; Auto-close parentheses, etc.
-(column-number-mode)		   ; Show column numbers in mode line.
+(delete-selection-mode t)   ; Behave a little more like other editors.
+(electric-pair-mode t)	    ; Auto-close parentheses, etc.
+(column-number-mode t)	    ; Show column numbers in mode line.
 
 (defun jp/set-fill-length-70 ()
   "Set the current buffer's fill length to 70 columns."
@@ -100,6 +101,11 @@
 (setopt sentence-end-double-space nil)	; It is no longer the 1900s.
 (setopt show-trailing-whitespace t)	; Show trailing spaces.
 (setopt require-final-newline t)	; End files with a newline.
+
+;; Improve scrolling experience.
+(setopt scroll-margin 6)
+(setopt scroll-conservatively 8)
+(setopt mouse-wheel-progressive-speed nil)
 
 ;; Prevent the "ls does not support dired" message by not attempting
 ;; to use use the flag at all on Darwin.
@@ -259,6 +265,9 @@
   ;; Allegedly improves performance by eliminating the need to use the
   ;; shell to get $PATH.
   (magit-git-executable "/opt/homebrew/bin/git")
+
+  ;; Show word-level diffs.
+  (magit-diff-refine-hunk (quote all))
 
   ;; Replace the current window when opening Magit, rather than
   ;; creating a new one.

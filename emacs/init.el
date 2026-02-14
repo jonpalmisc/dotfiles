@@ -121,6 +121,7 @@
 	  c++-mode
 	  objc-mode
 	  python-mode
+	  rust-mode
 	  js-mode) . dtrt-indent-mode))
 
 ;; This affects the way braces are indented automatically; the default
@@ -282,6 +283,8 @@
   :config
   (add-to-list 'eglot-server-programs '((python-mode) . ("ty" "server")))
   :custom
+  ;; Auto-shutdown when the last buffer using a server is closed.
+  (eglot-autoshutdown t)
   ;; Don't block UI while connecting.
   (eglot-sync-connect nil)
   ;; Use more subtle highlighting.

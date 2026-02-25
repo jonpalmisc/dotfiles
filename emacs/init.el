@@ -275,9 +275,19 @@
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1))
 
+(defun jp/eglot-ensure-unless-remote ()
+  "Activate Eglot unless the buffer is a remote file."
+  (unless (file-remote-p default-directory)
+    (eglot-ensure)))
+
 ;; Integration with language servers for completion.
 (use-package eglot
-  :hook ((c-mode c++-mode objc-mode python-mode js-mode rust-mode) . eglot-ensure)
+  :hook ((c-mode
+	  c++-mode
+	  objc-mode
+	  python-mode
+	  js-mode
+	  rust-mode) . jp/eglot-ensure-unless-remote)
   :bind (("C-; r" . eglot-rename)
 	 ("C-; a" . eglot-code-actions))
   :config

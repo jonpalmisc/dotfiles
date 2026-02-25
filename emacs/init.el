@@ -336,7 +336,8 @@
   :bind (("C-c a" . org-agenda)
 	 ("C-c A" . jp/org-agenda)
 	 ("C-c c" . org-capture)
-	 ("C-c t" . jp/org-capture-task))
+	 ("C-c t" . jp/org-capture-task)
+	 ("C-c l" . org-store-link))
   :hook ((org-mode . turn-on-auto-fill)
          ((org-mode org-agenda-mode) . jp/org-config-appearance))
   :custom

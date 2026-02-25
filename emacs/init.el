@@ -55,6 +55,7 @@
 
 (straight-use-package 'use-package)
 (setopt straight-use-package-by-default t)
+(setopt straight-vc-git-default-clone-depth '(1 single-branch))
 
 ;; Always require packages specified in this config to be present.
 (require 'use-package-ensure)

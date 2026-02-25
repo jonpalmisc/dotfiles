@@ -202,3 +202,7 @@ TAR_PRIVACY_FLAGS=(--uid 0 --gid 0 --no-xattrs --exclude='.DS_Store')
 
 	source .venv/bin/activate
 }
+
+,format-panic() {
+    tail -n +2 "$1" | jq -r .panicString
+}

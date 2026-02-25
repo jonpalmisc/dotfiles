@@ -120,9 +120,10 @@
   :hook ((c-mode
 	  c++-mode
 	  objc-mode
-	  python-mode
 	  rust-mode
-	  js-mode) . dtrt-indent-mode))
+	  python-mode
+	  js-mode
+	  json-mode) . dtrt-indent-mode))
 
 ;; This affects the way braces are indented automatically; the default
 ;; is the GNU-style. Gross.

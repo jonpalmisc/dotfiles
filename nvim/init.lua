@@ -6,17 +6,17 @@
 
 ------- Editing/fundamentals ---------------------------------------------------
 
-vim.opt.history = 100 -- Set max history size.
+vim.opt.history = 100 -- Command history size.
 
-vim.opt.mouse = "a"
-vim.opt.mousescroll = "ver:1,hor:0"
+vim.opt.mouse = "a" -- Enable mouse support.
+vim.opt.mousescroll = "ver:1,hor:0" -- Improve mouse/trackpad scrolling.
 
-vim.opt.autoindent = true -- Indent automatically.
-vim.opt.smartindent = true
+vim.opt.autoindent = true -- Match indentation when starting a new line.
+vim.opt.smartindent = true -- Indent automatically via syntax hints.
 
 vim.opt.wrap = false -- Don't wrap long lines.
 vim.opt.textwidth = 80 -- Use 80 columns for hard wrapping.
-vim.opt.formatoptions = vim.opt.formatoptions - "t" -- But don't auto-wrap  code.
+vim.opt.formatoptions = vim.opt.formatoptions - "t" -- But don't auto-wrap code.
 
 vim.opt.backspace = { "indent", "eol", "start" } -- Make backspace sensible.
 
@@ -42,8 +42,8 @@ vim.g.maplocalleader = ";"
 
 ------- File handling ----------------------------------------------------------
 
-vim.opt.encoding = "utf-8" -- Always use UTF-8.
-vim.opt.fileencoding = "utf-8"
+vim.opt.encoding = "utf-8" -- Always use UTF-8 internally.
+vim.opt.fileencoding = "utf-8" -- Always save files as UTF-8.
 
 vim.opt.backup = false -- Disable backup files.
 vim.opt.swapfile = false -- Don't use swapfiles.
@@ -56,7 +56,6 @@ vim.opt.autoread = true -- Auto-reload modified files.
 
 -- The combination of these two settings prevents the buffer content from
 -- jumping back-and-forth horizontally when signs are added/removed.
---
 vim.opt.number = true -- Show line numbers.
 vim.opt.signcolumn = "number" -- Show signs in place of line numbers.
 
@@ -174,8 +173,6 @@ require("lazy").setup({
     end,
   },
 
-  -- Well-maintained configurations for many common LSP servers for
-  -- automatic integration with Neovim's LSP support.
   {
     "neovim/nvim-lspconfig",
     lazy = false,
@@ -201,32 +198,6 @@ require("lazy").setup({
       vim.lsp.enable({ "clangd", "rust_analyzer", "pyright", "ty", "ts_ls", "zls" })
     end,
   },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   lazy = false,
-  --   config = function()
-  --     local on_attach = function(_, buf)
-  --       local map = vim.keymap.set
-  --
-  --       vim.x = 12;
-  --
-  --       map("n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = true })
-  --       map("n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = true })
-  --       map("n", "<localleader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { buffer = true })
-  --       map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = true })
-  --       map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = true })
-  --       map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = true })
-  --       map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = true })
-  --
-  --       map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = true })
-  --     end
-  --
-  --     vim.lsp.config("*", {
-  --       on_attach = on_attach,
-  --     })
-  --     vim.lsp.enable({ "clangd", "rust_analyzer", "pyright", "ty", "ts_ls", "zls" })
-  --   end,
-  -- },
 
   -- Pop-up code completion.
   {
@@ -358,9 +329,6 @@ require("lazy").setup({
       }
     end,
   },
-
-  "rktjmp/lush.nvim", -- Framework for easily building themes.
-  "rktjmp/shipwright.nvim", -- Used for exporting theme to other formats.
 }, {
   defaults = {
     lazy = true,

@@ -56,8 +56,8 @@ vim.opt.autoread = true -- Auto-reload modified files.
 
 -- The combination of these two settings prevents the buffer content from
 -- jumping back-and-forth horizontally when signs are added/removed.
-vim.opt.number = true -- Show line numbers.
-vim.opt.signcolumn = "number" -- Show signs in place of line numbers.
+vim.opt.number = false -- Show line numbers.
+vim.opt.signcolumn = "yes:1" -- Show signs in place of line numbers.
 
 vim.opt.cursorline = true -- Highlight line with cursor.
 
@@ -308,6 +308,7 @@ require("lazy").setup({
     cmd = { "Neogit" },
     opts = {
       disable_hint = true,
+      disable_signs = true,
       graph_style = "unicode",
       remember_settings = false,
       use_per_project_settings = false,

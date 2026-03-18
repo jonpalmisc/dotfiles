@@ -277,9 +277,15 @@
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1))
 
-(defun jp/eglot-ensure-unless-remote ()
-  "Activate Eglot unless the buffer is a remote file."
-  (unless (file-remote-p default-directory)
+(defun jp/project-has-noeglot-p ()
+  "Return non-nil if the current project has a '.noeglot' file at its root."
+  (when-let ((project (project-current)))
+    (file-exists-p (expand-file-name ".noeglot" (project-root project)))))
+
+(defun jp/eglot-ensure-most-of-the-time ()
+  "Activate Eglot, unless requested otherwise or if it would be bad."
+  (unless (or (file-remote-p default-directory)
+              (jp/project-has-noeglot-p))
     (eglot-ensure)))
 
 ;; Integration with language servers for completion.
@@ -289,7 +295,7 @@
 	  objc-mode
 	  python-mode
 	  js-mode
-	  rust-mode) . jp/eglot-ensure-unless-remote)
+	  rust-mode) . jp/eglot-ensure-most-of-the-time)
   :bind (("C-; r" . eglot-rename)
 	 ("C-; a" . eglot-code-actions))
   :config

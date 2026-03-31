@@ -7,6 +7,11 @@ bindkey -e
 autoload -Uz select-word-style
 select-word-style bash
 
+# Allow dropping into an editor with 'C-x C-e' when editing a long command.
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^X^e' edit-command-line
+
 # Use built-in completion system.
 autoload -Uz compinit
 compinit

@@ -103,6 +103,13 @@
 (setopt show-trailing-whitespace t)	; Show trailing spaces.
 (setopt require-final-newline t)	; End files with a newline.
 
+;; Disable support for bidirectional text (for performance).
+(setq bidi-inhibit-bpa t)
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+
+(setq redisplay-skip-fontification-on-input t)
+
 ;; Improve scrolling experience.
 (setopt scroll-margin 6)
 (setopt scroll-conservatively 8)
@@ -139,6 +146,10 @@
 ;; Enable mouse support in terminal mode.
 (unless (display-graphic-p)
   (xterm-mouse-mode))
+
+;; Allegedly saves rendering time.
+(setopt cursor-in-non-selected-windows nil)
+(setopt highlight-nonselected-windows nil)
 
 ;; Live help for long key combos.
 (use-package which-key

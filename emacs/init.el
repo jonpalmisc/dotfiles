@@ -161,7 +161,7 @@
   ;; delay when loaded on-demand; also used infrequently enough that
   ;; the on-demand delay is justified.
   :defer t
-  :bind ("C-." . 'mc/mark-next-like-this)
+  :bind ("C-\\" . 'mc/mark-next-like-this)
   ;; Disable annoying prompt asking you if you would like to do the
   ;; exact thing you requested to do.
   :custom (mc/always-run-for-all t))

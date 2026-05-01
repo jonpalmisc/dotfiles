@@ -251,6 +251,9 @@
 (use-package toml-mode
   :mode "\\.toml\\'")
 
+(use-package markdown-mode
+  :mode ("\\.md\\'" . gfm-mode))
+
 
 ;;;
 ;;; --- IDE-like features --------------------------------------------

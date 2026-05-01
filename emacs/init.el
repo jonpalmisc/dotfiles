@@ -291,6 +291,19 @@
   (magit-display-buffer-function
    'magit-display-buffer-same-window-except-diff-v1))
 
+(setq vc-handled-backends '(Git))	; Performance? Can't remember.
+
+(defun jp/project-try-nearest-git (dir)
+  (let ((root (locate-dominating-file dir ".git")))
+    (when root
+      (require 'vc-git)
+      (list 'vc 'Git (expand-file-name root)))))
+
+;; Always prefer the nearest Git repo when attempting to find the
+;; appropriate project direcotry. Prevents always going to the root
+;; repo when working with lots of submodules.
+(add-hook 'project-find-functions #'jp/project-try-nearest-git)
+
 (defun jp/project-has-noeglot-p ()
   "Return non-nil if the current project has a '.noeglot' file at its root."
   (when-let ((project (project-current)))

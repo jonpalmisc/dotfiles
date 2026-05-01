@@ -46,7 +46,7 @@
 	  (tool-bar-lines . 0)
 	  (ns-transparent-titlebar . t)
 	  (vertical-scroll-bars . nil)
-	  (width . 100)
+	  (width . 104)
 	  (height . 64)
 	  (font . "MD IO")))
 

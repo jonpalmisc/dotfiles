@@ -48,7 +48,7 @@
 	  (vertical-scroll-bars . nil)
 	  (width . 104)
 	  (height . 64)
-	  (font . "MD IO")))
+	  (font . "MD IO Medium")))
 
 ;; Use a bit more line height in GUI Emacs.
 (setopt line-spacing 0.1)

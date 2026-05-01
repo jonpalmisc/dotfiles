@@ -405,10 +405,24 @@
 ;;;
 
 
+(defun jp/kill-other-buffers ()
+  "Kill all buffers except the current and default ones."
+  (interactive)
+  (when (yes-or-no-p "Kill all other buffers? ")
+    (let ((keep (list (current-buffer)
+                      (get-buffer "*Messages*")
+                      (get-buffer "*scratch*"))))
+      (dolist (buf (buffer-list))
+        (unless (memq buf keep)
+          (kill-buffer buf))))))
+
 (use-package emacs
   :bind (("C-x C-b" . switch-to-buffer)
+	 ("C-x K"   . jp/kill-other-buffers)
 	 ("C-c C-e" . eval-buffer)
+
 	 ("C-c r" . replace-regexp)
+
 	 ("C-c o" . overwrite-mode)
 
 	 ("C-x C-p" . project-find-file)

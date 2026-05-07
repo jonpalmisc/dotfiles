@@ -240,6 +240,10 @@
   ;; On that note, fill to the standard column for Rust.
   :hook (rust-mode . (lambda () (setq fill-column 100))))
 
+(use-package elixir-mode
+  :mode (("\\.ex\\'" . elixir-mode)
+	 ("\\.exs\\'" . elixir-mode)))
+
 (use-package cmake-mode
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)))
@@ -253,6 +257,9 @@
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . gfm-mode))
+
+(use-package typst-mode
+  :mode ("\\.typ\\'" . typst-mode))
 
 
 ;;;

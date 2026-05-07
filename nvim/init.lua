@@ -79,291 +79,196 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
+-- Disable unused built-in plugins.
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+
 --============================================================================--
 --                                                                            --
 --                    P A C K A G E   M A N A G E M E N T                     --
 --                                                                            --
 --============================================================================--
 
-local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazy_path) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable",
-    lazy_path,
-  })
-end
+vim.pack.add({
+  "https://github.com/miikanissi/modus-themes.nvim",
+  "https://github.com/tpope/vim-sleuth",
+  "https://github.com/windwp/nvim-autopairs",
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
+  "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/rafamadriz/friendly-snippets",
+  { src = "https://github.com/saghen/blink.cmp", version = "v1" },
+  "https://github.com/nvim-lualine/lualine.nvim",
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/nvim-telescope/telescope.nvim",
+  "https://github.com/NeogitOrg/neogit",
+  "https://github.com/ej-shafran/compile-mode.nvim",
+})
 
-vim.opt.rtp:prepend(lazy_path)
-
-require("lazy").setup({
-  -- Nice theme to help me miss Emacs less.
-  {
-    "miikanissi/modus-themes.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      dim_inactive = true,
-      styles = {
-        comments = { italic = true },
-        keywords = { italic = false },
-      },
-    },
-    config = function()
-      vim.opt.termguicolors = true
-      vim.cmd("colorscheme modus")
-    end,
+vim.opt.termguicolors = true
+require("modus-themes").setup({
+  dim_inactive = true,
+  styles = {
+    comments = { italic = true },
+    keywords = { italic = false },
   },
+})
+vim.cmd("colorscheme modus")
 
-  -- Auto-detect indentation on a per-file basis so that Neovim inserts
-  -- the right amount of indentation by default during editing.
-  { "tpope/vim-sleuth", lazy = false },
+require("nvim-autopairs").setup({})
 
-  -- Auto-insert character pairs.
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
+require("nvim-treesitter.configs").setup({
+  highlight = { enable = true },
+  indent = { enable = false },
+  ensure_installed = {
+    "asm",
+    "bash",
+    "c",
+    "cmake",
+    "comment",
+    "cpp",
+    "css",
+    "diff",
+    "html",
+    "javascript",
+    "jsdoc",
+    "json",
+    "jsonc",
+    "lua",
+    "luadoc",
+    "markdown",
+    "markdown_inline",
+    "objc",
+    "printf",
+    "python",
+    "regex",
+    "rust",
+    "toml",
+    "typescript",
+    "vim",
+    "vimdoc",
+    "xml",
+    "yaml",
   },
+})
 
-  -- Better and faster syntax highlighting.
-  {
-    "nvim-treesitter/nvim-treesitter",
-    lazy = false,
-    branch = "master",
-    build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        highlight = { enable = true },
-        indent = { enable = false },
-        ensure_installed = {
-          "asm",
-          "bash",
-          "c",
-          "cmake",
-          "comment",
-          "cpp",
-          "css",
-          "diff",
-          "html",
-          "javascript",
-          "jsdoc",
-          "json",
-          "jsonc",
-          "lua",
-          "luadoc",
-          "markdown",
-          "markdown_inline",
-          "objc",
-          "printf",
-          "python",
-          "regex",
-          "rust",
-          "toml",
-          "typescript",
-          "vim",
-          "vimdoc",
-          "xml",
-          "yaml",
-        },
-      })
-    end,
-  },
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    local map = vim.keymap.set
 
-  {
-    "neovim/nvim-lspconfig",
-    lazy = false,
-    config = function()
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = function(ev)
-          local map = vim.keymap.set
+    map("n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = ev.buf })
+    map("n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = ev.buf })
+    map("n", "<localleader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { buffer = ev.buf })
+    map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = ev.buf })
+    map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = ev.buf })
+    map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = ev.buf })
+    map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = ev.buf })
 
-          map("n", "<localleader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { buffer = ev.buf })
-          map("n", "<localleader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { buffer = ev.buf })
-          map("n", "<localleader>gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", { buffer = ev.buf })
-          map("n", "<localleader>gr", "<cmd>lua vim.lsp.buf.references()<CR>", { buffer = ev.buf })
-          map("n", "<localleader>lr", "<cmd>lua vim.lsp.buf.rename()<CR>", { buffer = ev.buf })
-          map("n", "<localleader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", { buffer = ev.buf })
-          map("n", "<localleader>ld", "<cmd>lua vim.diagnostic.open_float()<CR>", { buffer = ev.buf })
+    map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = ev.buf })
+  end,
+})
+vim.lsp.enable({ "clangd", "rust_analyzer", "pyright", "ty", "ts_ls", "zls" })
 
-          map("i", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", { buffer = ev.buf })
-        end,
-      })
-
-      -- vim.lsp.config("*", {})
-      vim.lsp.enable({ "clangd", "rust_analyzer", "pyright", "ty", "ts_ls", "zls" })
-    end,
-  },
-
-  -- Pop-up code completion.
-  {
-    "saghen/blink.cmp",
-    lazy = false,
-    dependencies = { "rafamadriz/friendly-snippets" },
-    version = "1.*",
-    opts = {
-      fuzzy = { implementation = "prefer_rust_with_warning" },
-      keymap = { preset = "super-tab" },
-      completion = {
-        documentation = { auto_show = true },
-        menu = {
-          draw = {
-            columns = {
-              { "label", "label_description", gap = 1 },
-              { "kind" },
-            },
-          },
+require("blink.cmp").setup({
+  fuzzy = { implementation = "prefer_rust_with_warning" },
+  keymap = { preset = "super-tab" },
+  completion = {
+    documentation = { auto_show = true },
+    menu = {
+      draw = {
+        columns = {
+          { "label", "label_description", gap = 1 },
+          { "kind" },
         },
       },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
-      },
-    },
-    opts_extend = { "sources.default" },
-  },
-
-  -- Better status line.
-  {
-    "nvim-lualine/lualine.nvim",
-    lazy = false,
-    opts = {
-      options = {
-        icons_enabled = false,
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
-      },
-      sections = {
-        lualine_a = { "mode" },
-        lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = { "location" },
-      },
-      inactive_sections = {
-        lualine_a = {},
-        lualine_b = {},
-        lualine_c = { "filename" },
-        lualine_x = {},
-        lualine_y = {},
-        lualine_z = {},
-      },
     },
   },
-
-  -- Generic fuzzy-finder API, provides "command palette"-like search
-  -- interfaces for files, LSP symbols, etc.
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    cmd = { "Telescope" },
-    opts = function()
-      return {
-        defaults = {
-          mappings = {
-            i = {
-              ["<esc>"] = require("telescope.actions").close,
-            },
-          },
-
-          vimgrep_arguments = {
-            "rg",
-            "--color=never",
-            "--no-heading",
-            "--with-filename",
-            "--line-number",
-            "--column",
-            "--smart-case",
-          },
-
-          preview = false,
-          results_title = false,
-          storting_strategy = "ascending",
-          selection_caret = "  ",
-
-          layout_strategy = "bottom_pane",
-          layout_config = {
-            height = 12,
-            prompt_position = "bottom",
-          },
-          borderchars = {
-            prompt = { "─", " ", "─", " ", " ", " ", "─", "─" },
-            results = { "─", " ", " ", " ", "─", "─", " ", " " },
-          },
-        },
-      }
-    end,
+  sources = {
+    default = { "lsp", "path", "snippets", "buffer" },
   },
+})
 
-  -- Magit-like Git interface.
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = { "Neogit" },
-    opts = {
-      disable_hint = true,
-      disable_signs = true,
-      graph_style = "unicode",
-      remember_settings = false,
-      use_per_project_settings = false,
-    },
+require("lualine").setup({
+  options = {
+    icons_enabled = false,
+    component_separators = { left = "", right = "" },
+    section_separators = { left = "", right = "" },
   },
-  {
-    "ej-shafran/compile-mode.nvim",
-    lazy = false,
-    version = "^5.0.0",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = function()
-      vim.g.compile_mode = {
-        input_word_completion = true,
-        bang_expansion = true,
-        recompile_no_fail = true,
-        buffer_name = "[Compile]",
-      }
-    end,
+  sections = {
+    lualine_a = { "mode" },
+    lualine_b = {},
+    lualine_c = { "filename" },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = { "location" },
   },
-}, {
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { "filename" },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+})
+
+require("telescope").setup({
   defaults = {
-    lazy = true,
-  },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "2html_plugin",
-        "tohtml",
-        "getscript",
-        "getscriptPlugin",
-        "gzip",
-        "logipat",
-        "matchit",
-        "tar",
-        "tarPlugin",
-        "rrhelper",
-        "spellfile_plugin",
-        "vimball",
-        "vimballPlugin",
-        "zip",
-        "zipPlugin",
-        "tutor",
-        "rplugin",
-        "syntax",
-        "synmenu",
-        "optwin",
-        "compiler",
-        "bugreport",
-        "ftplugin",
+    mappings = {
+      i = {
+        ["<esc>"] = require("telescope.actions").close,
       },
+    },
+
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+    },
+
+    preview = false,
+    results_title = false,
+    storting_strategy = "ascending",
+    selection_caret = "  ",
+
+    layout_strategy = "bottom_pane",
+    layout_config = {
+      height = 12,
+      prompt_position = "bottom",
+    },
+    borderchars = {
+      prompt = { "─", " ", "─", " ", " ", " ", "─", "─" },
+      results = { "─", " ", " ", " ", "─", "─", " ", " " },
     },
   },
 })
+
+require("neogit").setup({
+  disable_hint = true,
+  disable_signs = true,
+  graph_style = "unicode",
+  remember_settings = false,
+  use_per_project_settings = false,
+})
+
+vim.g.compile_mode = {
+  input_word_completion = true,
+  bang_expansion = true,
+  recompile_no_fail = true,
+  buffer_name = "[Compile]",
+}
 
 --============================================================================--
 --                                                                            --

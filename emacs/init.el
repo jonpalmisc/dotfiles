@@ -137,6 +137,10 @@
 ;; is the GNU-style. Gross.
 (setopt c-default-style "bsd")
 
+;; Default Python doc comment wrapping style is also not aligned with
+;; what most style guides and formatters advise nowadays.
+(setopt python-fill-docstring-style 'pep-257-nn)
+
 
 ;;;
 ;;; --- User interface -----------------------------------------------

@@ -196,14 +196,19 @@
 
 (defun jp/macos-dark-mode-p ()
   "Is macOS currently in dark mode?"
-  (string= (shell-command-to-string "defaults read -g AppleInterfaceStyle") "Dark\n"))
+  (if (display-graphic-p)
+      (eq (frame-parameter nil 'background-mode) 'dark)
+    (with-temp-buffer
+      (call-process "defaults" nil t nil "read" "-g" "AppleInterfaceStyle")
+      (string-prefix-p "Dark" (buffer-string)))))
+
+(defun jp/load-theme ()
+  (modus-themes-load-theme
+   (if (jp/macos-dark-mode-p) 'modus-vivendi 'modus-operandi)))
 
 (use-package modus-themes
-  :config
-  (modus-themes-load-theme
-   (if (jp/macos-dark-mode-p)
-       'modus-vivendi
-     'modus-operandi)))
+  :commands modus-themes-load-theme
+  :hook (window-setup . jp/load-theme))
 
 (defun jp/macos-pbpaste ()
   "Get the contents of the macOS pasteboard."

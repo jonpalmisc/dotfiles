@@ -28,10 +28,32 @@
 ;;; --- Performance --------------------------------------------------
 
 
-;; Allegedly improves performance.
-(setq read-process-output-max (* 1024 1024))
+;; Suppress modeline and redisplay during startup to avoid unnecessary
+;; renders; both are restored on the first user interaction.
+(put 'mode-line-format 'initial-value (default-value 'mode-line-format))
+(setq-default mode-line-format nil)
+(setq inhibit-redisplay t
+      inhibit-message t)
 
-;; Disable special file handlers at startup for better performance.
+(defun jp/restore-startup-inhibits ()
+  (setq-default mode-line-format (get 'mode-line-format 'initial-value))
+  (setq inhibit-redisplay nil
+	inhibit-message nil)
+  (redisplay)
+  (remove-hook 'post-command-hook #'jp/restore-startup-inhibits))
+
+(add-hook 'post-command-hook #'jp/restore-startup-inhibits)
+
+;; Don't warn when visiting a file already open in another buffer.
+(setopt find-file-suppress-same-file-warnings t)
+
+;; Don't try to ping domain-like path segments as hostnames.
+(setopt ffap-machine-p-known 'accept)
+
+;; Skip case-insensitive second pass over 'auto-mode-alist'.
+(setopt auto-mode-case-fold nil)
+
+;; Disable special file handlers temporarily.
 (defvar jp/file-name-handler-alist-backup file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
@@ -39,6 +61,27 @@
 (add-hook 'emacs-startup-hook
 	  (lambda ()
 	    (setq file-name-handler-alist jp/file-name-handler-alist-backup)))
+
+;; Disable bidirectional text support.
+(setq bidi-inhibit-bpa t)
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+
+;; Increase output buffer for subprocesses; important for LSP.
+(setq read-process-output-max (* 4 1024 1024))
+
+;; Keep read buffer sizes stable; shrinking on idle hurts throughput.
+(setq process-adaptive-read-buffering nil)
+
+;; Don't compact font caches.
+(setq inhibit-compacting-font-caches t)
+
+;; Don't fontify while input is pending.
+(setq redisplay-skip-fontification-on-input t)
+
+;; Allegedly saves rendering time.
+(setopt cursor-in-non-selected-windows nil)
+(setopt highlight-nonselected-windows nil)
 
 
 ;;; --- Native & byte compilation ------------------------------------

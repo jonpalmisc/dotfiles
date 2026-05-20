@@ -99,17 +99,14 @@
 (setopt show-trailing-whitespace t)	; Show trailing spaces.
 (setopt require-final-newline t)	; End files with a newline.
 
-;; Disable support for bidirectional text (for performance).
-(setq bidi-inhibit-bpa t)
-(setq-default bidi-display-reordering 'left-to-right
-              bidi-paragraph-direction 'left-to-right)
-
-(setq redisplay-skip-fontification-on-input t)
-
 ;; Improve scrolling experience.
 (setopt scroll-margin 6)
 (setopt scroll-conservatively 8)
 (setopt mouse-wheel-progressive-speed nil)
+
+;; Improve scrolling performance.
+(setopt fast-but-imprecise-scrolling t)	; Don't fontify mid-scroll.
+(setopt auto-window-vscroll nil)	; Reduce  lag on tall lines.
 
 ;; Prevent the "ls does not support dired" message by not attempting
 ;; to use use the flag at all on Darwin.
@@ -191,6 +188,7 @@
 ;; Multiple & fuzzy completion style that works very well in
 ;; conjunction with Vertico.
 (use-package orderless
+  :after vertico
   :custom
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)

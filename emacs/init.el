@@ -175,11 +175,10 @@
     (corfu-terminal-mode +1)))
 
 ;; Corfu support for terminal Emacs.
-;;
-;; TODO: Remove when using Emacs 31+.
-(use-package corfu-terminal
-  :after corfu
-  :hook (corfu-mode . jp/corfu-terminal))
+(unless (>= emacs-major-version 31)
+  (use-package corfu-terminal
+    :after corfu
+    :hook (corfu-mode . jp/corfu-terminal)))
 
 ;; Better minibuffer completion.
 (use-package vertico

@@ -20,9 +20,7 @@
 (load custom-file :no-error-if-file-is-missing)
 
 
-;;;
 ;;; --- Package management -------------------------------------------
-;;;
 
 
 ;; Saves a lot of startup time, and has no downsides since I'm not
@@ -62,9 +60,7 @@
 (setopt use-package-always-ensure t)
 
 
-;;;
 ;;; --- Basic editing & options --------------------------------------
-;;;
 
 
 ;; Do not create the annoying backfiles (tildes) or lockfiles (hash)
@@ -142,9 +138,7 @@
 (setopt python-fill-docstring-style 'pep-257-nn)
 
 
-;;;
 ;;; --- User interface -----------------------------------------------
-;;;
 
 
 ;; Enable mouse support in terminal mode.
@@ -231,9 +225,7 @@
 	interprogram-paste-function 'jp/macos-pbpaste))
 
 
-;;;
 ;;; --- Extra language support ---------------------------------------
-;;;
 
 
 (use-package rust-mode
@@ -266,9 +258,7 @@
   :mode ("\\.typ\\'" . typst-mode))
 
 
-;;;
 ;;; --- IDE-like features --------------------------------------------
-;;;
 
 
 ;; Snippet engine; needed for auto-complete, etc.
@@ -357,9 +347,7 @@
   :custom (rg-show-header . nil))
 
 
-;;;
 ;;; --- Org ----------------------------------------------------------
-;;;
 
 
 (defun jp/org-config-appearance ()
@@ -411,9 +399,7 @@
        (org-agenda-sorting-strategy '(time-up todo-state-down priority-down)))))))
 
 
-;;;
 ;;; --- Extra keybindings --------------------------------------------
-;;;
 
 
 (defun jp/kill-other-buffers ()
@@ -442,7 +428,7 @@
 	 ("C--" . text-scale-decrease)))
 
 
-;;--------------------------------------------------------------------
+;;; ------------------------------------------------------------------
 
 
 ;; Bring the GC threshold down to normal levels now that all

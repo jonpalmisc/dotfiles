@@ -24,8 +24,25 @@
 ;; Put custom stuff in separate file.
 (setopt custom-file (locate-user-emacs-file "custom.el"))
 
+
+;;; --- Performance --------------------------------------------------
+
+
 ;; Allegedly improves performance.
 (setq read-process-output-max (* 1024 1024))
+
+;; Disable special file handlers at startup for better performance.
+(defvar jp/file-name-handler-alist-backup file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+;; Restore special file handlers after startup is complete.
+(add-hook 'emacs-startup-hook
+	  (lambda ()
+	    (setq file-name-handler-alist jp/file-name-handler-alist-backup)))
+
+
+;;; --- Native & byte compilation ------------------------------------
+
 
 ;; Prefer loading newer files over older, byte-compiled ones.
 ;;
@@ -36,6 +53,10 @@
 (setopt byte-compile-warnings '(not obsolete)
 	warning-suppress-log-types '((comp) (bytecomp))
 	native-comp-async-report-warnings-errors 'silent)
+
+
+;;; --- Early UI tweaks ----------------------------------------------
+
 
 ;; Disable toolbar & menubar; configure the default window size.
 ;;
@@ -55,6 +76,9 @@
 
 ;; Allow window sizes that aren't perfect multiples of the grid cell
 ;; dimensions. Without this, macOS window snapping behaves weirdly.
+;;
+;; Also a startup performance improvement as resizing the frame (due
+;; to font change) can be costly without these options.
 (setopt frame-resize-pixelwise t
 	frame-inhibit-implied-resize t)
 
@@ -63,15 +87,6 @@
 (setopt initial-major-mode 'fundamental-mode
 	initial-scratch-message nil)
 
-;; Disable special file handlers at startup for better performance.
-(defvar jp/file-name-handler-alist-backup file-name-handler-alist)
-(setq file-name-handler-alist nil)
-
 ;; Silence startup messages.
 (setopt inhibit-startup-message t
 	inhibit-startup-echo-area-message (user-login-name))
-
-;; Restore special file handlers after startup is complete.
-(add-hook 'emacs-startup-hook
-	  (lambda ()
-	    (setq file-name-handler-alist jp/file-name-handler-alist-backup)))

@@ -217,7 +217,9 @@
 
 (defun jp/load-theme ()
   (modus-themes-load-theme
-   (if (jp/macos-dark-mode-p) 'modus-vivendi 'modus-operandi)))
+   (if (and (string= system-type "darwin") (jp/macos-dark-mode-p))
+       'modus-vivendi
+     'modus-operandi)))
 
 (use-package modus-themes
   :when jp/full-mode
@@ -237,7 +239,7 @@
 
 ;; When running in the terminal, we need to set these so copy/paste
 ;; syncs with the system clipboard properly.
-(unless (display-graphic-p)
+(when (and (string= system-type "darwin") (not (display-graphic-p)))
   (setq interprogram-cut-function 'jp/macos-pbcopy
 	interprogram-paste-function 'jp/macos-pbpaste))
 
@@ -303,13 +305,13 @@
 (use-package magit
   :when jp/full-mode
   :commands magit-status
+  :config
+  ;; Allegedly improves performance by avoiding querying $PATH.
+  (when (string= system-type "darwin")
+    (setopt magit-git-executable "/opt/homebrew/bin/git"))
   :custom
   ;; Don't incessantly ask to save changes.
   (magit-save-repository-buffers nil)
-
-  ;; Allegedly improves performance by eliminating the need to use the
-  ;; shell to get $PATH.
-  (magit-git-executable "/opt/homebrew/bin/git")
 
   ;; Show word-level diffs.
   (magit-diff-refine-hunk (quote all))

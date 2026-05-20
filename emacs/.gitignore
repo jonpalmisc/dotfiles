@@ -13,3 +13,4 @@ projects
 
 *.tar.xz
 .mc-lists.el
+.full

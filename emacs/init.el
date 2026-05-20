@@ -1,6 +1,14 @@
 ;;; --- init.el -------------------------- -*- lexical-binding: t; -*-
 
 
+;; "Full mode" is activated a '.full' marker file in the Emacs
+;; directory. Without it, only built-in packages are used.
+;;
+;; Full mode is opt-in for portability between machines, etc.
+(defvar jp/full-mode
+  (file-exists-p (expand-file-name ".full" user-emacs-directory))
+  "Non-nil when full mode is enabled.")
+
 ;; Raising the garbage collection threshold while the minibuffer is
 ;; open can make the minibuffer more performant and less freeze-prone.
 (add-hook 'minibuffer-setup-hook #'jp/gc-raise)
@@ -9,10 +17,11 @@
 (defun jp/show-startup-stats ()
   "Show initialization duration in the minibuffer after startup."
   (message
-   "Emacs started in %s seconds with %d GCs."
+   "Emacs started in %s seconds with %d GCs (%s mode)."
    (format "%.2f" (float-time
                    (time-subtract after-init-time before-init-time)))
-   gcs-done))
+   gcs-done
+   (if jp/full-mode "full" "lite")))
 
 ;; Show total startup time once Emacs has finished loading.
 (add-hook 'emacs-startup-hook #'jp/show-startup-stats)
@@ -23,41 +32,40 @@
 ;;; --- Package management -------------------------------------------
 
 
-;; Saves a lot of startup time, and has no downsides since I'm not
-;; developing packages.
-(setopt straight-check-for-modifications nil)
+(when jp/full-mode
+  ;; Saves a lot of startup time.
+  (setopt straight-check-for-modifications nil)
 
-;; Use Straight for package management, primarily for performance
-;; reasons (among other, better ones).
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name
-        "straight/repos/straight.el/bootstrap.el"
-        (or (bound-and-true-p straight-base-dir)
-            user-emacs-directory)))
-      (bootstrap-version 7))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+  ;; Use Straight for package management, mainly for performance.
+  (defvar bootstrap-version)
+  (let ((bootstrap-file
+         (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+        (bootstrap-version 7))
+    (unless (file-exists-p bootstrap-file)
+      (with-current-buffer
+          (url-retrieve-synchronously
+           "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+           'silent 'inhibit-cookies)
+        (goto-char (point-max))
+        (eval-print-last-sexp)))
+    (load bootstrap-file nil 'nomessage))
 
-;; Hide excessive warnings, etc. related to native compilation.
-(add-to-list 'display-buffer-alist
-             '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
-               (display-buffer-no-window)
-               (allow-no-window . t)))
+  ;; Hide excessive warnings, etc. related to native compilation.
+  (add-to-list 'display-buffer-alist
+               '("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
+                 (display-buffer-no-window)
+                 (allow-no-window . t)))
 
-(straight-use-package 'use-package)
-(setopt straight-use-package-by-default t)
-(setopt straight-vc-git-default-clone-depth '(1 single-branch))
+  (straight-use-package 'use-package)
+  (setopt straight-use-package-by-default t)
+  (setopt straight-vc-git-default-clone-depth '(1 single-branch))
 
-;; Always require packages specified in this config to be present.
-(require 'use-package-ensure)
-(setopt use-package-always-ensure t)
+  ;; Always require packages specified below to be present.
+  (require 'use-package-ensure)
+  (setopt use-package-always-ensure t))
 
 
 ;;; --- Basic editing & options --------------------------------------
@@ -118,6 +126,7 @@
 ;; existing indentation style, which can be guessed from the buffer
 ;; using the 'dtrt-indent' package.
 (use-package dtrt-indent
+  :when jp/full-mode
   :hook ((c-mode
 	  c++-mode
 	  objc-mode
@@ -146,12 +155,14 @@
 (setopt cursor-in-non-selected-windows nil)
 (setopt highlight-nonselected-windows nil)
 
-;; Live help for long key combos.
+;; Live help for long key combos; built-in since Emacs 30.
 (use-package which-key
+  :when (or jp/full-mode (>= emacs-major-version 30))
   :hook (after-init . which-key-mode))
 
 ;; Sublime-style multiple cursors.
 (use-package multiple-cursors
+  :when jp/full-mode
   ;; Adds a perceivable delay to startup time, but an imperceivable
   ;; delay when loaded on-demand; also used infrequently enough that
   ;; the on-demand delay is justified.
@@ -163,6 +174,7 @@
 
 ;; Modern & minimal text-completion popup.
 (use-package corfu
+  :when jp/full-mode
   :hook (prog-mode . corfu-mode)
   :custom
   (corfu-auto t)
@@ -175,18 +187,20 @@
     (corfu-terminal-mode +1)))
 
 ;; Corfu support for terminal Emacs.
-(unless (>= emacs-major-version 31)
-  (use-package corfu-terminal
-    :after corfu
-    :hook (corfu-mode . jp/corfu-terminal)))
+(use-package corfu-terminal
+  :when (and jp/full-mode (< emacs-major-version 31))
+  :after corfu
+  :hook (corfu-mode . jp/corfu-terminal))
 
 ;; Better minibuffer completion.
 (use-package vertico
+  :when jp/full-mode
   :hook (after-init . vertico-mode))
 
 ;; Multiple & fuzzy completion style that works very well in
 ;; conjunction with Vertico.
 (use-package orderless
+  :when jp/full-mode
   :after vertico
   :custom
   (completion-styles '(orderless basic))
@@ -206,6 +220,7 @@
    (if (jp/macos-dark-mode-p) 'modus-vivendi 'modus-operandi)))
 
 (use-package modus-themes
+  :when jp/full-mode
   :commands modus-themes-load-theme
   :hook (window-setup . jp/load-theme))
 
@@ -231,6 +246,7 @@
 
 
 (use-package rust-mode
+  :when jp/full-mode
   :mode (("\\.rs\\'" . rust-mode))
   ;; By default, this binding gets stolen by `rust-mode', which is
   ;; annoying. How else am I meant to wrap my comments?
@@ -239,24 +255,30 @@
   :hook (rust-mode . (lambda () (setq fill-column 100))))
 
 (use-package elixir-mode
+  :when jp/full-mode
   :mode (("\\.ex\\'" . elixir-mode)
 	 ("\\.exs\\'" . elixir-mode)))
 
 (use-package cmake-mode
+  :when jp/full-mode
   :mode (("CMakeLists\\.txt\\'" . cmake-mode)
          ("\\.cmake\\'" . cmake-mode)))
 
 (use-package yaml-mode
+  :when jp/full-mode
   :mode (("\\.ya?ml\\'" . yaml-mode))
   :custom ((yaml-indent-offset 2)))
 
 (use-package toml-mode
+  :when jp/full-mode
   :mode "\\.toml\\'")
 
 (use-package markdown-mode
+  :when jp/full-mode
   :mode ("\\.md\\'" . gfm-mode))
 
 (use-package typst-mode
+  :when jp/full-mode
   :mode ("\\.typ\\'" . typst-mode))
 
 
@@ -265,6 +287,7 @@
 
 ;; Snippet engine; needed for auto-complete, etc.
 (use-package yasnippet
+  :when jp/full-mode
   :hook (prog-mode . yas-minor-mode)
   :bind ("M-i" . 'yas-insert-snippet))
 
@@ -272,11 +295,13 @@
 ;; the functionality for using them. The default snippet collection is
 ;; shipped separately in this package.
 (use-package yasnippet-snippets
+  :when jp/full-mode
   :after yasnippet
   :config (yasnippet-snippets-initialize))
 
 ;; Graphical, interactive Git interface.
 (use-package magit
+  :when jp/full-mode
   :commands magit-status
   :custom
   ;; Don't incessantly ask to save changes.
@@ -320,6 +345,7 @@
 
 ;; Integration with language servers for completion.
 (use-package eglot
+  :when jp/full-mode
   :hook ((c-mode
 	  c++-mode
 	  objc-mode
@@ -345,6 +371,7 @@
 
 ;; Good integration with Ripgrep.
 (use-package rg
+  :when jp/full-mode
   :bind (("C-c s" . rg-menu))
   :custom (rg-show-header . nil))
 

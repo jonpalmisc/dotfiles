@@ -1,8 +1,5 @@
 ;;; --- early-init.el -------------------- -*- lexical-binding: t; -*-
 
-;; Since we are using `straight.el' for package management, avoid
-;; needlessly loading `package.el' and slowing down startup.
-(setq package-enable-at-startup nil)
 
 (defun jp/gc-raise ()
   "Raise garbage collection thresholds to limit pauses."
@@ -20,6 +17,11 @@
 
 ;; Disable garbage collection at startup.
 (jp/gc-raise)
+
+;; Prefer loading newer files over older, compiled ones.
+;;
+;; This is particularly important when iterating on a config.
+(setq load-prefer-newer t)
 
 ;; Put custom stuff in separate file.
 (setopt custom-file (locate-user-emacs-file "custom.el"))
@@ -87,16 +89,16 @@
 ;;; --- Native & byte compilation ------------------------------------
 
 
-;; Prefer loading newer files over older, byte-compiled ones.
-;;
-;; This is particularly important when iterating on a config.
-(setq load-prefer-newer t)
+;; Silence annoying and confusing byte/native-compilation warnings.
+(setopt byte-compile-warnings nil
+	byte-compile-verbose nil
+	native-comp-async-report-warnings-errors 'silent
+	native-comp-warning-on-missing-source nil)
 
-;; Silence annoying and confusing bytecode warnings.
-(setopt byte-compile-warnings '(not obsolete)
-	warning-suppress-log-types '((comp) (bytecomp))
-	native-comp-async-report-warnings-errors 'silent)
 
+(setopt warning-minimum-level :error)
+(setopt warning-suppress-types '((defvaralias) (lexical-binding)))
+(setopt warning-inhibit-types '((files missing-lexbind-cookie)))
 
 ;;; --- Early UI tweaks ----------------------------------------------
 
@@ -133,3 +135,11 @@
 ;; Silence startup messages.
 (setopt inhibit-startup-message t
 	inhibit-startup-echo-area-message (user-login-name))
+
+
+;;; ------------------------------------------------------------------
+
+
+;; Since we are using `straight.el' for package management, avoid
+;; needlessly loading `package.el' and slowing down startup.
+(setq package-enable-at-startup nil)

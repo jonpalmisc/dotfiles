@@ -209,11 +209,9 @@
 
 (defun jp/macos-dark-mode-p ()
   "Is macOS currently in dark mode?"
-  (if (display-graphic-p)
-      (eq (frame-parameter nil 'background-mode) 'dark)
-    (with-temp-buffer
-      (call-process "defaults" nil t nil "read" "-g" "AppleInterfaceStyle")
-      (string-prefix-p "Dark" (buffer-string)))))
+  (with-temp-buffer
+    (call-process "defaults" nil t nil "read" "-g" "AppleInterfaceStyle")
+    (string-prefix-p "Dark" (buffer-string))))
 
 (defun jp/load-theme ()
   (modus-themes-load-theme

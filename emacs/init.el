@@ -357,6 +357,8 @@
   :config
   (add-to-list 'eglot-server-programs '((python-mode) . ("ty" "server")))
   :custom
+  ;; Reduce pointless GC pressure.
+  (eglot-events-buffer-config '(:size 0 :format full))
   ;; Auto-shutdown when the last buffer using a server is closed.
   (eglot-autoshutdown t)
   ;; Don't block UI while connecting.

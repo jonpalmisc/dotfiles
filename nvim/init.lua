@@ -129,9 +129,6 @@ vim.opt.cursorline = true -- Highlight line with cursor.
 
 vim.opt.colorcolumn = "+1" -- Show fill column indicator.
 
-vim.opt.list = true -- Show invisible characters.
-vim.opt.listchars = { trail = "·" } -- Mark trailing whitespace.
-
 -- Show trailing whitespace as a red background (instead of dots).
 vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
   callback = function()

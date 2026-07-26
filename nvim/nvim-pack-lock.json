@@ -5,7 +5,7 @@
       "src": "https://github.com/sindrets/diffview.nvim"
     },
     "mini.pick": {
-      "rev": "26f94e9c84f529d713de00b900c0a307ca260f35",
+      "rev": "04e73ab07222508361095bb6e27621b315e6b9f1",
       "src": "https://github.com/nvim-mini/mini.pick"
     },
     "modus-themes.nvim": {
@@ -13,7 +13,7 @@
       "src": "https://github.com/miikanissi/modus-themes.nvim"
     },
     "neogit": {
-      "rev": "99326a1310fb2d616b455d2fd16d01bf00682f06",
+      "rev": "57c9f8ee784bcd07141bf7fa958b5c5bb1420de8",
       "src": "https://github.com/NeogitOrg/neogit"
     },
     "nvim-autopairs": {
@@ -21,7 +21,7 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-lspconfig": {
-      "rev": "07dff35e7c95288861200b788ef32d6103f107f0",
+      "rev": "7ab79bb1b57160a537f427ac8a6026102f12b701",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "plenary.nvim": {

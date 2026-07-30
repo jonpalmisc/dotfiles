@@ -1,0 +1,22 @@
+{
+  "clangd": {
+    "enabled": true,
+    "command": [
+      "clangd",
+      "--index",
+      "--header-insertion-decorators",
+      "--inlay-hints",
+    ],
+    "selector": "source.c, source.c++, source.objc, source.objc++",
+  },
+  "ty": {
+    "enabled": true,
+    "command": ["ty", "server"],
+    "selector": "source.python",
+  },
+  "rust-analyzer": {
+    "enabled": true,
+    "command": ["rust-analyzer"],
+    "selector": "source.rust",
+  },
+}

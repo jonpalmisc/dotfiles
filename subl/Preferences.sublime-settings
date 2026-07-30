@@ -41,6 +41,8 @@
 
   //----------------------------------------------------------------------------
 
+  "terminal_command": "open -na Ghostty \"$dir\"",
+
   "index_files": true,
   "ignored_packages": ["Vintage",
   ],

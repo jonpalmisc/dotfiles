@@ -5,4 +5,5 @@
 	"font_size": 12,
 	"tab_size": 8,
 	"ignore_diff_white_space": true,
+	"terminal_command": "open -na Ghostty \"$dir\"",
 }

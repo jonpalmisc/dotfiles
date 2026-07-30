@@ -102,10 +102,16 @@ subl:
 	$(RM) $(SUBL_CONFIG_PATH)
 	$(LN) `pwd`/subl $(SUBL_CONFIG_PATH)
 
+	[ "$(shell uname)" = "Darwin" ] && rm -f "$(HOME)/Developer/Prefix/bin/subl"
+	[ "$(shell uname)" = "Darwin" ] && [ -d "$(HOME)/Developer/Prefix/bin" ] && ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" "$(HOME)/Developer/Prefix/bin/subl"
+
 .PHONY: smerge
 smerge:
 	$(RM) $(SMERGE_CONFIG_PATH)
 	$(LN) `pwd`/smerge $(SMERGE_CONFIG_PATH)
+
+	[ "$(shell uname)" = "Darwin" ] && rm -f "$(HOME)/Developer/Prefix/bin/smerge"
+	[ "$(shell uname)" = "Darwin" ] && [ -d "$(HOME)/Developer/Prefix/bin" ] && ln -s "/Applications/Sublime Merge.app/Contents/SharedSupport/bin/smerge" "$(HOME)/Developer/Prefix/bin/smerge"
 
 .PHONY: tmux
 tmux:

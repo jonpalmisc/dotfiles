@@ -1,5 +1,7 @@
 #!/bin/sh
 
+mkdir -p ~/Developer/Prefix/bin ~/Developer/Source
+
 # Use faster key repeat
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 defaults write NSGlobalDomain KeyRepeat -int 2

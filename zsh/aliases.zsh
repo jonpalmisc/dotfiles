@@ -206,3 +206,7 @@ TAR_PRIVACY_FLAGS=(--uid 0 --gid 0 --no-xattrs --exclude='.DS_Store')
 ,format-panic() {
     tail -n +2 "$1" | jq -r .panicString
 }
+
+,cdas() {
+    cd "$HOME/Library/Application Support"
+}

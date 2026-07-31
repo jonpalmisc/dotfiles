@@ -3,7 +3,7 @@ autoload colors && colors
 
 # Enable VCS info support, only show branch name.
 autoload -Uz vcs_info
-precmd() { vcs_info }
+precmd() { vcs_info; }
 zstyle ':vcs_info:git:*' formats '%b'
 
 # Show username and hostname.

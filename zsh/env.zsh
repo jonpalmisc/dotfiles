@@ -24,7 +24,7 @@ fi
 
 # Use Emacs as the default editor, if available.
 if [ -f /Applications/Emacs.app/Contents/MacOS/Emacs ]; then
-    export EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+	export EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 fi
 
 export VISUAL="$EDITOR"

@@ -9,8 +9,8 @@ alias rgi='rg -i'
 alias xattr='/usr/bin/xattr'
 
 if [ -d "/Applications/Emacs.app/" ]; then
-    alias gmacs='open -a Emacs'
-    alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
+	alias gmacs='open -a Emacs'
+	alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
 fi
 
 # Aliases for opening applications on macOS.
@@ -33,10 +33,7 @@ mkcd() {
 	prefix="$1"
 	shift
 
-	CFLAGS+=" -I$prefix/include" \
-	CXXFLAGS+=" -I$prefix/include" \
-	LDFLAGS+=" -L$prefix/lib" \
-	$@
+	CFLAGS+=" -I$prefix/include" CXXFLAGS+=" -I$prefix/include" LDFLAGS+=" -L$prefix/lib" $@
 }
 
 # Set CFLAGS, etc. to use a given prefix.
@@ -204,9 +201,9 @@ TAR_PRIVACY_FLAGS=(--uid 0 --gid 0 --no-xattrs --exclude='.DS_Store')
 }
 
 ,format-panic() {
-    tail -n +2 "$1" | jq -r .panicString
+	tail -n +2 "$1" | jq -r .panicString
 }
 
 ,cdas() {
-    cd "$HOME/Library/Application Support"
+	cd "$HOME/Library/Application Support"
 }

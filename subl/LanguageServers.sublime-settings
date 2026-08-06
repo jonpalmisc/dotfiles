@@ -19,4 +19,9 @@
     "command": ["rust-analyzer"],
     "selector": "source.rust",
   },
+  "sourcekit-lsp": {
+    "enabled": true,
+    "command": ["sourcekit-lsp"],
+    "selector": "source.swift",
+  }
 }

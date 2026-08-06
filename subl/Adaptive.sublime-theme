@@ -1,17 +1,15 @@
 {
-	"variables":
-	{
-		"font_size_sm": 11,
-		"font_size": 12,
-		"font_size_lg": 12,
-		"font_size_title": 14,
-	},
-	"rules":
-	[
-		{
-			"class": "sidebar_heading",
-			"font.size": 0,
-			"font.bold": false,
-		}
-	]
+  "variables": {
+    "font_size_sm": 11,
+    "font_size": 12,
+    "font_size_lg": 12,
+    "font_size_title": 14,
+  },
+  "rules": [
+    {
+      "class": "sidebar_heading",
+      "font.size": 0,
+      "font.bold": false,
+    },
+  ],
 }

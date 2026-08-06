@@ -1,0 +1,13 @@
+[
+  {
+    "keys": ["enter"],
+    "command": "current_result",
+    "context": [
+      {
+        "key": "selector",
+        "operator": "equal",
+        "operand": "text.find-in-files",
+      },
+    ],
+  },
+]

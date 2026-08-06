@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "keys": ["ctrl+x", "g"],
+    "command": "open_dir_in_sublime_text",
+    "args": { "dir": "$working_dir" },
+  },
+]

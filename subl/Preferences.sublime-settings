@@ -12,7 +12,7 @@
 
   "margin": 0,
 
-  "rulers": [80, 100],
+  "rulers": [100],
 
   "caret_style": "smooth",
   "caret_extra_top": 1,

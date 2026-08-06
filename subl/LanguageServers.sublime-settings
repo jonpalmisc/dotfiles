@@ -23,5 +23,10 @@
     "enabled": true,
     "command": ["sourcekit-lsp"],
     "selector": "source.swift",
+  },
+  "typescript-language-server": {
+    "enabled": true,
+    "command": ["typescript-language-server", "--stdio"],
+    "selector": "source.js, source.ts",
   }
 }

@@ -7,6 +7,9 @@
   "font_face": "MD IO Medium",
   "font_size": 12,
 
+  "line_padding_top": 1,
+  "line_padding_bottom": 1,
+
   "margin": 0,
 
   "rulers": [80, 100],

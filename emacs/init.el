@@ -397,7 +397,6 @@
   (org-capture nil "t"))
 
 (use-package org
-  :type built-in
   :bind (("C-c a" . org-agenda)
 	 ("C-c A" . jp/org-agenda)
 	 ("C-c c" . org-capture)

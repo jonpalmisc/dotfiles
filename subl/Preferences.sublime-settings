@@ -29,6 +29,7 @@
   "use_tab_stops": true,
 
   "tab_completion": false,
+  "auto_complete": false,
 
   // --- Behavior --------------------------------------------------------------
 

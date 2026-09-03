@@ -308,6 +308,9 @@
   (when (string= system-type "darwin")
     (setopt magit-git-executable "/opt/homebrew/bin/git"))
   :custom
+  ;; Allegedly faster Git process throughput.
+  (magit-process-connection-type nil)
+
   ;; Don't incessantly ask to save changes.
   (magit-save-repository-buffers nil)
 

@@ -14,7 +14,7 @@ function Remove-IfExists {
     }
 }
 
-function New-Junction {
+function New-DirLink {
     param([string]$LinkPath, [string]$TargetPath)
 
     Remove-IfExists $LinkPath

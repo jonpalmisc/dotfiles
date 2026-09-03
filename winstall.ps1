@@ -1,6 +1,6 @@
 param(
     [Parameter(Mandatory, Position=0)]
-    [ValidateSet("nvim", "subl", "smerge", "ps7")]
+    [ValidateSet("nvim", "subl", "smerge", "ps7", "winterm")]
     [string]$Target
 )
 
@@ -41,5 +41,8 @@ switch ($Target) {
     }
     "ps7" {
         New-FileSymbolicLink "$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1" "$RepoRoot\ps7\Microsoft.PowerShell_profile.ps1"
+    }
+    "winterm" {
+        New-FileSymbolicLink "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" "$RepoRoot\winterm\settings.json"
     }
 }

@@ -1,6 +1,11 @@
 ;;; --- early-init.el -------------------- -*- lexical-binding: t; -*-
 
 
+;; Low-quality compatibility shim for older Emacs.
+(unless (fboundp 'setopt)
+  (defmacro setopt (&rest pairs)
+    `(setq ,@pairs)))
+
 (defun jp/gc-raise ()
   "Raise garbage collection thresholds to limit pauses."
   (setq gc-cons-threshold most-positive-fixnum

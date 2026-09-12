@@ -43,8 +43,10 @@ mkcd() {
 	export LDFLAGS="$LDFLAGS -L$1/lib"
 }
 
-alias ,with-brew-prefix=",with-prefix $(brew --prefix)"
-alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
+if [[ "$OSTYPE" == darwin* ]]; then
+	alias ,with-brew-prefix=",with-prefix $(brew --prefix)"
+	alias ,with-dev-prefix=",with-prefix $HOME/Developer/Prefix"
+fi
 
 ,pyint() {
 	python3 -c "i = ($1); print(i); print(hex(i)); print(bin(i))"

@@ -54,7 +54,11 @@ setopt SHARE_HISTORY
 
 # ===-- Other ---------------------------------------------------------------===
 
+if [[ "$OSTYPE" == darwin* ]]; then
+	# This caused issues on Debian; gate to macOS only?
+	unalias run-help
+fi
+
 # Use built-in help system.
-unalias run-help
 autoload run-help
 alias help=run-help

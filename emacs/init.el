@@ -97,8 +97,9 @@
   "Set the current buffer's fill length to 70 columns."
   (setq fill-column 70))
 
-;; Wrap text to 80 columns by default, but use 70 columns for Elisp.
-(setopt fill-column 80)
+;; Wrap text to 100 columns by default, but for historical reasons,
+;; use 70 columns for Elisp.
+(setopt fill-column 100)
 (add-hook 'emacs-lisp-mode-hook #'jp/set-fill-length-70)
 
 (global-display-fill-column-indicator-mode) ; Show fill column ruler.

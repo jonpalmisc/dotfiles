@@ -361,6 +361,8 @@
   :config
   (add-to-list 'eglot-server-programs '((python-mode) . ("ty" "server")))
   :custom
+  ;; Allegedly improve performance by cutting down on modeline noise?
+  (eglot-report-progress nil)
   ;; Reduce pointless GC pressure.
   (eglot-events-buffer-config '(:size 0 :format full))
   ;; Auto-shutdown when the last buffer using a server is closed.

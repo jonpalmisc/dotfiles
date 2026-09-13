@@ -93,6 +93,8 @@
 (electric-pair-mode t)	    ; Auto-close parentheses, etc.
 (column-number-mode t)	    ; Show column numbers in mode line.
 
+(setq completion-ignore-case t)	    ; Use case-insensitive completion.
+
 (defun jp/set-fill-length-70 ()
   "Set the current buffer's fill length to 70 columns."
   (setq fill-column 70))

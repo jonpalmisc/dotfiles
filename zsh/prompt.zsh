@@ -8,8 +8,13 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 # Show username and hostname.
 CUSTOM_PROMPT+=$'\n'
-CUSTOM_PROMPT+="%F{red}"
-CUSTOM_PROMPT+='%n@%m'
+if [[ -n ${SSH_CONNECTION:-} ]]; then
+	CUSTOM_PROMPT+="%F{blue}"
+	CUSTOM_PROMPT+='[%n@%m]'
+else
+	CUSTOM_PROMPT+="%F{red}"
+	CUSTOM_PROMPT+='%n@%m'
+fi
 CUSTOM_PROMPT+="%F{reset}"
 CUSTOM_PROMPT+=':'
 

@@ -71,7 +71,7 @@ vim.opt.autoindent = true -- Match current indentation on new lines.
 vim.opt.smartindent = true -- Use smarter auto-indent when available.
 
 vim.opt.wrap = false -- Disable soft wrapping.
-vim.opt.textwidth = 80 -- Hard-wrap at 80 columns.
+vim.opt.textwidth = 100 -- Hard-wrap at 100 columns (ignoring language-specific overrides).
 vim.opt.joinspaces = false -- Single space after period on join.
 vim.opt.formatoptions = vim.opt.formatoptions - "t" -- Don't auto-wrap code.
 

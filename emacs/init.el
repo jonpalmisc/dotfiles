@@ -138,6 +138,10 @@
 	  js-mode
 	  json-mode) . dtrt-indent-mode))
 
+;; Highlight "TODO", etc. in comments.
+(use-package hl-todo
+  :hook (prog-mode . hl-todo-mode))
+
 ;; This affects the way braces are indented automatically; the default
 ;; is the GNU-style. Gross.
 (setopt c-default-style "bsd")

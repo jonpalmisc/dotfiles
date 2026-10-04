@@ -138,9 +138,15 @@
 	  js-mode
 	  json-mode) . dtrt-indent-mode))
 
+(defun jp/add-hl-todo-keywords ()
+  ;; Don't set if the package isn't loaded yet.
+  (when (boundp 'hl-todo-keyword-faces)
+    (add-to-list 'hl-todo-keyword-faces '("NB" . warning))))
+
 ;; Highlight "TODO", etc. in comments.
 (use-package hl-todo
-  :hook (prog-mode . hl-todo-mode))
+  :hook (prog-mode . hl-todo-mode)
+  :config (jp/add-hl-todo-keywords))
 
 ;; This affects the way braces are indented automatically; the default
 ;; is the GNU-style. Gross.
@@ -229,7 +235,15 @@
 (use-package modus-themes
   :when jp/full-mode
   :commands modus-themes-load-theme
-  :hook (window-setup . jp/load-theme))
+  :hook ((window-setup . jp/load-theme)
+	 ;; Need to do this again here since Modus will clobber the
+	 ;; keywords list, undoing our changes if we already updated
+	 ;; the list via the hook after `hl-todo' was loaded.
+	 ;;
+	 ;; There exists a sequence of events such that we wind up
+	 ;; adding our extra keywords twice, but that has seemed to
+	 ;; not be an issue so far...
+	 (modus-themes-after-load-theme . jp/add-hl-todo-keywords)))
 
 (defun jp/macos-pbpaste ()
   "Get the contents of the macOS pasteboard."

@@ -152,6 +152,12 @@
 ;; is the GNU-style. Gross.
 (setopt c-default-style "bsd")
 
+;; This looks obtuse, but this configures `c-mode' to use C++-style
+;; comments (//) and is seemingly the recommended way to do so.
+(add-hook 'c-mode-hook
+          (lambda ()
+            (c-toggle-comment-style -1)))
+
 ;; Default Python doc comment wrapping style is also not aligned with
 ;; what most style guides and formatters advise nowadays.
 (setopt python-fill-docstring-style 'pep-257-nn)

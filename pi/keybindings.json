@@ -1,0 +1,11 @@
+{
+  "$schema": "https://pi.dev/schemas/keybindings.schema.json",
+  "tui.select.up": ["up", "ctrl+p"],
+  "tui.select.down": ["down", "ctrl+n"],
+  "tui.input.newLine": ["shift+enter", "ctrl+j", "alt+enter"],
+  "app.message.followUp": [],
+  "app.model.cycleForward": [],
+  "app.session.togglePath": [],
+  "app.session.toggleNamedFilter": [],
+  "app.models.toggleProvider": []
+}

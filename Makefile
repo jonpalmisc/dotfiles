@@ -11,6 +11,7 @@ IDA_CONFIG_PATH		:= ~/.idapro
 MAC_KEYBINDINGS_PATH	:= ~/Library/KeyBindings
 NVIM_CONFIG_PATH	:= ~/.config/nvim
 PAM_CONFIG_PATH		:= /etc/pam.d
+PI_CONFIG_PATH		:= ~/.pi/agent
 RADARE_CONFIG_PATH	:= ~/.config/radare2
 SSH_CONFIG_PATH		:= ~/.ssh/config
 SUBL_CONFIG_PATH	:= ~/Library/Application\ Support/Sublime\ Text/Packages/User
@@ -86,6 +87,11 @@ nvim:
 .PHONY: pam
 pam:
 	$(LN) `pwd`/pam/sudo $(PAM_CONFIG_PATH)/sudo_local
+
+.PHONY: pi
+pi:
+	mkdir -p $(PI_CONFIG_PATH)
+	$(LN) `pwd`/pi/keybindings.json $(PI_CONFIG_PATH)/keybindings.json
 
 .PHONY: radare2
 radare2:

@@ -1,8 +1,17 @@
 {
   "$schema": "https://pi.dev/schemas/keybindings.schema.json",
+
+  "tui.editor.cursorUp": ["up", "ctrl+p"],
+  "tui.editor.cursorDown": ["down", "ctrl+n"],
+
   "tui.select.up": ["up", "ctrl+p"],
   "tui.select.down": ["down", "ctrl+n"],
+  "tui.select.cancel": ["escape", "ctrl+c", "ctrl+g"],
+
   "tui.input.newLine": ["shift+enter", "ctrl+j", "alt+enter"],
+
+  "app.editor.external": ["ctrl+'"],
+
   "app.message.followUp": [],
   "app.model.cycleForward": [],
   "app.session.togglePath": [],

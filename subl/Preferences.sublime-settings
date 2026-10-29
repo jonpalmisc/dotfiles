@@ -6,6 +6,7 @@
 
   "font_face": "MD IO Medium",
   "font_size": 12,
+  "font_options": ["no_calt"],
 
   "line_padding_top": 1,
   "line_padding_bottom": 1,
